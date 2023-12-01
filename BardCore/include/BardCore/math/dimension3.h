@@ -1,6 +1,6 @@
 #ifndef BARDCORE_DIMENSION3_H
 #define BARDCORE_DIMENSION3_H
-#include "bardcore.h"
+#include "../bardcore.h"
 
 namespace bardcore
 {
@@ -59,7 +59,6 @@ namespace bardcore
         {
         }
 
-        
 
         /**
          * \brief constructor with x, y, z in 3D
@@ -95,7 +94,7 @@ namespace bardcore
          * \brief subtracts a dimension3 from another dimension3 and stores the result in a new dimension3
          * \param other other dimension3
         */
-        NODISCARD inline T operator-(const T& other) const
+        constexpr NODISCARD inline T operator-(const T& other) const noexcept
         {
             return {x - other.x, y - other.y, z - other.z};
         }
@@ -104,7 +103,7 @@ namespace bardcore
          * \brief adds a dimension3 from another dimension3 and stores the result in a new dimension3
          * \param other other dimension3
         */
-        NODISCARD inline T operator+(const T& other) const
+        constexpr NODISCARD inline T operator+(const T& other) const noexcept
         {
             return {x + other.x, y + other.y, z + other.z};
         }
@@ -113,7 +112,7 @@ namespace bardcore
          * \brief multiplies a dimension3 with n and stores the result in a new dimension3
          * \param n float to multiply with
         */
-        NODISCARD inline T operator*(const float n) const
+        constexpr NODISCARD inline T operator*(const float n) const noexcept
         {
             return {x * n, y * n, z * n};
         }
@@ -123,10 +122,10 @@ namespace bardcore
          * \throws std::invalid_argument if n is 0
          * \param n float to divide with
         */
-        NODISCARD inline T operator/(const float n) const
+        constexpr NODISCARD inline T operator/(const float n) const
         {
             if (n == 0.f)
-                throw std::invalid_argument("division by zero");
+                throw zero_exception("division by zero");
 
             return {x / n, y / n, z / n};
         }
@@ -135,7 +134,7 @@ namespace bardcore
          * \brief adds a dimension3 to this dimension3
          * \param other other dimension3
         */
-        inline void operator+=(const T& other)
+        inline void operator+=(const T& other) noexcept
         {
             x += other.x;
             y += other.y;
@@ -146,7 +145,7 @@ namespace bardcore
          * \brief subtracts this dimension3 from this dimension3
          * \param other other dimension3
         */
-        inline void operator-=(const T& other)
+        inline void operator-=(const T& other) noexcept
         {
             x -= other.x;
             y -= other.y;
@@ -157,7 +156,7 @@ namespace bardcore
          * \brief multiplies this dimension3 with n
          * \param n float to multiply with
         */
-        inline void operator*=(const float n)
+        inline void operator*=(const float n) noexcept
         {
             x *= n;
             y *= n;
@@ -166,10 +165,14 @@ namespace bardcore
 
         /**
          * \brief divides this dimension3 with n
+         * \throws zero_exception if n is 0
          * \param n float to divide with
         */
         inline void operator/=(const float n)
         {
+            if (n == 0.f)
+                throw zero_exception("division by zero");
+            
             x /= n;
             y /= n;
             z /= n;
@@ -180,7 +183,7 @@ namespace bardcore
          * \param other other dimension3
          * \return this
          */
-        dimension3& operator=(const dimension3& other)
+        dimension3& operator=(const dimension3& other) noexcept
         {
             x = other.x;
             y = other.y;
@@ -209,7 +212,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left < right
          */
-        NODISCARD friend bool operator<(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator<(const dimension3& left, const dimension3& right) noexcept
         {
             return left.x < right.x
                 && left.y < right.y
@@ -222,7 +225,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left <= right
          */
-        NODISCARD friend bool operator<=(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator<=(const dimension3& left, const dimension3& right) noexcept
         {
             return !(right < left);
         }
@@ -233,7 +236,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left > right
          */
-        NODISCARD friend bool operator>(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator>(const dimension3& left, const dimension3& right) noexcept
         {
             return right < left;
         }
@@ -244,7 +247,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left >= right
          */
-        NODISCARD friend bool operator>=(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator>=(const dimension3& left, const dimension3& right) noexcept
         {
             return !(left < right);
         }
@@ -255,7 +258,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left == right
          */
-        NODISCARD friend bool operator==(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator==(const dimension3& left, const dimension3& right) noexcept
         {
             return left.x == right.x
                 && left.y == right.y
@@ -268,7 +271,7 @@ namespace bardcore
          * \param right right dimension3
          * \return true if left != right
          */
-        NODISCARD friend bool operator!=(const dimension3& left, const dimension3& right)
+        constexpr NODISCARD friend bool operator!=(const dimension3& left, const dimension3& right) noexcept
         {
             return !(left == right);
         }

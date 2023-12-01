@@ -13,15 +13,26 @@
     #define NODISCARD [[nodiscard]]
     #define INLINE inline
 #else
-    #define INLINE 
-    #define NODISCARD
+#define INLINE 
+#define NODISCARD
 #endif
 
 // Standard includes
 #include <ostream>
+#include <exception>
 
 namespace bardcore
 {
+    class bard_exception : public std::exception
+    {
+    public:
+        using std::exception::exception;
+    };
 } // namespace bardcore
+
+// BardCore includes
+#include "exceptions/zero_exception.h"
+#include "exceptions/negative_exception.h"
+
 
 #endif //BARDCORE_BARDCORE_H
