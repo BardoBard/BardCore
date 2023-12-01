@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--                
+        credit yushulx 
+                        -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+
+    <PropertyGroup>
+        <MyPlatform Condition="'$(Platform)'=='x64'">x64</MyPlatform>
+
+        <IsWindows Condition="'$(OS)'=='Windows_NT'">true</IsWindows>
+    </PropertyGroup>
+
+    <ItemDefinitionGroup>
+        <ClCompile>
+            <AdditionalIncludeDirectories>
+                $(MSBuildThisFileDirectory)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+        </ClCompile>
+    </ItemDefinitionGroup>
+
+    <ItemDefinitionGroup>
+        <Link Condition="'$(MyPlatform)' == 'x64' and '$(IsWindows)'=='true'">
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)\..\..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+        </Link>
+    </ItemDefinitionGroup>
+
+</Project>

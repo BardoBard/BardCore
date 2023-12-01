@@ -15,9 +15,9 @@
 // C++ libraries
 #include "gtest/gtest.h" //google test
 
-#include <BardCore/point3d.h>
-#include <BardCore/BardCore.h>
-#include <BardCore/math.h>
-#include <BardCore/vector3d.h>
+#include <BardCore/bardcore.h>
+#include <BardCore/math/point3d.h>
+#include <BardCore/math/math.h>
+#include <BardCore/math/vector3d.h>
 
 using namespace bardcore;

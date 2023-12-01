@@ -4,6 +4,8 @@
 /tests/x64/
 /tests/tests.vcxproj.user
 
+/BardCore/x64/
+
 /x64/
 /BardCore.sln.DotSettings.user
 /packages/
