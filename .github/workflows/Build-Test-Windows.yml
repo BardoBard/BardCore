@@ -1,0 +1,36 @@
+name: Test After PullRequest
+
+on:
+  pull_request: {}
+
+jobs:
+  build_and_run:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Restore NuGet Packages
+      run: nuget restore BardCore.sln
+      
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Build C++ BardCore Debug
+      run: |
+        msbuild /t:Build /p:Configuration=Debug /p:Platform=x64 BardCore.sln
+      working-directory: ${{ github.workspace }}
+
+    - name: Build C++ BardCore Release
+      run: |
+        msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
+      working-directory: ${{ github.workspace }}
+      
+    - name: Run C++ Tests Debug
+      run: |
+        ./x64/debug/Tests.exe
+      
+    - name: Run C++ Tests Release
+      run: |
+        ./x64/release/Tests.exe
