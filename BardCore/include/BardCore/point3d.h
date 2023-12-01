@@ -1,23 +1,17 @@
 #ifndef BARDCORE_POINT3D_H
 #define BARDCORE_POINT3D_H
 
-#include "BardCore/vector3d.h"
-#include "BardCore/dimension3.h"
+#include "vector3d.h"
+#include "dimension3.h"
 
 
 namespace bardcore
 {
     class point3d : public dimension3<point3d>
     {
+    private:
     public:
-        //constructors
-        point3d() : dimension3()
-        {
-        }
-
-        point3d(const float x, const float y, const float z) : dimension3(x, y, z)
-        {
-        }
+        using dimension3::dimension3;
 
         point3d operator+(const vector3d& vector) const
         {
@@ -40,11 +34,11 @@ namespace bardcore
         }
 
         /**
-     * Gets vector between two points
-     *
-     * @param point second point
-     * @return vector between point1 and point2
-     */
+         * Gets vector between two points
+         *
+         * @param point second point
+         * @return vector between point1 and point2
+         */
         NODISCARD vector3d get_vector(const point3d& point) const
         {
             return vector3d(point - *this);
@@ -74,8 +68,8 @@ namespace bardcore
             const float x_diff = point.x - x;
             const float y_diff = point.y - y;
             const float z_diff = point.z - z;
-            return {x_diff * x_diff + y_diff * y_diff + z_diff * z_diff};
+            return x_diff * x_diff + y_diff * y_diff + z_diff * z_diff;
         }
     };
-}
+} // namespace bardcore
 #endif //BARDCORE_POINT3D_H

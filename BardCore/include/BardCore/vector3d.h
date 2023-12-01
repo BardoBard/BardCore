@@ -1,39 +1,23 @@
 #ifndef BARDCORE_VECTOR3D_H
 #define BARDCORE_VECTOR3D_H
 
-#include "BardCore/dimension3.h"
-#include "BardCore/math.h"
+#include "dimension3.h"
+#include "math.h"
 
 namespace bardcore
 {
     class vector3d : public dimension3<vector3d>
     {
     public:
-        explicit vector3d(const dimension3& other): dimension3(other)
-        {
-        }
-
-        explicit vector3d(dimension3&& other): dimension3(other)
-        {
-        }
-
-        vector3d(const float x, const float y, const float z): dimension3(x, y, z)
-        {
-        }
-
-        template <typename Derived>
-        explicit vector3d(const dimension3<Derived>& other) : dimension3(other)
-        {
-        }
-
+        using dimension3::dimension3; // inherit constructors
 
         /**
-        * reduce the 3D vector from its value to a value between -1 and 1 with length 1
-        */
+         * \brief reduce the 3D vector from its value to a value between -1 and 1 with length 1
+         * \return normalized vector
+         */
         NODISCARD vector3d normalize() const
         {
             const float l = this->length();
-
 
             return *this / l;
         }
@@ -60,7 +44,7 @@ namespace bardcore
         */
         NODISCARD float dot(const vector3d& vector) const
         {
-            return {x * vector.x + y * vector.y + z * vector.z};
+            return x * vector.x + y * vector.y + z * vector.z;
         }
 
         /**
@@ -70,7 +54,7 @@ namespace bardcore
          */
         NODISCARD float length() const
         {
-            return {std::sqrt(x * x + y * y + z * z)};
+            return std::sqrt(x * x + y * y + z * z);
         }
 
         /**
@@ -87,11 +71,11 @@ namespace bardcore
             if (this == &vector)
                 throw std::invalid_argument("vectors mustn't be the same");
 
-            if (l == 0 || vector_l == 0)
+            if (l == 0.f || vector_l == 0.f)
                 throw std::invalid_argument("vector length must not be zero");
 
             return math::get_degrees_from_radians(std::acos(dot(vector) / (l * vector_l)));
         }
     };
-}
+} // namespace bardcore
 #endif //BARDCORE_VECTOR3D_H

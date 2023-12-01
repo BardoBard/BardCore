@@ -1,12 +1,13 @@
 #ifndef BARDCORE_MATH_H
 #define BARDCORE_MATH_H
+#include "bardcore.h"
 
 namespace bardcore
 {
     class math
     {
     public:
-        inline static constexpr float pi = 3.14159265358979323846f;
+        INLINE static constexpr float pi = 3.14159265358979323846f;
 
         static float get_degrees_from_radians(const float radians)
         {
@@ -18,5 +19,5 @@ namespace bardcore
             return degrees * math::pi / 180.0f;
         }
     };
-}
+} // namespace bardcore
 #endif //BARDCORE_MATH_H

@@ -1,0 +1,4 @@
+Owner Bardio
+
+I hereby give everyone permission to use this library in any way they see fit.
+I would appreciate it if when you encounter a bug, you let me know so I can fix it.
