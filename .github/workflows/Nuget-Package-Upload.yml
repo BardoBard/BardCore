@@ -11,7 +11,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check version
+      - name: Restore NuGet Packages
+        run: nuget restore BardCore.sln
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build C++ BardCore Release
         run: |
-          echo ${{ vars.NUGET_VERSION }}
+          msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
+        working-directory: ${{ github.workspace }}
+
+      - name: Install Nuget
+        run: |
+          curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+    
+      - name: Make Package
+        run: |
+          nuget help
+          nuget pack BardCore/Nuget/BardCore.nuspec -p Version=${{ vars.NUGET_VERSION }};ReleaseNotes="automatic testing"
+          echo ${{ secret.NUGET_PACKAGE_KEY }}
+    
         
