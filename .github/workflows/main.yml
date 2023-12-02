@@ -1,0 +1,19 @@
+name: Nuget Package Upload
+
+on:
+  pull_request: {}
+  
+jobs:
+  build_and_run:
+    runs-on: windows-latest
+  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check version
+        env:
+          NUGET_VERSION: ${{ secrets.NUGET_VERSION }}
+        run: |
+          echo "$env:NUGET_VERSION"
+        
