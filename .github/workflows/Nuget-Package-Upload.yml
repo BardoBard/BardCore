@@ -30,6 +30,6 @@ jobs:
         run: |
           nuget help
           nuget pack BardCore/Nuget/BardCore.nuspec -p Version=${{ vars.NUGET_VERSION }};ReleaseNotes="automatic testing"
-          echo ${{ secret.NUGET_PACKAGE_KEY }}
+          echo ${{ secrets.NUGET_PACKAGE_KEY }}
     
         
