@@ -27,9 +27,9 @@ jobs:
           curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     
       - name: Make Package
-        run: |
-          nuget help
-          nuget pack BardCore/Nuget/BardCore.nuspec -p Version=${{ vars.NUGET_VERSION }};ReleaseNotes="automatic testing"
-          echo ${{ secrets.NUGET_PACKAGE_KEY }}
+        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=0.1.4;ReleaseNotes="hihi"
+      
+      - name: Secret
+        run: echo ${{ secrets.NUGET_PACKAGE_KEY }}
     
         
