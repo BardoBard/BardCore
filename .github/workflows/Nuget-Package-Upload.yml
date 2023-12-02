@@ -27,9 +27,20 @@ jobs:
           curl https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     
       - name: Make Package
-        run: 'nuget pack Bardcore/nuget/bardcore.nuspec -p Version=0.1.4 -p ReleaseNotes="hihi"'
-      
+        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
+          
       - name: Secret
-        run: echo ${{ secrets.NUGET_PACKAGE_KEY }}
+        run: |
+          setlocal enabledelayedexpansion
+          set "NEW_NUGET_VERSION=${{ vars.NUGET_VERSION }}"
+          
+          rem Extract the last part (the build number) from the version
+          for /f "tokens=3 delims=." %%a in ("!NEW_NUGET_VERSION!") do set "BUILD_NUMBER=%%a"
+          
+          set /a "NEW_BUILD_NUMBER=BUILD_NUMBER + 1"
+          
+          set "NUGET_VERSION=!NEW_NUGET_VERSION:%BUILD_NUMBER%=%NEW_BUILD_NUMBER%!"
+          echo "NUGET_VERSION=$NEW_NUGET_VERSION" >> $GITHUB_ENV
+          endlocal
     
         
