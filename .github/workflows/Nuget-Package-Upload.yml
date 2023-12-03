@@ -28,6 +28,7 @@ jobs:
           
       - name: Make Package
         run: |
+          $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
           $lastNumber = $NUGET_VERSION.Split('.')[-1]
           
           $NUGET_VERSION = $NUGET_VERSION -replace "$lastNumber", ""
