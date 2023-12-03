@@ -39,10 +39,12 @@ jobs:
 
       - name: Update NUGET_VERSION
         run: |
-          $newVersion = [version]$NUGET_VERSION
-          $newVersion = $newVersion.Major, $newVersion.Minor, ($newVersion.Build + 1) -join '.'
-          echo "NUGET_VERSION=$newVersion" >> $GITHUB_ENV
-          echo $newVersion
+          $lastNumber = $NUGET_VERSION.Split('.')[-1]
+          
+          $NUGET_VERSION = $NUGET_VERSION -replace "\.\d+$", ""
+          
+          $NUGET_VERSION += $lastNumber
           echo $NUGET_VERSION
+
         shell: 
           powershell
