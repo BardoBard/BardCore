@@ -27,9 +27,12 @@ jobs:
           curl -s https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 
       - name: Get Last Version
-        run: $NUGET_VERSION = (nuget list BardCore) -match '([0-9]*\.[0-9]*\.[0-9])' -replace "BardCore ",''
+        run: |
+          $NUGET_VERSION = (nuget list BardCore) -match '([0-9]*\.[0-9]*\.[0-9])' -replace "BardCore ",''
+          echo $NUGET_VERSION
         shell:
           powershell
+          
       - name: Make Package
         run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
 
