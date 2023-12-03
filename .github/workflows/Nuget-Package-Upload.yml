@@ -28,7 +28,7 @@ jobs:
 
       - name: Get Last Version
         run: |
-          $NUGET_VERSION = nuget list BardCore -replace "BardCore ",''
+          $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
           nuget list BardCore
           echo $NUGET_VERSION
         shell:
