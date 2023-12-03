@@ -35,5 +35,7 @@ jobs:
           $newVersion = [version]$currentVersion
           $newVersion = $newVersion.Major, $newVersion.Minor, ($newVersion.Build + 1) -join '.'
           echo "NUGET_VERSIO=$newVersion" >> $GITHUB_ENV
+          echo ${{ vars.NUGET_VERSION }}
+          echo ${{ env.NUGET_VERSION }}
         shell: 
           powershell
