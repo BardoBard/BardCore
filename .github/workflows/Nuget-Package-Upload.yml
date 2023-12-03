@@ -35,7 +35,7 @@ jobs:
           
           $NUGET_VERSION += $lastNumber
           echo $NUGET_VERSION
-          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
+          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=$NUGET_VERSION -p ReleaseNotes="Automatic release"
           dir
 
         shell: 
