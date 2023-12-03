@@ -1,0 +1,47 @@
+name: Nuget Package Upload
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  nuget_package_upload:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Restore NuGet Packages
+        run: nuget restore BardCore.sln
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build C++ BardCore Release
+        run: |
+          msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
+        working-directory: ${{ github.workspace }}
+
+      - name: Install Nuget CLI
+        run: |
+          curl -s https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+          
+      - name: Make And Push Package
+        run: |
+          $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
+          $LAST_NUMBER = $NUGET_VERSION.Split('.')[-1]
+          
+          $NUGET_VERSION = $NUGET_VERSION -replace "$LAST_NUMBER", ""
+          
+          $NUGET_VERSION += ([int]$LAST_NUMBER + 1)
+          
+          $ReleaseNotes = Get-Content BardCore/RELEASE_NOTES
+          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=$NUGET_VERSION -p ReleaseNotes=$ReleaseNotes
+
+          nuget push "BardCore.$NUGET_VERSION.nupkg" ${{ secrets.NUGET_PACKAGE_KEY }} -Source https://api.nuget.org/v3/index.json
+
+        shell: 
+          powershell
+    
