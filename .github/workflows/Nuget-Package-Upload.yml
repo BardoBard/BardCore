@@ -29,15 +29,14 @@ jobs:
       - name: Make Package
         run: |
           $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
-          $lastNumber = $NUGET_VERSION.Split('.')[-1]
+          $LAST_NUMBER = $NUGET_VERSION.Split('.')[-1]
           
-          $NUGET_VERSION = $NUGET_VERSION -replace "$lastNumber", ""
+          $NUGET_VERSION = $NUGET_VERSION -replace "$LAST_NUMBER", ""
           
-          $NUGET_VERSION += ([int]$lastNumber + 1)
+          $NUGET_VERSION += ([int]$LAST_NUMBER + 1)
           
-          echo $NUGET_VERSION
-          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=$NUGET_VERSION -p ReleaseNotes="Automatic release"
-          dir
+          $ReleaseNotes = Get-Content .github/RELEASE_NOTES
+          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=$NUGET_VERSION -p ReleaseNotes=$ReleaseNotes
 
         shell: 
           powershell
