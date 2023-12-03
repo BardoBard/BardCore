@@ -6,8 +6,7 @@ on:
 jobs:
   nuget_package_upload:
     runs-on: windows-latest
-  
-    environment: NUGET
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
