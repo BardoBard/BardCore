@@ -24,17 +24,16 @@ jobs:
 
       - name: Install Nuget
         run: |
-          echo "${{ env.NUGET_VERSION }}"
           curl -s https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
     
       - name: Make Package
-        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ env.VERSION }} -p ReleaseNotes="Automatic release"
+        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
           
       - name: Update NUGET_VERSION
         run: |
-          $currentVersion = "${{ env.VERSION }}"
+          $currentVersion = "${{ vars.NUGET_VERSION }}"
           $newVersion = [version]$currentVersion
           $newVersion = $newVersion.Major, $newVersion.Minor, ($newVersion.Build + 1) -join '.'
-          echo "VERSION=$newVersion" >> $GITHUB_ENV
+          echo "NUGET_VERSIO=$newVersion" >> $GITHUB_ENV
         shell: 
           powershell
