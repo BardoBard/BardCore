@@ -30,3 +30,15 @@ jobs:
         run: $NUGET_VERSION = (nuget list BardCore) -match '([0-9]*\.[0-9]*\.[0-9])' -replace "BardCore ",''
         shell:
           powershell
+      - name: Make Package
+        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
+
+      - name: Update NUGET_VERSION
+        run: |
+          $newVersion = [version]$NUGET_VERSION
+          $newVersion = $newVersion.Major, $newVersion.Minor, ($newVersion.Build + 1) -join '.'
+          echo "NUGET_VERSION=$newVersion" >> $GITHUB_ENV
+          echo $newVersion
+          echo $NUGET_VERSION
+        shell: 
+          powershell
