@@ -25,26 +25,19 @@ jobs:
       - name: Install Nuget
         run: |
           curl -s https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
-
-      - name: Get Last Version
-        run: |
-          $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
-          nuget list BardCore
-          echo $NUGET_VERSION
-        shell:
-          powershell
           
       - name: Make Package
-        run: nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
-
-      - name: Update NUGET_VERSION
         run: |
+          $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
           $lastNumber = $NUGET_VERSION.Split('.')[-1]
           
           $NUGET_VERSION = $NUGET_VERSION -replace "\.\d+$", ""
           
           $NUGET_VERSION += $lastNumber
           echo $NUGET_VERSION
+          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=${{ vars.NUGET_VERSION }} -p ReleaseNotes="Automatic release"
+          dir
 
         shell: 
           powershell
+    
