@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "BardCore/math/vector3d.h"
 
 namespace testing
 {
@@ -77,7 +78,7 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
 
         constexpr float result = vector1.length();
-        
+
         ASSERT_NEAR(3.742f, result, ROUND_THREE_DECIMALS);
     }
 
@@ -151,7 +152,6 @@ namespace testing
         constexpr vector3d vector1 = {45, 32, 78}; //original vector 
         constexpr vector3d vector2 = {14, 26, 52}; //used for angle calculations
         constexpr vector3d vector3 = {12, 76, 51}; //used for dot product
-        constexpr vector3d vector4 = {11, 96, 47}; //used for normalization
 
         //angle
         float result = vector1.angle(vector2);
@@ -176,4 +176,4 @@ namespace testing
         ASSERT_NEAR(0.335f, result_normalize.y, ROUND_THREE_DECIMALS);
         ASSERT_NEAR(0.816f, result_normalize.z, ROUND_THREE_DECIMALS);
     }
-}
+} // namespace testing

@@ -21,18 +21,19 @@
 #include <ostream>
 #include <exception>
 
-namespace bardcore
+namespace bardcore::exceptions
 {
     class bard_exception : public std::exception
     {
     public:
         using std::exception::exception;
     };
-} // namespace bardcore
+} // namespace bardcore::exceptions
 
 // BardCore includes
 #include "exceptions/zero_exception.h"
 #include "exceptions/negative_exception.h"
+#include "exceptions/same_object_exception.h"
 
 
 #endif //BARDCORE_BARDCORE_H

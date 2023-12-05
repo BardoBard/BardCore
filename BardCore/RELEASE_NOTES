@@ -1,4 +1,3 @@
-﻿Automatic Release to github
+﻿Added quaternion rotation + mirror, refactor layout of dimension3/4 with operators, added more tests, added more specific exceptions
+06/12/2023
 
-
-04/12/2023

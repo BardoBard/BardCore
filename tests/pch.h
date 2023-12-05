@@ -16,8 +16,5 @@
 #include "gtest/gtest.h" //google test
 
 #include <BardCore/bardcore.h>
-#include <BardCore/math/point3d.h>
-#include <BardCore/math/math.h>
-#include <BardCore/math/vector3d.h>
 
 using namespace bardcore;
