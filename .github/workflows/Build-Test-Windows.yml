@@ -17,7 +17,7 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
-    - name: Build C++ BardCore Debug
+    - name: Build C++ BardCore Debug (Cpp-20)
       run: |
         msbuild /t:Build /p:Configuration=Debug /p:Platform=x64 BardCore.sln
       working-directory: ${{ github.workspace }}
@@ -37,10 +37,18 @@ jobs:
         msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
       working-directory: ${{ github.workspace }}
       
-    - name: Run C++ Tests Debug
+    - name: Run C++ Tests Debug (Cpp-20)
       run: |
         ./x64/debug/Tests.exe
       
-    - name: Run C++ Tests Release
+    - name: Run C++ Tests Release (Cpp-14)
+      run: |
+        ./x64/release-14/Tests.exe
+      
+    - name: Run C++ Tests Release (Cpp-17)
+      run: |
+        ./x64/release-17/Tests.exe
+      
+    - name: Run C++ Tests Release (Cpp-20)
       run: |
         ./x64/release/Tests.exe
