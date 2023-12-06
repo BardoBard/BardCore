@@ -1,11 +1,8 @@
 /.vs/
 /.idea/
 
-/tests/x64/
-/tests/tests.vcxproj.user
+/**/x64/
+*DotSettings.user
+*.vcxproj.user
 
-/BardCore/x64/
-
-/x64/
-/BardCore.sln.DotSettings.user
 /packages/
