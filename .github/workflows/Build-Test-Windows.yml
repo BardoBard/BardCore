@@ -22,7 +22,17 @@ jobs:
         msbuild /t:Build /p:Configuration=Debug /p:Platform=x64 BardCore.sln
       working-directory: ${{ github.workspace }}
 
-    - name: Build C++ BardCore Release
+    - name: Build C++ BardCore Release (Cpp-14)
+      run: |
+        msbuild /t:Build /p:Configuration=Release-14 /p:Platform=x64 BardCore.sln
+      working-directory: ${{ github.workspace }}
+      
+    - name: Build C++ BardCore Release (Cpp-17)
+      run: |
+        msbuild /t:Build /p:Configuration=Release-17 /p:Platform=x64 BardCore.sln
+      working-directory: ${{ github.workspace }}
+      
+    - name: Build C++ BardCore Release (Cpp-20)
       run: |
         msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
       working-directory: ${{ github.workspace }}

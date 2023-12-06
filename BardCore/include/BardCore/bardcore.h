@@ -21,14 +21,17 @@
 #include <ostream>
 #include <exception>
 
-namespace bardcore::exceptions
+namespace bardcore
 {
-    class bard_exception : public std::exception
+    namespace exceptions
     {
-    public:
-        using std::exception::exception;
-    };
-} // namespace bardcore::exceptions
+        class bard_exception : public std::exception
+        {
+        public:
+            using std::exception::exception;
+        };
+    } // namespace bardcore::exceptions
+} // namespace bardcore
 
 // BardCore includes
 #include "exceptions/zero_exception.h"
