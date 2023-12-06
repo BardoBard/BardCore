@@ -1,12 +1,12 @@
-#ifndef BARDCORE_ZERO_DIVISION_H
-#define BARDCORE_ZERO_DIVISION_H
+#ifndef BARDCORE_SAME_OBJECT_EXCEPTION_H
+#define BARDCORE_SAME_OBJECT_EXCEPTION_H
 #include "../bardcore.h"
 
 namespace bardcore
 {
     namespace exceptions
     {
-        class zero_exception : public bard_exception
+        class same_object_exception : public bard_exception
         {
         public:
             using bard_exception::bard_exception;
@@ -14,4 +14,4 @@ namespace bardcore
     } // namespace bardcore::exceptions
 } // namespace bardcore
 
-#endif //BARDCORE_ZERO_DIVISION_H
+#endif //BARDCORE_SAME_OBJECT_EXCEPTION_H

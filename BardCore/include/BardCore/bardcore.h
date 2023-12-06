@@ -23,16 +23,20 @@
 
 namespace bardcore
 {
-    class bard_exception : public std::exception
+    namespace exceptions
     {
-    public:
-        using std::exception::exception;
-    };
+        class bard_exception : public std::exception
+        {
+        public:
+            using std::exception::exception;
+        };
+    } // namespace bardcore::exceptions
 } // namespace bardcore
 
 // BardCore includes
 #include "exceptions/zero_exception.h"
 #include "exceptions/negative_exception.h"
+#include "exceptions/same_object_exception.h"
 
 
 #endif //BARDCORE_BARDCORE_H

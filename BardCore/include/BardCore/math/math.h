@@ -14,7 +14,7 @@ namespace bardcore
         /// \param curr current value
         /// \param prev previous value
         /// \return square root of value
-        constexpr NODISCARD static float sqrt_newton_raphson(const float value, const float curr, const float prev)
+        NODISCARD constexpr static float sqrt_newton_raphson(const float value, const float curr, const float prev)
         {
             return curr == prev
                        ? curr
@@ -22,14 +22,27 @@ namespace bardcore
         }
 
     public:
+        /**
+         * \brief pi constant
+         */
         INLINE static constexpr float pi = 3.14159265358979323846f;
 
-        constexpr NODISCARD static float get_degrees_from_radians(const float radians)
+        /**
+         * \brief calculates the degrees from radians
+         * \param radians radians
+         * \return degrees
+         */
+        NODISCARD constexpr static float radians_to_degrees(const float radians)
         {
             return radians * 180.0f / math::pi;
         }
 
-        constexpr NODISCARD static float get_radians_from_degrees(const float degrees)
+        /**
+         * \brief calculates the radians from degrees
+         * \param degrees degrees
+         * \return radians
+         */
+        NODISCARD constexpr static float degrees_to_radians(const float degrees)
         {
             return degrees * math::pi / 180.0f;
         }
@@ -39,12 +52,37 @@ namespace bardcore
         /// \param value value to calculate the square root from
         /// \throws negative_exception if value is negative
         /// \return square root of value
-        constexpr NODISCARD static float sqrt(const float value)
+        NODISCARD constexpr static float sqrt(const float value)
         {
             if (value < 0)
-                throw negative_exception("value can not be negative");
+                throw exceptions::negative_exception("value can not be negative");
 
             return sqrt_newton_raphson(value, value, 0);
+        }
+
+        /**
+         * \brief calculates the greatest common divisor of two numbers, using the euclidean algorithm
+         * \note this algorithm is not fast but it was fun to make, it's quite fast for small numbers
+         * \throws negative_exception if a or b is negative
+         * \throws negative_exception if a or b is negative
+         * \param a number 1
+         * \param b number 2
+         * \return greatest common divisor of a and b
+         */
+        NODISCARD constexpr static int euclidean_gcd(const int a, const int b)
+        {
+            if (a <= 0 || b <= 0)
+                throw exceptions::negative_exception("a and b must not be negative");
+            if (a < b)
+                //TODO: make different exception
+                throw exceptions::negative_exception("a must be greater than b");
+
+            const auto mod = a % b;
+
+            if (mod == 0) //stop condition
+                return b;
+
+            return euclidean_gcd(b, mod);
         }
     };
 } // namespace bardcore

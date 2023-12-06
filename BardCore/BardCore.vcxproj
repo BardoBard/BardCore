@@ -166,15 +166,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\Bardcore\bardcore.h"/>
-    <ClCompile Include="include\Bardcore\math\dimension3.h"/>
-    <ClCompile Include="include\Bardcore\math\math.h"/>
-    <ClCompile Include="include\Bardcore\math\point3d.h"/>
-    <ClCompile Include="include\Bardcore\math\vector3d.h"/>
+    <ClCompile Include="include\Bardcore\bardcore.h" />
+    <ClCompile Include="include\Bardcore\interfaces\dimension3.h"/>
+    <ClCompile Include="include\Bardcore\interfaces\dimension4.h"/>
+    <ClCompile Include="include\bardcore\math\imaginary\quaternion.h"/>
+    <ClCompile Include="include\bardcore\math\math.h" />
+    <ClCompile Include="include\bardcore\math\point3d.h" />
+    <ClCompile Include="include\bardcore\math\vector3d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Bardcore\exceptions\negative_exception.h" />
-    <ClInclude Include="include\Bardcore\exceptions\zero_exception.h" />
+    <ClInclude Include="include\bardcore\exceptions\negative_exception.h" />
+    <ClInclude Include="include\bardcore\exceptions\same_object_exception.h" />
+    <ClInclude Include="include\bardcore\exceptions\zero_exception.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

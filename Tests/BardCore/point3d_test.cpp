@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "BardCore/math/point3d.h"
+#include "BardCore/math/vector3d.h"
 
 namespace testing
 {
@@ -45,4 +47,4 @@ namespace testing
 
         ASSERT_EQ(27.f, result);
     }
-}
+} // namespace testing

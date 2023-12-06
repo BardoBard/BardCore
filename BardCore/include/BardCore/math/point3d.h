@@ -3,40 +3,25 @@
 
 #include "../bardcore.h"
 #include "vector3d.h"
-#include "dimension3.h"
+#include "../interfaces/dimension3.h"
 
 
 namespace bardcore
 {
+    /**
+     * \brief 3D point
+     * \note inherits from dimension3
+     * \note this class is also constexpr
+     */
     class point3d : public dimension3<point3d>
     {
     public:
         using dimension3::dimension3;
 
-        constexpr point3d operator+(const vector3d& vector) const noexcept
-        {
-            return {x + vector.x, y + vector.y, z + vector.z};
-        }
-
-        constexpr point3d operator+(const point3d& point) const noexcept
-        {
-            return {x + point.x, y + point.y, z + point.z};
-        }
-
-        constexpr point3d operator-(const vector3d& vector) const noexcept
-        {
-            return {x - vector.x, y - vector.y, z - vector.z};
-        }
-
-        constexpr point3d operator-(const point3d& point) const noexcept
-        {
-            return {x - point.x, y - point.y, z - point.z};
-        }
-
         /// \brief calculates the vector between two points
         /// \param point point
         /// \return vector between two points
-        constexpr NODISCARD vector3d get_vector(const point3d& point) const noexcept
+        NODISCARD constexpr vector3d get_vector(const point3d& point) const noexcept
         {
             return vector3d(point - *this);
         }
@@ -45,7 +30,7 @@ namespace bardcore
         /// \note formula: sqrt(Σ (a_i - b_i)^2)
         /// \param point other point
         /// \return distance between two points
-        constexpr NODISCARD float distance(const point3d& point) const noexcept
+        NODISCARD constexpr float distance(const point3d& point) const noexcept
         {
             return math::sqrt(distance_squared(point));
         }
@@ -54,7 +39,7 @@ namespace bardcore
         /// \note formula: Σ (a_i - b_i)^2
         /// \param point other point
         /// \return distance squared between two points
-        constexpr NODISCARD float distance_squared(const point3d& point) const noexcept
+        NODISCARD constexpr float distance_squared(const point3d& point) const noexcept
         {
             const float x_diff = point.x - x;
             const float y_diff = point.y - y;

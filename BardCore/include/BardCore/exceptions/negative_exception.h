@@ -4,11 +4,14 @@
 
 namespace bardcore
 {
-    class negative_exception : public bard_exception
+    namespace exceptions
     {
-    public:
-        using bard_exception::bard_exception;
-    };
+        class negative_exception : public bard_exception
+        {
+        public:
+            using bard_exception::bard_exception;
+        };
+    } // namespace bardcore::exceptions
 } // namespace bardcore
 
 #endif //BARDCORE_NEGATIVE_EXCEPTION_H

@@ -1,5 +1,7 @@
 #include "pch.h"
 
+#include "BardCore/math/point3d.h"
+
 namespace testing
 {
     TEST(dimension3_test, point_add_test)
@@ -126,4 +128,4 @@ namespace testing
         ASSERT_NEAR(101.5f, result.y, ROUND_ONE_DECIMALS);
         ASSERT_NEAR(136.5f, result.z, ROUND_ONE_DECIMALS);
     }
-};
+} // namespace testing
