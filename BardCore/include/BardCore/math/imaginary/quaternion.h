@@ -95,7 +95,7 @@ namespace bardcore
          * \return mirrored 3D object
          */
         template <typename T, typename = std::enable_if_t<std::is_base_of_v<dimension3<T>, T>>>
-        NODISCARD static T mirror(const T& to_be_mirrored_3d, const vector3d& mirror_vector)
+        NODISCARD constexpr static T mirror(const T& to_be_mirrored_3d, const vector3d& mirror_vector)
         {
             if (to_be_mirrored_3d == dimension3<T>::zero())
                 throw exceptions::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
