@@ -5,10 +5,10 @@ namespace testing
 {
     TEST(quaternion_test, multiplication_test)
     {
-        const quaternion quaternion1 = {1, 2, 3, 4};
-        const quaternion quaternion2 = {5, 6, 7, 8};
+        constexpr quaternion quaternion1 = {1, 2, 3, 4};
+        constexpr quaternion quaternion2 = {5, 6, 7, 8};
 
-        const quaternion result = quaternion1 * quaternion2;
+        constexpr quaternion result = quaternion1 * quaternion2;
 
         ASSERT_EQ(-60.f, result.get_real());
         ASSERT_EQ(12.f, result.get_i());
@@ -18,10 +18,10 @@ namespace testing
 
     TEST(quaternion_test, multiplication2_test)
     {
-        const quaternion quaternion1 = {-56, 0, 2, 1};
-        const quaternion quaternion2 = {9, -3, 0, 9};
+        constexpr quaternion quaternion1 = {-56, 0, 2, 1};
+        constexpr quaternion quaternion2 = {9, -3, 0, 9};
 
-        const quaternion result = quaternion1 * quaternion2;
+        constexpr quaternion result = quaternion1 * quaternion2;
 
         ASSERT_EQ(-513.f, result.get_real());
         ASSERT_EQ(186.f, result.get_i());
@@ -31,8 +31,8 @@ namespace testing
 
     TEST(quaternion_test, rotation_point_vector_theta_test)
     {
-        const vector3d vector = {1, 2, 3};
-        const point3d point = {4, 5, 6};
+        constexpr vector3d vector = {1, 2, 3};
+        constexpr point3d point = {4, 5, 6};
         constexpr float theta = 90.f;
 
         const point3d result = quaternion::rotate(point, vector, theta);
@@ -45,8 +45,8 @@ namespace testing
 
     TEST(quaternion_test, rotation_point_vector_theta_test2)
     {
-        const vector3d vector = {1, 2, 3};
-        const point3d point = {4, 5, 6};
+        constexpr vector3d vector = {1, 2, 3};
+        constexpr point3d point = {4, 5, 6};
         constexpr float theta = 180.f;
 
         const point3d result = quaternion::rotate(point, vector, theta);
@@ -58,8 +58,8 @@ namespace testing
 
     TEST(quaternion_test, rotation_point_vector_zero_theta_test)
     {
-        const vector3d vector = {1, 2, 3};
-        const point3d point = {4, 5, 6};
+        constexpr vector3d vector = {1, 2, 3};
+        constexpr point3d point = {4, 5, 6};
         constexpr float theta = 0;
 
         const point3d result = quaternion::rotate(point, vector, theta);
@@ -72,8 +72,8 @@ namespace testing
 
     TEST(quaternion_test, rotation_vector_theta_test)
     {
-        const vector3d rotation_vector = {1, 2, 3};
-        const vector3d vector = {4, 5, 6};
+        constexpr vector3d rotation_vector = {1, 2, 3};
+        constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 270.f;
 
         const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
@@ -85,8 +85,8 @@ namespace testing
 
     TEST(quaternion_test, rotation_vector_theta_test2)
     {
-        const vector3d rotation_vector = {1, 2, 3};
-        const vector3d vector = {4, 5, 6};
+        constexpr vector3d rotation_vector = {1, 2, 3};
+        constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 360.f;
 
         const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
@@ -99,8 +99,8 @@ namespace testing
     //test zero theta
     TEST(quaternion_test, rotation_vector_zero_theta_test2)
     {
-        const vector3d rotation_vector = {1, 2, 3};
-        const vector3d vector = {4, 5, 6};
+        constexpr vector3d rotation_vector = {1, 2, 3};
+        constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 0;
 
         const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
@@ -113,8 +113,8 @@ namespace testing
     //test negative theta
     TEST(quaternion_test, rotation_vector_negative_theta_test)
     {
-        const vector3d rotation_vector = {1, 2, 3};
-        const vector3d vector = {4, 5, 6};
+        constexpr vector3d rotation_vector = {1, 2, 3};
+        constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = -90.f;
 
         const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
@@ -127,8 +127,8 @@ namespace testing
     //test exception
     TEST(quaternion_test, rotation_exception_test)
     {
-        const vector3d rotation_vector = {0, 0, 0};
-        const vector3d vector = {4, 5, 6};
+        constexpr vector3d rotation_vector = {0, 0, 0};
+        constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 90.f;
 
         ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exceptions::zero_exception);
@@ -137,8 +137,8 @@ namespace testing
     //test exception
     TEST(quaternion_test, rotation_exception_test2)
     {
-        const vector3d rotation_vector = {1, 2, 3};
-        const vector3d vector = {0, 0, 0};
+        constexpr vector3d rotation_vector = {1, 2, 3};
+        constexpr vector3d vector = {0, 0, 0};
         constexpr float theta = 90.f;
 
         ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exceptions::zero_exception);
@@ -147,9 +147,9 @@ namespace testing
     //test conjugate
     TEST(quaternion_test, conjugate_test)
     {
-        const quaternion quaternion1 = {1, 2, 3, 4};
+        constexpr quaternion quaternion1 = {1, 2, 3, 4};
 
-        const quaternion result = quaternion1.conjugate();
+        constexpr quaternion result = quaternion1.conjugate();
 
         ASSERT_NEAR(1.f, result.get_real(), ROUND_EPSILON);
         ASSERT_NEAR(-2.f, result.get_i(), ROUND_EPSILON);
@@ -160,9 +160,9 @@ namespace testing
     //test conjugate
     TEST(quaternion_test, conjugate_test2)
     {
-        const quaternion quaternion1 = {0, 0, 0, 0};
+        constexpr quaternion quaternion1 = {0, 0, 0, 0};
 
-        const quaternion result = quaternion1.conjugate();
+        constexpr quaternion result = quaternion1.conjugate();
 
         ASSERT_NEAR(0.f, result.get_real(), ROUND_EPSILON);
         ASSERT_NEAR(0.f, result.get_i(), ROUND_EPSILON);
@@ -173,10 +173,10 @@ namespace testing
     //test mirror
     TEST(quaternion_test, mirror_test)
     {
-        const vector3d mirror_vector = {1, 2, 3};
-        const point3d point = {4, 5, 6};
+        constexpr vector3d mirror_vector = {1, 2, 3};
+        constexpr point3d point = {4, 5, 6};
 
-        const point3d result = quaternion::mirror(point, mirror_vector);
+        constexpr point3d result = quaternion::mirror(point, mirror_vector);
 
         ASSERT_NEAR(0.57f, result.x, ROUND_TWO_DECIMALS);
         ASSERT_NEAR(4.14f, result.y, ROUND_TWO_DECIMALS);
@@ -186,10 +186,10 @@ namespace testing
     //test mirror
     TEST(quaternion_test, mirror_test2)
     {
-        const vector3d mirror_vector = {0, -2, -1};
-        const point3d point = {-9, 8, -7};
+        constexpr vector3d mirror_vector = {0, -2, -1};
+        constexpr point3d point = {-9, 8, -7};
 
-        const point3d result = quaternion::mirror(point, mirror_vector);
+        constexpr point3d result = quaternion::mirror(point, mirror_vector);
 
         ASSERT_NEAR(9.f, result.x, ROUND_EPSILON);
         ASSERT_NEAR(-0.8f, result.y, ROUND_ONE_DECIMALS);
@@ -199,8 +199,8 @@ namespace testing
     //test mirror zero
     TEST(quaternion_test, mirror_zero_test)
     {
-        const vector3d mirror_vector = {0, 0, 0};
-        const point3d point = {4, 5, 6};
+        constexpr vector3d mirror_vector = {0, 0, 0};
+        constexpr point3d point = {4, 5, 6};
 
         ASSERT_THROW(quaternion::mirror(point, mirror_vector), exceptions::zero_exception);
     }
@@ -208,8 +208,8 @@ namespace testing
     //test mirror zero
     TEST(quaternion_test, mirror_zero_test2)
     {
-        const vector3d mirror_vector = {1, 2, 3};
-        const point3d point = {0, 0, 0};
+        constexpr vector3d mirror_vector = {1, 2, 3};
+        constexpr point3d point = {0, 0, 0};
 
         ASSERT_THROW(quaternion::mirror(point, mirror_vector), exceptions::zero_exception);
     }

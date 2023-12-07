@@ -26,6 +26,15 @@ namespace bardcore
             return vector3d(point - *this);
         }
 
+        /// \brief calculates the center between two points
+        /// \note formula: (a + b) / 2
+        /// \param point other point
+        /// \return center between two points
+        NODISCARD constexpr point3d center(const point3d& point) const noexcept
+        {
+            return point3d((point.x + x) / 2.f, (point.y + y) / 2.f, (point.z + z) / 2.f);
+        }
+
         /// \brief calculates the distance between two points
         /// \note formula: sqrt(Σ (a_i - b_i)^2)
         /// \param point other point

@@ -1,6 +1,2 @@
-﻿Added quaternion rotation + mirror, refactor layout of dimension3/4 with operators, added more tests, added more specific exceptions
-06/12/2023
-
-Added testing with cpp-14, cpp-17 and cpp-20 automatic CI/CD pipeline.
-Renamed tests to Tests
-06/12/2023
+﻿documentation
+07/12/2023

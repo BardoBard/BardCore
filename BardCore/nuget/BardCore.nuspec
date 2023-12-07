@@ -6,19 +6,15 @@
         <title>BardCore - A Math Library</title>
         <authors>Bardio</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-<!--        <license type="expression">MIT</license>-->
-        <readme>docs\README.md</readme>
-        <!-- <icon>icon.png</icon> -->
         <projectUrl>https://github.com/BardoBard/BardCore/</projectUrl>
         <description>Bardcore is a math library mainly used for raytracing.</description>
         <releaseNotes>$ReleaseNotes$</releaseNotes>
         <copyright>$copyright$</copyright>
-        <dependencies>
-            <!-- <dependency id="Newtonsoft.Json" version="9.0" /> -->
-        </dependencies>
     </metadata>
     <files>
-        <file src="..\docs\README.md" target="docs\" />
+        <file src="..\..\README.md" target="docs\" />
+        <file src="..\RELEASE_NOTES" target="docs\" />
+        <file src="..\docs\*.md" target="docs\" />
         <file src="..\licenses\LICENSE.txt" target="licenses\"/>
 
         <file src="..\..\x64\release\Bardcore.lib" target="lib\" />

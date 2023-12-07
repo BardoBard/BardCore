@@ -47,4 +47,17 @@ namespace testing
 
         ASSERT_EQ(27.f, result);
     }
+
+    //center test
+    TEST(point3d_test, center_test)
+    {
+        constexpr point3d point1 = {1, 2, 3};
+        constexpr point3d point2 = {4, 5, 6};
+
+        constexpr point3d result = point1.center(point2);
+
+        ASSERT_EQ(2.5f, result.x);
+        ASSERT_EQ(3.5f, result.y);
+        ASSERT_EQ(4.5f, result.z);
+    }
 } // namespace testing
