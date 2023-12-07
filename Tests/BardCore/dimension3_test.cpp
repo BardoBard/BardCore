@@ -108,7 +108,7 @@ namespace testing
     {
         constexpr point3d point1 = {10, 20, 30};
 
-        ASSERT_ANY_THROW(point1 / (0));
+        ASSERT_THROW(point1 / 0, exceptions::zero_exception);
     }
 
     TEST(dimension3_test, point_all_test)

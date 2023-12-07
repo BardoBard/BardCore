@@ -20,7 +20,7 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {0, 0, 0};
 
-        ASSERT_ANY_THROW(vector1.angle(vector2));
+        ASSERT_THROW(vector1.angle(vector2), exceptions::bard_exception);
     }
 
     //test angle with same vector
@@ -36,7 +36,7 @@ namespace testing
     {
         constexpr vector3d vector1 = {1, 2, 3};
 
-        ASSERT_ANY_THROW(vector1.angle(vector1));
+        ASSERT_THROW(vector1.angle(vector1), exceptions::bard_exception);
     }
 
     //test dot
