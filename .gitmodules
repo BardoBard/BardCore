@@ -1,0 +1,3 @@
+[submodule "BardCore/docs"]
+	path = BardCore/docs
+	url = https://github.com/BardoBard/BardCore.wiki.git
