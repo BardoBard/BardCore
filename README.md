@@ -20,3 +20,5 @@ opengl wrapper around it.
 
 I've tried to make everything constexpr where possible, so that the compiler can do as much work as possible at compile
 time.
+
+Please refer to the [wiki](https://github.com/BardoBard/BardCore/wiki/home) for more information.
