@@ -252,27 +252,28 @@ namespace testing
 
         //get point
 
-        constexpr std::optional point = ray.get_point(0);
-        constexpr std::optional point1 = ray.get_point(1);
-        constexpr std::optional point2 = ray.get_point(2);
-        constexpr std::optional point3 = ray.get_point(10);
+        const std::unique_ptr<point3d> point = ray.get_point(0);
+        const std::unique_ptr<point3d> point1 = ray.get_point(1);
+        const std::unique_ptr<point3d> point2 = ray.get_point(2);
+        const std::unique_ptr<point3d> point3 = ray.get_point(10);
 
-        ASSERT_TRUE(point.has_value());
-        ASSERT_TRUE(point1.has_value());
-        ASSERT_TRUE(point2.has_value());
-        ASSERT_FALSE(point3.has_value());
+        ASSERT_TRUE(point != nullptr);
+        ASSERT_TRUE(point1 != nullptr);
+        ASSERT_TRUE(point2 != nullptr);
+        
+        ASSERT_TRUE(point3 == nullptr);
 
-        ASSERT_NEAR(1.f, point.value().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(2.f, point.value().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.f, point.value().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.f, point->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(2.f, point->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.f, point->z, ROUND_THREE_DECIMALS);
 
-        ASSERT_NEAR(1.456f, point1.value().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(2.570f, point1.value().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.684f, point1.value().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.456f, point1->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(2.570f, point1->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.684f, point1->z, ROUND_THREE_DECIMALS);
 
-        ASSERT_NEAR(1.912f, point2.value().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.140f, point2.value().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(4.368f, point2.value().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.912f, point2->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.140f, point2->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(4.368f, point2->z, ROUND_THREE_DECIMALS);
     }
 
     //test get point throws

@@ -125,13 +125,13 @@ namespace bardcore
                 return within_range(position_.distance(point));
             }
 
-            /// \brief calculates the point on the ray at the given distance, if distance is out of range, std::nullopt will be returned
+            /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullptr
             /// \throws negative_exception if distance is negative
             /// \param distance distance from the position to the point
-            /// \return point on the ray at the given distance, if distance is out of range, std::nullopt will be returned
-            NODISCARD constexpr std::optional<point3d> get_point(const float distance) const
+            /// \return point on the ray at the given distance, if distance is out of range, nullptr
+            NODISCARD std::unique_ptr<point3d> get_point(const float distance) const
             {
-                return within_range(distance) ? std::make_optional(position_ + direction_ * distance) : std::nullopt;
+                return within_range(distance) ? std::make_unique<point3d>(position_ + direction_ * distance) : nullptr;
             }
 
             ///////////////////////////////////////////////////////

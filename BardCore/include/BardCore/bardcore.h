@@ -20,7 +20,6 @@
 // Standard includes
 #include <ostream>
 #include <exception>
-#include <optional>
 
 namespace bardcore
 {
