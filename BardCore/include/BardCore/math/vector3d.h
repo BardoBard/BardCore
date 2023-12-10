@@ -57,27 +57,51 @@ namespace bardcore
         /// \return length of vector
         NODISCARD constexpr float length() const noexcept
         {
-            return math::sqrt(x * x + y * y + z * z);
+            return math::sqrt(length_squared());
         }
 
-        /// \brief calculates the angle between this and another vector
+        /// \brief calculates the length squared of the vector
+        /// \return length squared of vector
+        NODISCARD constexpr float length_squared() const noexcept
+        {
+            return x * x + y * y + z * z;
+        }
+
+        /// \brief calculates the angle from -1 to 1 between this and another vector
+        /// \note -1 means the vectors are opposite, 1 means the vectors are the same
+        /// \note this method is way faster than calculating the degrees/radians
+        /// \throws same_object_exception if this and other vector are the same
+        /// \throws zero_exception if length of this or other vector is zero
+        /// \param vector other vector
+        /// \return -1 to 1 angle between this and other vector
+        NODISCARD constexpr float angle_dot(const vector3d& vector) const
+        {
+            if (this == &vector)
+                throw exceptions::same_object_exception("vectors mustn't be the same");
+
+            return this->normalize().dot(vector.normalize());
+        }
+        
+        /// \brief calculates the angle in radians between this and another vector
         /// \note this method is not constexpr because of the std::acos function, perhaps implement own at some point
         /// \throws same_object_exception if this and other vector are the same
         /// \throws zero_exception if length of this or other vector is zero
         /// \param vector other vector
-        /// \return angle between this and other vector
-        NODISCARD float angle(const vector3d& vector) const
+        /// \return angle in radians between this and other vector
+        NODISCARD float angle_radians(const vector3d& vector) const
         {
-            const float l = length();
-            const float vector_l = vector.length();
+            return std::acos(angle_dot(vector));
+        }
 
-            if (this == &vector)
-                throw exceptions::same_object_exception("vectors mustn't be the same");
-
-            if (l == 0.f || vector_l == 0.f)
-                throw exceptions::zero_exception("vector length must not be zero");
-
-            return math::radians_to_degrees(std::acos(dot(vector) / (l * vector_l)));
+        /// \brief calculates the angle in degrees between this and another vector
+        /// \note this method is not constexpr because of the std::acos function, perhaps implement own at some point
+        /// \throws same_object_exception if this and other vector are the same
+        /// \throws zero_exception if length of this or other vector is zero
+        /// \param vector other vector
+        /// \return angle in degrees between this and other vector
+        NODISCARD float angle_degrees(const vector3d& vector) const
+        {
+            return math::radians_to_degrees(angle_radians(vector));
         }
     };
 } // namespace bardcore

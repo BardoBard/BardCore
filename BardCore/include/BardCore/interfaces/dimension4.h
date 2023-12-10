@@ -201,30 +201,14 @@ namespace bardcore
          * \param other other dimension4
          * \return this
          */
-        dimension4& operator=(const dimension4& other) noexcept
-        {
-            x = other.x;
-            y = other.y;
-            z = other.z;
-            w = other.w;
-
-            return *this;
-        }
+        dimension4& operator=(const dimension4& other) noexcept = default;
 
         /**
          * \brief move assignment operator
          * \param other other dimension4
          * \return this
          */
-        dimension4& operator=(dimension4&& other) noexcept
-        {
-            x = other.x;
-            y = other.y;
-            z = other.z;
-            w = other.w;
-
-            return *this;
-        }
+        dimension4& operator=(dimension4&& other) noexcept = default;
 
         /**
          * \brief less than operator
