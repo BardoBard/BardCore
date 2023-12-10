@@ -9,9 +9,13 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {4, 5, 6};
 
-        const float result = vector1.angle(vector2);
+        const float result_degrees = vector1.angle_degrees(vector2);
+        const float result_radians = vector1.angle_radians(vector2);
+        constexpr float result_dot = vector1.angle_dot(vector2);
 
-        ASSERT_NEAR(12.94f, result, ROUND_TWO_DECIMALS);
+        ASSERT_NEAR(12.94f, result_degrees, ROUND_TWO_DECIMALS);
+        ASSERT_NEAR(0.226f, result_radians, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.974f, result_dot, ROUND_THREE_DECIMALS);
     }
 
     //test angle with zero
@@ -20,7 +24,9 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {0, 0, 0};
 
-        ASSERT_THROW(vector1.angle(vector2), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_degrees(vector2), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_radians(vector2), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_dot(vector2), exceptions::bard_exception);
     }
 
     //test angle with same vector
@@ -28,7 +34,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {1, 2, 3};
-        ASSERT_NO_THROW(vector1.angle(vector2));
+        ASSERT_NO_THROW(vector1.angle_degrees(vector2));
+        ASSERT_NO_THROW(vector1.angle_radians(vector2));
+        ASSERT_NO_THROW(vector1.angle_dot(vector2));
     }
 
     //test angle with same object
@@ -36,7 +44,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {1, 2, 3};
 
-        ASSERT_THROW(vector1.angle(vector1), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_degrees(vector1), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_radians(vector1), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_dot(vector1), exceptions::bard_exception);
     }
 
     //test dot
@@ -154,8 +164,14 @@ namespace testing
         constexpr vector3d vector3 = {12, 76, 51}; //used for dot product
 
         //angle
-        float result = vector1.angle(vector2);
+        float result = vector1.angle_degrees(vector2);
         ASSERT_NEAR(15.09f, result, ROUND_TWO_DECIMALS);
+
+        result = vector1.angle_radians(vector2);
+        ASSERT_NEAR(0.263f, result, ROUND_THREE_DECIMALS);
+
+        result = vector1.angle_dot(vector2);
+        ASSERT_NEAR(0.966f, result, ROUND_THREE_DECIMALS);
 
         //dot
         result = vector1.dot(vector3);

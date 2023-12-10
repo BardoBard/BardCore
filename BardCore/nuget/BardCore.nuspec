@@ -5,6 +5,7 @@
         <version>$Version$</version>
         <title>BardCore - A Math Library</title>
         <authors>Bardio</authors>
+        <readme>docs\README.md</readme>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <projectUrl>https://github.com/BardoBard/BardCore/</projectUrl>
         <description>Bardcore is a math library mainly used for raytracing.</description>

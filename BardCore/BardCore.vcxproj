@@ -173,6 +173,7 @@
     <ClCompile Include="include\bardcore\math\math.h" />
     <ClCompile Include="include\bardcore\math\point3d.h" />
     <ClCompile Include="include\bardcore\math\vector3d.h" />
+    <ClCompile Include="include\bardcore\utility\ray.h"/>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\bardcore\exceptions\negative_exception.h" />
