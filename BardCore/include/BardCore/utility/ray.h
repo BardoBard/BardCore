@@ -8,7 +8,7 @@ namespace bardcore
 {
     namespace utility
     {
-        /// \brief 
+        /// \brief ray, a ray is a vector from a position to a point
         class ray
         {
         protected:
