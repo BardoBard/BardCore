@@ -251,7 +251,19 @@ namespace testing
         constexpr utility::ray ray = {origin, direction, distance};
 
         //get point
+#ifdef CXX17 // C++17 or higher (using optional instead of unique_ptr)
+        const std::optional<point3d> point = ray.get_point(0);
+        const std::optional<point3d> point1 = ray.get_point(1);
+        const std::optional<point3d> point2 = ray.get_point(2);
+        const std::optional<point3d> point3 = ray.get_point(10);
 
+        ASSERT_TRUE(point.has_value());
+        ASSERT_TRUE(point1.has_value());
+        ASSERT_TRUE(point2.has_value());
+
+        ASSERT_FALSE(point3.has_value());
+        
+#else // smaller than C++17 (using unique_ptr instead of optional)
         const std::unique_ptr<point3d> point = ray.get_point(0);
         const std::unique_ptr<point3d> point1 = ray.get_point(1);
         const std::unique_ptr<point3d> point2 = ray.get_point(2);
@@ -262,6 +274,8 @@ namespace testing
         ASSERT_TRUE(point2 != nullptr);
         
         ASSERT_TRUE(point3 == nullptr);
+#endif // CXX17
+
 
         ASSERT_NEAR(1.f, point->x, ROUND_THREE_DECIMALS);
         ASSERT_NEAR(2.f, point->y, ROUND_THREE_DECIMALS);

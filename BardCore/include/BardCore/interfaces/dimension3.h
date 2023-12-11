@@ -84,7 +84,7 @@ namespace bardcore
         ///////////////////////////////////////////////////////
 
         /**
-         * \brief output operator
+         * \brief output operator, prints "(x, y, z)"
          * \param os output stream
          * \param dimension3 dimension3 to output
          * \return output stream "(x, y, z)"

@@ -13,13 +13,16 @@
     #define NODISCARD [[nodiscard]]
     #define INLINE inline
 #else
-#define INLINE 
-#define NODISCARD
+    #define INLINE 
+    #define NODISCARD
 #endif
 
 // Standard includes
 #include <ostream>
 #include <exception>
+#ifdef CXX17
+    #include <optional>
+#endif // CXX17
 
 namespace bardcore
 {
