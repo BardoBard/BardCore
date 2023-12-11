@@ -126,14 +126,16 @@ namespace bardcore
             }
 
 #ifdef CXX17
-            
+
             /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullopt
             /// \throws negative_exception if distance is negative
             /// \param distance distance from the position to the point
             /// \return point on the ray at the given distance, if distance is out of range, nullopt
             NODISCARD std::optional<point3d> get_point(const float distance) const
             {
-                return within_range(distance) ? std::make_optional<point3d>(position_ + direction_ * distance) : std::nullopt;
+                return within_range(distance)
+                           ? std::make_optional<point3d>(position_ + direction_ * distance)
+                           : std::nullopt;
             }
 
 #else// smaller than C++17
@@ -151,6 +153,18 @@ namespace bardcore
             ///////////////////////////////////////////////////////
             ///                    operators                    ///
             ///////////////////////////////////////////////////////
+
+            /**
+             * \brief output operator, prints "{position: (x, y, z), direction: (x, y, z), distance: d}"
+             * \param os output stream
+             * \param ray ray to output
+             * \return output stream "{position: (x, y, z), direction: (x, y, z), distance: d}"
+             */
+            friend std::ostream& operator<<(std::ostream& os, const ray& ray)
+            {
+                return os << "{position: " << ray.position_ << ", direction: " << ray.direction_ << ", distance: "
+                    << ray.distance_ << "}";
+            }
 
             /// \brief copy assignment
             /// \param ray ray to copy
