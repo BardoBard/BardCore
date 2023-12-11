@@ -8,7 +8,8 @@ namespace bardcore
 {
     namespace utility
     {
-        /// \brief ray, a ray is a vector from a position to a point
+        /// \brief ray, a ray is a vector from a position to a point (position + direction * distance)
+        /// \note direction will be normalized
         class ray
         {
         protected:
@@ -154,6 +155,8 @@ namespace bardcore
             ///                    operators                    ///
             ///////////////////////////////////////////////////////
 
+            // operators like (+,-,*,/,<,>, etc) are not implemented because they don't make sense for a ray
+
             /**
              * \brief output operator, prints "{position: (x, y, z), direction: (x, y, z), distance: d}"
              * \param os output stream
@@ -175,6 +178,27 @@ namespace bardcore
             /// \param ray ray to move
             /// \return reference to this
             ray& operator=(ray&& ray) noexcept = default;
+
+
+            /// \brief equal operator (position, direction and distance are equal)
+            /// \param left left ray
+            /// \param right right ray
+            /// \return true if left == right (position, direction and distance are equal)
+            NODISCARD constexpr friend bool operator==(const ray& left, const ray& right) noexcept
+            {
+                return left.position_ == right.position_
+                    && left.direction_ == right.direction_
+                    && left.distance_ == right.distance_;
+            }
+
+            /// \brief not equal operator (position, direction or distance is not equal)
+            /// \param left left ray
+            /// \param right right ray
+            /// \return true if left != right (position, direction or distance is not equal)
+            NODISCARD constexpr friend bool operator!=(const ray& left, const ray& right) noexcept
+            {
+                return !(left == right);
+            }
         };
     } // namespace bardcore::utility
 } // namespace bardcore
