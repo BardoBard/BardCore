@@ -36,6 +36,7 @@ namespace testing
         constexpr float result = point1.distance(point2);
 
         ASSERT_NEAR(5.196f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NO_THROW(point1.distance(point1));
     }
 
     TEST(point3d_test, distance_squared_test)

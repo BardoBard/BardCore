@@ -49,6 +49,7 @@ namespace bardcore
 
     public:
         /// \brief calculates the square root via Newton-Raphson
+        /// \note sqrt(0) = 0, e.g : 0^(1/2) = 0
         /// \param value value to calculate the square root from
         /// \throws negative_exception if value is negative
         /// \return square root of value

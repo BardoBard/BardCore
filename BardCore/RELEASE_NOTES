@@ -1,8 +1,2 @@
-﻿added c++ specific compiler options, this means the versioning actually does something now
-11/12/2023
-
-added std::optional for c++17 or greater
-11/12/2023
-
-added documentation, added ostream operator for printing ray
+﻿ray operator ==, documentation
 11/12/2023
