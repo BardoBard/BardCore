@@ -13,8 +13,8 @@
     #define NODISCARD [[nodiscard]]
     #define INLINE inline
 #else
-#define INLINE 
-#define NODISCARD
+    #define INLINE 
+    #define NODISCARD
 #endif
 
 // Standard includes

@@ -1,5 +1,2 @@
-﻿added ray + tests
-10/12/2023
-
-added angle degrees/radians/dot product + tests
-10/12/2023
+﻿added c++ specific compiler options, this means the versioning actually does something now
+11/12/2023
