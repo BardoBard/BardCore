@@ -20,6 +20,9 @@
 // Standard includes
 #include <ostream>
 #include <exception>
+#ifdef CXX17
+    #include <optional>
+#endif // CXX17
 
 namespace bardcore
 {

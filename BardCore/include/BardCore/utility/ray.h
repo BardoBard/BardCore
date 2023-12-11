@@ -1,8 +1,8 @@
 #ifndef BARDCORE_RAY_H
 #define BARDCORE_RAY_H
 
-#include "BardCore/math/point3d.h"
-#include "BardCore/math/vector3d.h"
+#include "../math/point3d.h"
+#include "../math/vector3d.h"
 
 namespace bardcore
 {
@@ -125,6 +125,19 @@ namespace bardcore
                 return within_range(position_.distance(point));
             }
 
+#ifdef CXX17
+            
+            /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullopt
+            /// \throws negative_exception if distance is negative
+            /// \param distance distance from the position to the point
+            /// \return point on the ray at the given distance, if distance is out of range, nullopt
+            NODISCARD std::optional<point3d> get_point(const float distance) const
+            {
+                return within_range(distance) ? std::make_optional<point3d>(position_ + direction_ * distance) : std::nullopt;
+            }
+
+#else// smaller than C++17
+
             /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullptr
             /// \throws negative_exception if distance is negative
             /// \param distance distance from the position to the point
@@ -133,6 +146,7 @@ namespace bardcore
             {
                 return within_range(distance) ? std::make_unique<point3d>(position_ + direction_ * distance) : nullptr;
             }
+#endif // CXX17
 
             ///////////////////////////////////////////////////////
             ///                    operators                    ///
