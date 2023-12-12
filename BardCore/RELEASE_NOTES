@@ -1,2 +1,2 @@
-﻿ray operator ==, documentation
-11/12/2023
+﻿small change to exception_handling, std::exception has not ctor that handles messages.
+12/12/2023
