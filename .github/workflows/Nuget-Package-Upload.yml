@@ -41,7 +41,7 @@ jobs:
           dotnet nuget add source "https://nuget.pkg.github.com/bardobard/index.json" --username BardoBard --password ${{ secrets.NUGET_GITHUB_ACCESS_TOKEN }} --store-password-in-clear-text --name github --valid-authentication-types basic
           
           $ReleaseNotes = Get-Content BardCore/RELEASE_NOTES
-          nuget pack Bardcore/nuget/bardcore.nuspec -p Version=$NUGET_VERSION -p ReleaseNotes=$ReleaseNotes
+          nuget pack Bardcore/nuget/bardcore.nuspec -p Version="$NUGET_VERSION" -p ReleaseNotes="$ReleaseNotes"
 
 
 
