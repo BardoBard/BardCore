@@ -1,2 +1,2 @@
-﻿small change to exception_handling, std::exception has not ctor that handles messages.
+Added <cmath> include for std::acos, etc
 12/12/2023
