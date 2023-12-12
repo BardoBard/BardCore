@@ -1,2 +1,2 @@
-Added <cmath> include for std::acos, etc
+Added cmath include for std::acos, etc
 12/12/2023
