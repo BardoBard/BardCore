@@ -20,6 +20,7 @@
 // Standard includes
 #include <ostream>
 #include <exception>
+#include <cmath>
 #ifdef CXX17
     #include <optional>
 #endif // CXX17
