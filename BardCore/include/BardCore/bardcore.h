@@ -28,10 +28,29 @@ namespace bardcore
 {
     namespace exceptions
     {
+        /// \brief base class for all exceptions in BardCore
         class bard_exception : public std::exception
         {
+        protected:
+            std::string msg_;
+
         public:
-            using std::exception::exception;
+            explicit bard_exception(const char* msg) : msg_(msg)
+            {
+            }
+
+            explicit bard_exception(const std::string& msg): msg_(msg)
+            {
+            }
+
+            ~bard_exception() noexcept override = default;
+
+            /// \brief returns the message of the exception
+            /// \return the message of the exception
+            NODISCARD const char* what() const noexcept override
+            {
+                return msg_.c_str();
+            }
         };
     } // namespace bardcore::exceptions
 } // namespace bardcore
