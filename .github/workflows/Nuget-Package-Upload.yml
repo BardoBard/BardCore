@@ -21,9 +21,9 @@ jobs:
 
       - name: Build C++ BardCore Release
         run: |
-          msbuild /t:Build /p:Configuration=Debug /p:Platform=x32 BardCore.sln
+          msbuild /t:Build /p:Configuration=Debug /p:Platform=Win32 BardCore.sln
           msbuild /t:Build /p:Configuration=Debug /p:Platform=x64 BardCore.sln
-          msbuild /t:Build /p:Configuration=Release /p:Platform=x32 BardCore.sln
+          msbuild /t:Build /p:Configuration=Release /p:Platform=Win32 BardCore.sln
           msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
         working-directory: ${{ github.workspace }}
 
