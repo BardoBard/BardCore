@@ -55,7 +55,7 @@ namespace bardcore
          * \param theta the angle in degrees
          * \return rotated 3D object
          */
-        template <typename T, typename = std::enable_if_t<std::is_base_of_v<dimension3<T>, T>>>
+        template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
         NODISCARD static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, float theta)
         {
             if (to_be_rotated_3d == dimension3<T>::zero())
@@ -94,7 +94,7 @@ namespace bardcore
          * \param mirror_vector the axis around which the object should be mirrored
          * \return mirrored 3D object
          */
-        template <typename T, typename = std::enable_if_t<std::is_base_of_v<dimension3<T>, T>>>
+        template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
         NODISCARD constexpr static T mirror(const T& to_be_mirrored_3d, const vector3d& mirror_vector)
         {
             if (to_be_mirrored_3d == dimension3<T>::zero())

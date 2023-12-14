@@ -139,7 +139,7 @@ namespace bardcore
                            : std::nullopt;
             }
 
-#else// smaller than C++17
+#else // lower than CXX17
 
             /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullptr
             /// \throws negative_exception if distance is negative
