@@ -21,7 +21,9 @@ jobs:
 
       - name: Build C++ BardCore Release
         run: |
-          dotnet --version
+          msbuild /t:Build /p:Configuration=Debug /p:Platform=x32 BardCore.sln
+          msbuild /t:Build /p:Configuration=Debug /p:Platform=x64 BardCore.sln
+          msbuild /t:Build /p:Configuration=Release /p:Platform=x32 BardCore.sln
           msbuild /t:Build /p:Configuration=Release /p:Platform=x64 BardCore.sln
         working-directory: ${{ github.workspace }}
 
@@ -42,8 +44,6 @@ jobs:
           
           $ReleaseNotes = Get-Content BardCore/RELEASE_NOTES
           nuget pack Bardcore/nuget/bardcore.nuspec -p Version="$NUGET_VERSION" -p ReleaseNotes="$ReleaseNotes"
-
-
 
           dotnet nuget push "BardCore.$NUGET_VERSION.nupkg" --api-key ${{ secrets.NUGET_GITHUB_ACCESS_TOKEN }} --source "github"
           nuget push "BardCore.$NUGET_VERSION.nupkg" ${{ secrets.NUGET_PACKAGE_KEY }} -Source https://api.nuget.org/v3/index.json
