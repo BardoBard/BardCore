@@ -1,6 +1,8 @@
 #ifndef BARDCORE_BARDCORE_H
 #define BARDCORE_BARDCORE_H
 
+// C++ version has to be 14 or later
+
 #if __cplusplus >= 201402L
     #define CXX14
 #endif
@@ -13,15 +15,15 @@
     #define CXX20
 #endif
 
-#ifdef CXX17 // C++17 or later
+#ifdef CXX14
+    #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of<CLASS<T>, T>::value>
+    #define NODISCARD 
+    #define INLINE 
+#elif CXX17 // C++17 or later
     #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of_v<CLASS<T>, T>>
     #define NODISCARD [[nodiscard]]
     #define INLINE inline
-#elif CXX14 // C++14 or later
-    #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of<CLASS<T>, T>::value>
-    #define INLINE 
-    #define NODISCARD
-#else // Earlier than C++14
+#else // Not C++14 or later
     #error BardCore requires at least C++14
 #endif
 
