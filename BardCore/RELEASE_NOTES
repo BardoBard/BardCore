@@ -1,2 +1,2 @@
-Added ENABLE_IF_DERIVED(CLASS, T) for c++14 and c++17
+added win32/win64 specific libs
 14/12/2023

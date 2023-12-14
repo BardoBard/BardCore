@@ -75,15 +75,21 @@
     <PropertyGroup Label="UserMacros"/>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <LinkIncremental>true</LinkIncremental>
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+        <IntDir>$(Platform)\$(Configuration)\</IntDir>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <LinkIncremental>true</LinkIncremental>
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
         <LinkIncremental>false</LinkIncremental>
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+        <IntDir>$(Platform)\$(Configuration)\</IntDir>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <LinkIncremental>false</LinkIncremental>
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
     </PropertyGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <ClCompile>
@@ -170,6 +176,7 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
+        <ClCompile Include="include\bardcore\bardcore.cpp" />
         <ClCompile Include="include\Bardcore\bardcore.h"/>
         <ClCompile Include="include\Bardcore\interfaces\dimension3.h"/>
         <ClCompile Include="include\Bardcore\interfaces\dimension4.h"/>

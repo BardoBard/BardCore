@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package>
     <metadata>
         <id>BardCore</id>
         <version>$Version$</version>
@@ -13,14 +13,17 @@
         <copyright>$copyright$</copyright>
     </metadata>
     <files>
-        <file src="..\..\README.md" target="docs\" />
-        <file src="..\RELEASE_NOTES" target="docs\" />
-        <file src="..\docs\*.md" target="docs\" />
+        <file src="..\..\README.md" target="docs\"/>
+        <file src="..\RELEASE_NOTES" target="docs\"/>
+        <file src="..\docs\*.md" target="docs\"/>
         <file src="..\licenses\LICENSE.txt" target="licenses\"/>
 
-        <file src="..\..\x64\release\Bardcore.lib" target="lib\" />
-        <file src="..\include\**\*.*"   target="build\native\include\" />
-        <file src="BardCore.targets"   target="build\native" />
+        <file src="..\include\**\*.*" target="build\native\include\"/>
+        <file src="BardCore.targets" target="build\native"/>
 
-      </files>
+        <file src="..\..\out\Win32\Debug\BardCore.lib" target="build\native\lib\x86\debug\"/>
+        <file src="..\..\out\Win32\Release\BardCore.lib" target="build\native\lib\x86\release\"/>
+        <file src="..\..\out\x64\Debug\BardCore.lib" target="build\native\lib\x64\debug\"/>
+        <file src="..\..\out\x64\Release\BardCore.lib" target="build\native\lib\x64\release\"/>
+    </files>
 </package>
