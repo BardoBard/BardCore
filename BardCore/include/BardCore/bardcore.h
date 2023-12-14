@@ -15,15 +15,17 @@
     #define CXX20
 #endif
 
-#ifdef CXX14
-    #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of<CLASS<T>, T>::value>
-    #define NODISCARD 
-    #define INLINE 
-#elif CXX17 // C++17 or later
+#if defined(CXX17) // C++17 or later
+    #include <optional>
     #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of_v<CLASS<T>, T>>
     #define NODISCARD [[nodiscard]]
     #define INLINE inline
-#else // Not C++14 or later
+#elif defined(CXX14) // C++14
+    #include <memory>
+    #define ENABLE_IF_DERIVED(CLASS, T) typename = std::enable_if_t<std::is_base_of<CLASS<T>, T>::value>
+    #define NODISCARD 
+    #define INLINE
+#else // earlier than c++ 14
     #error BardCore requires at least C++14
 #endif
 
@@ -31,9 +33,6 @@
 #include <ostream>
 #include <exception>
 #include <cmath>
-#ifdef CXX17
-    #include <optional>
-#endif // CXX17
 
 namespace bardcore
 {

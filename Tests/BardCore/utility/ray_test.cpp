@@ -251,7 +251,7 @@ namespace testing
         constexpr utility::ray ray = {origin, direction, distance};
 
         //get point
-#ifdef CXX17 // C++17 or higher (using optional instead of unique_ptr)
+#if defined(CXX17) // C++17 or higher (using optional instead of unique_ptr)
         const std::optional<point3d> point = ray.get_point(0);
         const std::optional<point3d> point1 = ray.get_point(1);
         const std::optional<point3d> point2 = ray.get_point(2);
@@ -263,7 +263,7 @@ namespace testing
 
         ASSERT_FALSE(point3.has_value());
         
-#else // smaller than C++17 (using unique_ptr instead of optional)
+#elif defined(CXX14) // smaller than C++17 (using unique_ptr instead of optional)
         const std::unique_ptr<point3d> point = ray.get_point(0);
         const std::unique_ptr<point3d> point1 = ray.get_point(1);
         const std::unique_ptr<point3d> point2 = ray.get_point(2);
