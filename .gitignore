@@ -2,7 +2,9 @@
 /.idea/
 
 /**/x64/
+/**/Win32/
 *DotSettings.user
 *.vcxproj.user
 
+/out/
 /packages/

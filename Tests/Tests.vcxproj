@@ -34,6 +34,26 @@
             <Platform>x64</Platform>
         </ProjectConfiguration>
     </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+        <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+        <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-14|x64'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-17|x64'">
+        <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
+    </PropertyGroup>
     <PropertyGroup Label="Globals">
         <ProjectGuid>{8E6852F4-EC4B-40DE-B8BD-8AC5ABFAF070}</ProjectGuid>
         <Keyword>Winx32Proj</Keyword>
@@ -100,8 +120,8 @@
         <Link>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <SubSystem>Console</SubSystem>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,8 +140,8 @@
         <Link>
             <GenerateDebugInformation>true</GenerateDebugInformation>
             <SubSystem>Console</SubSystem>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,8 +161,8 @@
             <SubSystem>Console</SubSystem>
             <OptimizeReferences>true</OptimizeReferences>
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,8 +182,8 @@
             <SubSystem>Console</SubSystem>
             <OptimizeReferences>true</OptimizeReferences>
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out\$(IntDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-14|x64'">
@@ -183,8 +203,8 @@
             <SubSystem>Console</SubSystem>
             <OptimizeReferences>true</OptimizeReferences>
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)/release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out/$(Platform)/release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-17|x64'">
@@ -204,8 +224,8 @@
             <SubSystem>Console</SubSystem>
             <OptimizeReferences>true</OptimizeReferences>
             <EnableCOMDATFolding>true</EnableCOMDATFolding>
-            <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)/release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-            <AdditionalDependencies>Bardcore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalLibraryDirectories>$(SolutionDir)out/$(Platform)/release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

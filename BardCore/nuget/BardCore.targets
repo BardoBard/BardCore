@@ -8,8 +8,27 @@
         <ClCompile>
             <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
             <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </ClCompile>
+
+        <!-- x32 -->
+        <Link Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+            <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)\lib\x86\debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        <Link Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+            <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)\lib\x86\release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        
+        <!-- x64 -->
+        <Link Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+            <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)\lib\x64\debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+        <Link Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+            <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)\lib\x64\release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+            <AdditionalDependencies>BardCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
     </ItemDefinitionGroup>
 
 </Project>
