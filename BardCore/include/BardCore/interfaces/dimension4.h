@@ -101,7 +101,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension4, e.g. quaternion
          * \param other other dimension4
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension4<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
         NODISCARD constexpr T operator-(const Derived& other) const noexcept
         {
             return {x - other.x, y - other.y, z - other.z, w - other.w};
@@ -112,7 +112,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension4, e.g. quaternion
          * \param other other dimension4
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension4<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
         NODISCARD constexpr T operator+(const Derived& other) const noexcept
         {
             return {x + other.x, y + other.y, z + other.z, w + other.w};
@@ -145,7 +145,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension4, e.g. quaternion
          * \param other other dimension4
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension4<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
         void operator+=(const Derived& other) noexcept
         {
             x += other.x;
@@ -159,7 +159,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension4, e.g. quaternion
          * \param other other dimension4
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension4<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
         void operator-=(const Derived& other) noexcept
         {
             x -= other.x;

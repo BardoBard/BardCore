@@ -126,7 +126,7 @@ namespace bardcore
                 return within_range(position_.distance(point));
             }
 
-#ifdef CXX17
+#if defined(CXX17)
 
             /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullopt
             /// \throws negative_exception if distance is negative
@@ -139,7 +139,7 @@ namespace bardcore
                            : std::nullopt;
             }
 
-#else// smaller than C++17
+#elif defined(CXX14) // CXX14
 
             /// \brief calculates the point on the ray at the given distance, if distance is out of range, nullptr
             /// \throws negative_exception if distance is negative
@@ -149,7 +149,7 @@ namespace bardcore
             {
                 return within_range(distance) ? std::make_unique<point3d>(position_ + direction_ * distance) : nullptr;
             }
-#endif // CXX17
+#endif
 
             ///////////////////////////////////////////////////////
             ///                    operators                    ///

@@ -57,7 +57,7 @@ namespace bardcore
          * \note this allows to copy a point3d to a vector3d
          * \param other other dimension3
          */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension3<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         constexpr explicit dimension3(const dimension3<Derived>& other) : dimension3(other.x, other.y, other.z)
         {
         }
@@ -104,7 +104,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension3<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         NODISCARD constexpr T operator-(const Derived& other) const noexcept
         {
             return {x - other.x, y - other.y, z - other.z};
@@ -115,7 +115,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension3<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         NODISCARD constexpr T operator+(const Derived& other) const noexcept
         {
             return {x + other.x, y + other.y, z + other.z};
@@ -148,7 +148,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension3<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         void operator+=(const Derived& other) noexcept
         {
             x += other.x;
@@ -161,7 +161,7 @@ namespace bardcore
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
         */
-        template <typename Derived, typename = std::enable_if_t<std::is_base_of_v<dimension3<Derived>, Derived>>>
+        template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         void operator-=(const Derived& other) noexcept
         {
             x -= other.x;

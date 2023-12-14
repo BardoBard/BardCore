@@ -1,2 +1,2 @@
-Added cmath include for std::acos, etc
-12/12/2023
+Added ENABLE_IF_DERIVED(CLASS, T) for c++14 and c++17
+14/12/2023
