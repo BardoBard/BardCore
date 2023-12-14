@@ -176,7 +176,6 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="include\bardcore\bardcore.cpp" />
         <ClCompile Include="include\Bardcore\bardcore.h"/>
         <ClCompile Include="include\Bardcore\interfaces\dimension3.h"/>
         <ClCompile Include="include\Bardcore\interfaces\dimension4.h"/>
