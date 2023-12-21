@@ -1,7 +1,6 @@
 #ifndef BARDCORE_LIGHT_H
 #define BARDCORE_LIGHT_H
 
-#include "BardCore/utility/ray.h"
 #include "BardCore/math/point3d.h"
 
 namespace bardcore
@@ -33,6 +32,25 @@ namespace bardcore
             constexpr light(const point3d& position, const float intensity) : position(position), intensity(intensity)
             {
             }
+
+            /**
+             * \brief copy constructor
+             * \param light light to copy
+             */
+            constexpr light(const light& light) noexcept : position(light.position), intensity(light.intensity)
+            {
+            }
+
+            /**
+             * \brief move constructor
+             * \note intensity is copied instead of moved, because it is a primitive type
+             * \param light light to move
+             */
+            constexpr light(light&& light) noexcept : position(std::move(light.position)), intensity(light.intensity)
+            {
+            }
+
+            ~light() = default;
 
         private:
             /**
@@ -73,6 +91,61 @@ namespace bardcore
             NODISCARD constexpr float inverse_square_law(const float length) const
             {
                 return inverse_square_law_squared(length * length);
+            }
+
+            ///////////////////////////////////////////////////////
+            ///                    operators                    ///
+            ///////////////////////////////////////////////////////
+
+            // operators like (+,-,*,/,<,>, etc) are not implemented because they don't make sense for a light
+
+            /**
+             * \brief output operator, prints "{position: (x, y, z), intensity: i}"
+             * \param os output stream
+             * \param light light to output
+             * \return output stream "{position: (x, y, z), intensity: i}"
+             */
+            friend std::ostream& operator<<(std::ostream& os, const light& light)
+            {
+                return os << "{position: " << light.position << ", intensity: " << light.intensity << "}";
+            }
+
+            /**
+             * \brief copy assignment
+             * \param light light to copy
+             * \return reference to this
+             */
+            light& operator=(const light& light) noexcept = default;
+
+            /**
+             * \brief move assignment
+             * \param light light to move
+             * \return reference to this
+             */
+            light& operator=(light&& light) noexcept = default;
+
+
+            /**
+             * \brief equal operator (position, intensity are equal)
+             * \param left left light
+             * \param right right light
+             * \return true if left == right (position, intensity are equal)
+             */
+            NODISCARD constexpr friend bool operator==(const light& left, const light& right) noexcept
+            {
+                return left.position == right.position
+                    && left.intensity == right.intensity;
+            }
+
+            /**
+             * \brief not equal operator (position or intensity are not equal)
+             * \param left left light
+             * \param right right light
+             * \return true if left != right (position or intensity are not equal)
+             */
+            NODISCARD constexpr friend bool operator!=(const light& left, const light& right) noexcept
+            {
+                return !(left == right);
             }
         };
     } // namespace bardcore::utility

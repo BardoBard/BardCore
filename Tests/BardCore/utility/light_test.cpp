@@ -6,6 +6,41 @@
 
 namespace testing
 {
+    TEST(light_test, constructor)
+    {
+        constexpr bardcore::point3d position(1, 2, 3);
+        constexpr float intensity = 100;
+
+        constexpr bardcore::utility::light light(position, intensity);
+
+        EXPECT_EQ(light.position, position); // uses operator== from point3d
+        EXPECT_EQ(light.intensity, intensity);
+    }
+
+    TEST(light_test, copy_constructor)
+    {
+        constexpr bardcore::point3d position(1, 2, 3);
+        constexpr float intensity = 100;
+        constexpr bardcore::utility::light light(position, intensity);
+
+        constexpr bardcore::utility::light light2(light);
+
+        EXPECT_EQ(light2.position, position); // uses operator== from point3d
+        EXPECT_EQ(light2.intensity, intensity);
+    }
+
+    TEST(light_test, move_constructor)
+    {
+        constexpr bardcore::point3d position(1, 2, 3);
+        constexpr float intensity = 100;
+        constexpr bardcore::utility::light light(position, intensity);
+
+        constexpr bardcore::utility::light light2(std::move(light));
+
+        EXPECT_EQ(light2.position, position); // uses operator== from point3d
+        EXPECT_EQ(light2.intensity, intensity);
+    }
+
     TEST(light_test, inverse_square_law_point)
     {
         constexpr bardcore::utility::light light(bardcore::point3d(0, 0, 0), 1);
