@@ -1,19 +1,21 @@
 #ifndef BARDCORE_MATH_H
 #define BARDCORE_MATH_H
 
-#include "../bardcore.h"
+#include "BardCore/bardcore.h"
 
 namespace bardcore
 {
     class math
     {
-    private:
-        /// \brief helper function for calculating the square root via Newton-Raphson 
-        /// \note credit: Alex Shtoff - https://stackoverflow.com/questions/8622256/in-c11-is-sqrt-defined-as-constexpr
-        /// \param value value to calculate the square root from
-        /// \param curr current value
-        /// \param prev previous value
-        /// \return square root of value
+    private:        
+        /**
+         * \brief helper function for calculating the square root via Newton-Raphson 
+         * \note credit: Alex Shtoff - https://stackoverflow.com/questions/8622256/in-c11-is-sqrt-defined-as-constexpr
+         * \param value value to calculate the square root from
+         * \param curr current value
+         * \param prev previous value
+         * \return square root of value
+         */
         NODISCARD constexpr static float sqrt_newton_raphson(const float value, const float curr, const float prev)
         {
             return curr == prev
@@ -47,12 +49,14 @@ namespace bardcore
             return degrees * math::pi / 180.0f;
         }
 
-    public:
-        /// \brief calculates the square root via Newton-Raphson
-        /// \note sqrt(0) = 0, e.g : 0^(1/2) = 0
-        /// \param value value to calculate the square root from
-        /// \throws negative_exception if value is negative
-        /// \return square root of value
+    public:        
+        /**
+         * \brief calculates the square root via Newton-Raphson
+         * \note sqrt(0) = 0, e.g : 0^(1/2) = 0
+         * \param value value to calculate the square root from
+         * \throws negative_exception if value is negative
+         * \return square root of value
+         */
         NODISCARD constexpr static float sqrt(const float value)
         {
             if (value < 0)
@@ -66,24 +70,24 @@ namespace bardcore
          * \note this algorithm is not fast but it was fun to make, it's quite fast for small numbers
          * \throws negative_exception if a or b is negative
          * \throws negative_exception if a or b is negative
-         * \param a number 1
-         * \param b number 2
+         * \param number1 number 1
+         * \param number2 number 2
          * \return greatest common divisor of a and b
          */
-        NODISCARD constexpr static int euclidean_gcd(const int a, const int b)
+        NODISCARD constexpr static int euclidean_gcd(const int number1, const int number2)
         {
-            if (a <= 0 || b <= 0)
+            if (number1 <= 0 || number2 <= 0)
                 throw exceptions::negative_exception("a and b must not be negative");
-            if (a < b)
+            if (number1 < number2)
                 //TODO: make different exception
                 throw exceptions::negative_exception("a must be greater than b");
 
-            const auto mod = a % b;
+            const auto mod = number1 % number2;
 
             if (mod == 0) //stop condition
-                return b;
+                return number2;
 
-            return euclidean_gcd(b, mod);
+            return euclidean_gcd(number2, mod);
         }
     };
 } // namespace bardcore

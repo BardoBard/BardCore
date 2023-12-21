@@ -1,6 +1,6 @@
 #ifndef BARDCORE_ZERO_DIVISION_H
 #define BARDCORE_ZERO_DIVISION_H
-#include "../bardcore.h"
+#include "BardCore/bardcore.h"
 
 namespace bardcore
 {

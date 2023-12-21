@@ -39,6 +39,16 @@ namespace testing
         ASSERT_NO_THROW(point1.distance(point1));
     }
 
+    TEST(point3d_test, distance_test_neg)
+    {
+        constexpr point3d point1 = {-5, 3, 2};
+        constexpr point3d point2 = {7, 9, -25};
+
+        constexpr float result = point1.distance(point2);
+
+        ASSERT_NEAR(result, 30.1f, ROUND_ONE_DECIMALS);
+    }
+    
     TEST(point3d_test, distance_squared_test)
     {
         constexpr point3d point1 = {1, 2, 3};
@@ -47,6 +57,16 @@ namespace testing
         constexpr float result = point1.distance_squared(point2);
 
         ASSERT_EQ(27.f, result);
+    }
+
+    TEST(point3d_test, distance_squared_test_neg)
+    {
+        constexpr point3d point1 = {-5, 3, 2};
+        constexpr point3d point2 = {7, 9, -25};
+
+        constexpr float result = point1.distance_squared(point2);
+
+        ASSERT_NEAR(result, 909.0f, ROUND_ONE_DECIMALS);
     }
 
     //center test

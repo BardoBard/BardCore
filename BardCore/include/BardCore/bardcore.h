@@ -38,7 +38,9 @@ namespace bardcore
 {
     namespace exceptions
     {
-        /// \brief base class for all exceptions in BardCore
+        /**
+         * \brief base class for all exceptions in BardCore
+         */
         class bard_exception : public std::exception
         {
         protected:
@@ -55,8 +57,10 @@ namespace bardcore
 
             ~bard_exception() noexcept override = default;
 
-            /// \brief returns the message of the exception
-            /// \return the message of the exception
+            /**
+             * \brief returns the message of the exception
+             * \return the message of the exception
+             */
             NODISCARD const char* what() const noexcept override
             {
                 return msg_.c_str();

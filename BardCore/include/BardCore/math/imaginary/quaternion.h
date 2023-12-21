@@ -1,9 +1,9 @@
 #ifndef BARDCORE_QUATERNION_H
 #define BARDCORE_QUATERNION_H
 
-#include "../../interfaces/dimension4.h"
-#include "../math.h"
-#include "../point3d.h"
+#include "BardCore/interfaces/dimension4.h"
+#include "BardCore/math/math.h"
+#include "BardCore/math/point3d.h"
 
 namespace bardcore
 {

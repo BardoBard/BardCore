@@ -1,6 +1,6 @@
 #ifndef BARDCORE_NEGATIVE_EXCEPTION_H
 #define BARDCORE_NEGATIVE_EXCEPTION_H
-#include "../bardcore.h"
+#include "BardCore/bardcore.h"
 
 namespace bardcore
 {

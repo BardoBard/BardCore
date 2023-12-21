@@ -1,6 +1,6 @@
 #ifndef BARDCORE_SAME_OBJECT_EXCEPTION_H
 #define BARDCORE_SAME_OBJECT_EXCEPTION_H
-#include "../bardcore.h"
+#include "BardCore/bardcore.h"
 
 namespace bardcore
 {
