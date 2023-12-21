@@ -25,7 +25,7 @@
         <RootNamespace>BardCore</RootNamespace>
         <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
     <PropertyGroup>
         <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     </PropertyGroup>
@@ -55,24 +55,24 @@
         <WholeProgramOptimization>true</WholeProgramOptimization>
         <CharacterSet>Unicode</CharacterSet>
     </PropertyGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
     <ImportGroup Label="ExtensionSettings">
     </ImportGroup>
     <ImportGroup Label="Shared">
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     </ImportGroup>
     <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     </ImportGroup>
-    <PropertyGroup Label="UserMacros"/>
+    <PropertyGroup Label="UserMacros" />
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
         <LinkIncremental>true</LinkIncremental>
         <OutDir>$(SolutionDir)out\$(Platform)\$(Configuration)\</OutDir>
@@ -176,21 +176,22 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClCompile Include="include\Bardcore\bardcore.h"/>
-        <ClCompile Include="include\Bardcore\interfaces\dimension3.h"/>
-        <ClCompile Include="include\Bardcore\interfaces\dimension4.h"/>
-        <ClCompile Include="include\bardcore\math\imaginary\quaternion.h"/>
-        <ClCompile Include="include\bardcore\math\math.h"/>
-        <ClCompile Include="include\bardcore\math\point3d.h"/>
-        <ClCompile Include="include\bardcore\math\vector3d.h"/>
-        <ClCompile Include="include\bardcore\utility\ray.h"/>
+        <ClCompile Include="include\Bardcore\bardcore.h" />
+        <ClCompile Include="include\Bardcore\interfaces\dimension3.h" />
+        <ClCompile Include="include\Bardcore\interfaces\dimension4.h" />
+        <ClCompile Include="include\bardcore\math\imaginary\quaternion.h" />
+        <ClCompile Include="include\bardcore\math\math.h" />
+        <ClCompile Include="include\bardcore\math\point3d.h" />
+        <ClCompile Include="include\bardcore\math\vector3d.h" />
+        <ClCompile Include="include\bardcore\utility\light.h"/>
+        <ClCompile Include="include\bardcore\utility\ray.h" />
     </ItemGroup>
     <ItemGroup>
-        <ClInclude Include="include\bardcore\exceptions\negative_exception.h"/>
-        <ClInclude Include="include\bardcore\exceptions\same_object_exception.h"/>
-        <ClInclude Include="include\bardcore\exceptions\zero_exception.h"/>
+        <ClInclude Include="include\bardcore\exceptions\negative_exception.h" />
+        <ClInclude Include="include\bardcore\exceptions\same_object_exception.h" />
+        <ClInclude Include="include\bardcore\exceptions\zero_exception.h" />
     </ItemGroup>
-    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
     <ImportGroup Label="ExtensionTargets">
     </ImportGroup>
 </Project>

@@ -1,2 +1,8 @@
-added win32/win64 specific libs
-14/12/2023
+added light
+21/12/2023
+
+updated inconsistent comments throughout the code
+21/12/2023
+
+updated include headers to be more consistent with the project
+21/12/2023

@@ -1,6 +1,6 @@
 #ifndef BARDCORE_dimension4_H
 #define BARDCORE_dimension4_H
-#include "../bardcore.h"
+#include "BardCore/bardcore.h"
 
 namespace bardcore
 {

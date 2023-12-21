@@ -21,6 +21,6 @@ opengl wrapper around it.
 I've tried to make everything constexpr where possible, so that the compiler can do as much work as possible at compile
 time.
 
-Please refer to the [wiki](https://github.com/BardoBard/BardCore/wiki/home) for more information.
+Please refer to the [wiki](https://github.com/BardoBard/BardCore/wiki/Introduction) for more information.
 
 [^flag]: *In order to use the c++ 14/17/20 you have to use the /Zc:__cplusplus flag, it's automatically included (.target) but it might not be [compatible](https://learn.microsoft.com/en-us/cpp/build/reference/zc-cplusplus?view=msvc-170#remarks) with other packages, keep that in mind.*
