@@ -63,7 +63,7 @@ namespace bardcore
                 position_(position), direction_(direction.normalize()), distance_(distance)
             {
                 if (distance < 0)
-                    throw exceptions::negative_exception("distance can't be negative");
+                    throw exception::negative_exception("distance can't be negative");
             }
 
             /**
@@ -126,7 +126,7 @@ namespace bardcore
             void set_distance(const float distance)
             {
                 if (distance < 0)
-                    throw exceptions::negative_exception("distance can't be negative");
+                    throw exception::negative_exception("distance can't be negative");
 
                 this->distance_ = distance;
             }
@@ -147,7 +147,7 @@ namespace bardcore
             NODISCARD constexpr bool within_range(const float length) const
             {
                 if (length < 0)
-                    throw exceptions::negative_exception("length can't be negative");
+                    throw exception::negative_exception("length can't be negative");
 
                 return length <= distance_;
             }

@@ -90,13 +90,13 @@ namespace testing
     //test euclidean_gcd exception
     TEST(math_test, euclidean_gcd_exception_test)
     {
-        ASSERT_THROW(math::euclidean_gcd(-1, 1), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(1, -1), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(-1, -1), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(1, 0), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(0, 1), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(0, 0), exceptions::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(1, 2), exceptions::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(-1, 1), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(1, -1), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(-1, -1), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(1, 0), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(0, 1), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(0, 0), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(1, 2), exception::negative_exception);
     }
     
 } // namespace testing

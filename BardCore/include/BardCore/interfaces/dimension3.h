@@ -110,6 +110,17 @@ namespace bardcore
             return {x - other.x, y - other.y, z - other.z};
         }
 
+
+        /**
+         * \brief subtracts a float from a dimension3 and stores the result in a new dimension3
+         * \param n float to subtract with
+         * \return new dimension3
+         */
+        NODISCARD constexpr T operator-(const float n) const noexcept
+        {
+            return {x - n, y - n, z - n};
+        }
+
         /**
          * \brief adds a dimension3 from another dimension3 and stores the result in a new dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
@@ -119,6 +130,16 @@ namespace bardcore
         NODISCARD constexpr T operator+(const Derived& other) const noexcept
         {
             return {x + other.x, y + other.y, z + other.z};
+        }
+        
+        /**
+         * \brief adds a float from a dimension3 and stores the result in a new dimension3
+         * \param n float to add with
+         * \return new dimension3
+         */
+        NODISCARD constexpr T operator+(const float n) const noexcept
+        {
+            return {x + n, y + n, z + n};
         }
 
         /**
@@ -138,7 +159,7 @@ namespace bardcore
         NODISCARD constexpr T operator/(const float n) const
         {
             if (n == 0.f)
-                throw exceptions::zero_exception("division by zero");
+                throw exception::zero_exception("division by zero");
 
             return {x / n, y / n, z / n};
         }
@@ -157,6 +178,17 @@ namespace bardcore
         }
 
         /**
+         * \brief adds a float to this dimension3
+         * \param n float to add with
+         */
+        void operator+=(const float n) noexcept
+        {
+            x += n;
+            y += n;
+            z += n;
+        }
+
+        /**
          * \brief subtracts this dimension3 from this dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
@@ -167,6 +199,17 @@ namespace bardcore
             x -= other.x;
             y -= other.y;
             z -= other.z;
+        }
+        
+        /**
+         * \brief subtracts a float from this dimension3
+         * \param n float to subtract with
+         */
+        void operator-=(const float n) noexcept
+        {
+            x -= n;
+            y -= n;
+            z -= n;
         }
 
         /**
@@ -188,7 +231,7 @@ namespace bardcore
         void operator/=(const float n)
         {
             if (n == 0.f)
-                throw exceptions::zero_exception("division by zero");
+                throw exception::zero_exception("division by zero");
 
             x /= n;
             y /= n;

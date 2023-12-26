@@ -24,9 +24,9 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {0, 0, 0};
 
-        ASSERT_THROW(vector1.angle_degrees(vector2), exceptions::bard_exception);
-        ASSERT_THROW(vector1.angle_radians(vector2), exceptions::bard_exception);
-        ASSERT_THROW(vector1.angle_dot(vector2), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_degrees(vector2), exception::bard_exception);
+        ASSERT_THROW(vector1.angle_radians(vector2), exception::bard_exception);
+        ASSERT_THROW(vector1.angle_dot(vector2), exception::bard_exception);
     }
 
     //test angle with same vector
@@ -44,9 +44,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {1, 2, 3};
 
-        ASSERT_THROW(vector1.angle_degrees(vector1), exceptions::bard_exception);
-        ASSERT_THROW(vector1.angle_radians(vector1), exceptions::bard_exception);
-        ASSERT_THROW(vector1.angle_dot(vector1), exceptions::bard_exception);
+        ASSERT_THROW(vector1.angle_degrees(vector1), exception::bard_exception);
+        ASSERT_THROW(vector1.angle_radians(vector1), exception::bard_exception);
+        ASSERT_THROW(vector1.angle_dot(vector1), exception::bard_exception);
     }
 
     //test dot

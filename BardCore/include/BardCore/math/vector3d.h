@@ -26,7 +26,7 @@ namespace bardcore
             const float l = this->length();
 
             if (l == 0.f)
-                throw exceptions::zero_exception("vector length must not be zero");
+                throw exception::zero_exception("vector length must not be zero");
 
             return *this / l;
         }
@@ -87,7 +87,7 @@ namespace bardcore
         NODISCARD constexpr float angle_dot(const vector3d& vector) const
         {
             if (this == &vector)
-                throw exceptions::same_object_exception("vectors mustn't be the same");
+                throw exception::same_object_exception("vectors mustn't be the same");
 
             return this->normalize().dot(vector.normalize());
         }

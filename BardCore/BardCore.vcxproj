@@ -183,13 +183,13 @@
         <ClCompile Include="include\bardcore\math\math.h" />
         <ClCompile Include="include\bardcore\math\point3d.h" />
         <ClCompile Include="include\bardcore\math\vector3d.h" />
-        <ClCompile Include="include\bardcore\utility\light.h"/>
+        <ClCompile Include="include\bardcore\utility\light.h" />
         <ClCompile Include="include\bardcore\utility\ray.h" />
     </ItemGroup>
     <ItemGroup>
-        <ClInclude Include="include\bardcore\exceptions\negative_exception.h" />
-        <ClInclude Include="include\bardcore\exceptions\same_object_exception.h" />
-        <ClInclude Include="include\bardcore\exceptions\zero_exception.h" />
+        <ClInclude Include="include\bardcore\exception\negative_exception.h" />
+        <ClInclude Include="include\bardcore\exception\same_object_exception.h" />
+        <ClInclude Include="include\bardcore\exception\zero_exception.h" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
     <ImportGroup Label="ExtensionTargets">

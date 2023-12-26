@@ -148,19 +148,19 @@ namespace testing
         constexpr float distance = -7;
 
         //negative distance
-        ASSERT_THROW(utility::ray(origin, direction, distance), exceptions::negative_exception);
+        ASSERT_THROW(utility::ray(origin, direction, distance), exception::negative_exception);
 
 
         //same points, which causes zero direction vector
         constexpr point3d end = {1, 2, 3};
 
-        ASSERT_THROW(utility::ray(origin, end), exceptions::zero_exception);
+        ASSERT_THROW(utility::ray(origin, end), exception::zero_exception);
 
 
         //zero direction vector
         constexpr vector3d zero_direction = vector3d::zero();
 
-        ASSERT_THROW(utility::ray(origin, zero_direction, 0), exceptions::zero_exception);
+        ASSERT_THROW(utility::ray(origin, zero_direction, 0), exception::zero_exception);
     }
 
     //test setters
@@ -197,9 +197,9 @@ namespace testing
 
         utility::ray ray = utility::ray(vector3d::up());
 
-        ASSERT_THROW(ray.set_distance(distance), exceptions::negative_exception);
-        ASSERT_THROW(ray.set_distance(distance1), exceptions::negative_exception);
-        ASSERT_THROW(ray.set_distance(distance2), exceptions::negative_exception);
+        ASSERT_THROW(ray.set_distance(distance), exception::negative_exception);
+        ASSERT_THROW(ray.set_distance(distance1), exception::negative_exception);
+        ASSERT_THROW(ray.set_distance(distance2), exception::negative_exception);
     }
 
     //test within range
@@ -237,8 +237,8 @@ namespace testing
 
         constexpr utility::ray ray = {origin, direction, distance};
 
-        ASSERT_THROW(ray.within_range(-1), exceptions::negative_exception);
-        ASSERT_THROW(ray.within_range(-10), exceptions::negative_exception);
+        ASSERT_THROW(ray.within_range(-1), exception::negative_exception);
+        ASSERT_THROW(ray.within_range(-10), exception::negative_exception);
     }
 
     //test get point
@@ -299,7 +299,7 @@ namespace testing
 
         constexpr utility::ray ray = {origin, direction, distance};
 
-        ASSERT_THROW(ray.get_point(-1), exceptions::negative_exception);
-        ASSERT_THROW(ray.get_point(-10), exceptions::negative_exception);
+        ASSERT_THROW(ray.get_point(-1), exception::negative_exception);
+        ASSERT_THROW(ray.get_point(-10), exception::negative_exception);
     }
 } // namespace testing
