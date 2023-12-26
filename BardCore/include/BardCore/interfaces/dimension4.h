@@ -178,12 +178,12 @@ namespace bardcore
          * \brief add a float from this dimension4
          * \param n float to add with
          */
-        void operator-=(const float n) noexcept
+        void operator+=(const float n) noexcept
         {
-            x -= n;
-            y -= n;
-            z -= n;
-            w -= n;
+            x += n;
+            y += n;
+            z += n;
+            w += n;
         }
 
         /**
