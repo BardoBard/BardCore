@@ -59,7 +59,7 @@ namespace bardcore
         NODISCARD static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, float theta)
         {
             if (to_be_rotated_3d == dimension3<T>::zero())
-                throw exceptions::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
+                throw exception::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
 
             //theta from degrees to rad
             theta = math::degrees_to_radians(theta / 2);
@@ -98,7 +98,7 @@ namespace bardcore
         NODISCARD constexpr static T mirror(const T& to_be_mirrored_3d, const vector3d& mirror_vector)
         {
             if (to_be_mirrored_3d == dimension3<T>::zero())
-                throw exceptions::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
+                throw exception::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
 
             //get unitvector (aka normalized vector)
             const vector3d unit_vector = mirror_vector.normalize(); //throws zero_exception
@@ -162,7 +162,7 @@ namespace bardcore
             const float l = length();
 
             if (l == 0.f)
-                throw exceptions::zero_exception("quaternion length must not be zero");
+                throw exception::zero_exception("quaternion length must not be zero");
 
             return *this / l;
         }

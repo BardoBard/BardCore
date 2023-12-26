@@ -60,7 +60,7 @@ namespace bardcore
         NODISCARD constexpr static float sqrt(const float value)
         {
             if (value < 0)
-                throw exceptions::negative_exception("value can not be negative");
+                throw exception::negative_exception("value can not be negative");
 
             return sqrt_newton_raphson(value, value, 0);
         }
@@ -77,10 +77,10 @@ namespace bardcore
         NODISCARD constexpr static int euclidean_gcd(const int number1, const int number2)
         {
             if (number1 <= 0 || number2 <= 0)
-                throw exceptions::negative_exception("a and b must not be negative");
+                throw exception::negative_exception("a and b must not be negative");
             if (number1 < number2)
                 //TODO: make different exception
-                throw exceptions::negative_exception("a must be greater than b");
+                throw exception::negative_exception("a must be greater than b");
 
             const auto mod = number1 % number2;
 

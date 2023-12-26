@@ -36,7 +36,7 @@
 
 namespace bardcore
 {
-    namespace exceptions
+    namespace exception
     {
         /**
          * \brief base class for all exceptions in BardCore
@@ -44,7 +44,7 @@ namespace bardcore
         class bard_exception : public std::exception
         {
         protected:
-            std::string msg_;
+            std::string msg_{};
 
         public:
             explicit bard_exception(const char* msg) : msg_(msg)
@@ -70,9 +70,9 @@ namespace bardcore
 } // namespace bardcore
 
 // BardCore includes
-#include "exceptions/zero_exception.h"
-#include "exceptions/negative_exception.h"
-#include "exceptions/same_object_exception.h"
+#include "BardCore/exception/zero_exception.h"
+#include "BardCore/exception/negative_exception.h"
+#include "BardCore/exception/same_object_exception.h"
 
 
 #endif //BARDCORE_BARDCORE_H

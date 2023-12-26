@@ -131,7 +131,7 @@ namespace testing
         constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 90.f;
 
-        ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exceptions::zero_exception);
+        ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exception::zero_exception);
     }
 
     //test exception
@@ -141,7 +141,7 @@ namespace testing
         constexpr vector3d vector = {0, 0, 0};
         constexpr float theta = 90.f;
 
-        ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exceptions::zero_exception);
+        ASSERT_THROW(quaternion::rotate(vector, rotation_vector, theta), exception::zero_exception);
     }
     
     //test conjugate
@@ -202,7 +202,7 @@ namespace testing
         constexpr vector3d mirror_vector = {0, 0, 0};
         constexpr point3d point = {4, 5, 6};
 
-        ASSERT_THROW(quaternion::mirror(point, mirror_vector), exceptions::zero_exception);
+        ASSERT_THROW(quaternion::mirror(point, mirror_vector), exception::zero_exception);
     }
 
     //test mirror zero
@@ -211,6 +211,6 @@ namespace testing
         constexpr vector3d mirror_vector = {1, 2, 3};
         constexpr point3d point = {0, 0, 0};
 
-        ASSERT_THROW(quaternion::mirror(point, mirror_vector), exceptions::zero_exception);
+        ASSERT_THROW(quaternion::mirror(point, mirror_vector), exception::zero_exception);
     }
 } // namespace testing

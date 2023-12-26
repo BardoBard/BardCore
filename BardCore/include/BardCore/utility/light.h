@@ -63,7 +63,7 @@ namespace bardcore
             NODISCARD constexpr float inverse_square_law_squared(const float length_squared) const
             {
                 if (length_squared <= 0.f)
-                    throw exceptions::zero_exception("length must not be zero");
+                    throw exception::zero_exception("length must not be zero");
 
                 return intensity / length_squared;
             }

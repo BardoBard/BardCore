@@ -89,7 +89,7 @@ namespace testing
         constexpr bardcore::point3d point(0, 0, 0);
         constexpr bardcore::point3d point2(1, 1, 1);
 
-        EXPECT_THROW(light.inverse_square_law(point), bardcore::exceptions::zero_exception);
+        EXPECT_THROW(light.inverse_square_law(point), bardcore::exception::zero_exception);
         EXPECT_NO_THROW(light.inverse_square_law(point2));
     }
 
@@ -99,7 +99,7 @@ namespace testing
         constexpr float length = 0;
         constexpr float length2 = 10;
 
-        EXPECT_THROW(light.inverse_square_law(length), bardcore::exceptions::zero_exception);
+        EXPECT_THROW(light.inverse_square_law(length), bardcore::exception::zero_exception);
         EXPECT_NO_THROW(light.inverse_square_law(length2));
     }
 } // namespace testing
