@@ -183,6 +183,7 @@
         <ClCompile Include="include\bardcore\math\math.h" />
         <ClCompile Include="include\bardcore\math\point3d.h" />
         <ClCompile Include="include\bardcore\math\vector3d.h" />
+        <ClCompile Include="include\bardcore\utility\camera.h" />
         <ClCompile Include="include\bardcore\utility\light.h" />
         <ClCompile Include="include\bardcore\utility\ray.h" />
     </ItemGroup>
