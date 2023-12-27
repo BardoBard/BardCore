@@ -18,7 +18,8 @@ namespace bardcore
         using dimension3::dimension3;
         
         /**
-         * \brief calculates the vector between two points
+         * \brief calculates the vector from this point to another point
+         * \note formula: (b) -> b - this
          * \param point point
          * \return vector between two points
          */

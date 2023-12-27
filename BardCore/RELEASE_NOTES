@@ -1,8 +1,2 @@
-updated docs
-26/12/2023
-
-renamed exceptions -> exception
-26/12/2023
-
-added operator overloading for plus minus (float n) for dimension3/4
-26/12/2023
+reflection for vector
+27/12/2023

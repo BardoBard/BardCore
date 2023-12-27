@@ -28,7 +28,10 @@ namespace bardcore
             if (l == 0.f)
                 throw exception::zero_exception("vector length must not be zero");
 
-            return *this / l;
+            //branchless normalization
+            return l == 1.f
+                       ? *this
+                       : *this / l;
         }
 
         /**
@@ -117,6 +120,42 @@ namespace bardcore
         {
             return math::radians_to_degrees(angle_radians(vector));
         }
+
+#if defined(CXX17) // C++17 or higher (std::optional)
+
+        /**
+         * \brief calculates the reflection of this vector on a normalized(normal) only if this vector is not behind normal
+         * \note read more at https://math.stackexchange.com/a/4019883
+         * \note formula: r = n (2 * (d . n)) − d
+         * \param normal normal, the vector to reflect on, it will be normalized for you
+         * \return std::nullopt if vector is behind normal, else reflection of this vector on a normalized(normal)
+         */
+        NODISCARD std::optional<vector3d> reflection(const vector3d& normal) const
+        {
+            const vector3d n = normal.normalize();
+            const float dot = n.dot(*this);
+            return dot < 0
+                       ? std::nullopt
+                       : std::make_optional(n * (2 * dot) - *this);
+        }
+#elif defined(CXX14) // C++14 (no std::unique_ptr)
+
+        /**
+         * \brief calculates the reflection of this vector on a normalized(normal) only if this vector is not behind normal
+         * \note read more at https://math.stackexchange.com/a/4019883
+         * \note formula: r = n (2 * (d . n)) − d
+         * \param normal normal, the vector to reflect on, it will be normalized for you
+         * \return nullptr if vector is behind normal, else reflection of this vector on a normalized(normal)
+         */
+        NODISCARD std::unique_ptr<vector3d> reflection(const vector3d& normal) const
+        {
+            const vector3d n = normal.normalize();
+            const float dot = n.dot(*this);
+            return dot < 0
+                        ? nullptr
+                        : std::make_unique<vector3d>(n * (2 * dot) - *this);
+        }
+#endif
     };
 } // namespace bardcore
 #endif //BARDCORE_VECTOR3D_H

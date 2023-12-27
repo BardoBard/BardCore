@@ -192,4 +192,32 @@ namespace testing
         ASSERT_NEAR(0.335f, result_normalize.y, ROUND_THREE_DECIMALS);
         ASSERT_NEAR(0.816f, result_normalize.z, ROUND_THREE_DECIMALS);
     }
+
+    //reflection
+    TEST(vector3d_test, reflection_test)
+    {
+        constexpr vector3d vector1 = {1, 2, 3};
+        constexpr vector3d vector2 = {0, 0, 1};
+
+        const auto result = vector1.reflection(vector2);
+
+        ASSERT_NEAR(-1.f, result->x, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(-2.f, result->y, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(3.f, result->z, ROUND_ONE_DECIMALS);
+    }
+
+    //reflection with negative input
+    TEST(vector3d_test, reflection_negative_test)
+    {
+        constexpr vector3d vector1 = {-1, 2, -3};
+        constexpr vector3d vector2 = {-4, -5, 6};
+
+        const auto result = vector1.reflection(vector2);
+
+#if defined(CXX17)
+        ASSERT_FALSE(result.has_value());
+#elif defined(CXX14)
+        ASSERT_EQ(nullptr, result);
+#endif
+    }
 } // namespace testing
