@@ -77,7 +77,8 @@
         <ClCompile Include="BardCore\math\math_test.cpp" />
         <ClCompile Include="BardCore\math\point3d_test.cpp" />
         <ClCompile Include="BardCore\math\vector3d_test.cpp" />
-        <ClCompile Include="BardCore\utility\light_test.cpp"/>
+        <ClCompile Include="BardCore\utility\camera_test.cpp" />
+        <ClCompile Include="BardCore\utility\light_test.cpp" />
         <ClCompile Include="BardCore\utility\ray_test.cpp" />
         <ClCompile Include="pch.cpp">
             <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

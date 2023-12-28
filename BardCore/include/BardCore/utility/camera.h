@@ -19,18 +19,18 @@ namespace bardcore
             point3d position_; // position of the camera
             vector3d direction_; // normalized direction of the camera
 
-
             point3d top_left_;
             vector3d half_horizontal_, half_vertical_; // half of the horizontal and vertical vector
 
             unsigned int screen_width_{}, screen_height_{}; // screen width and height
-            
+
         private:
+            
             /**
              * \brief this is a helper function to calculate the screen topleft and horizontal and vertical vectors
              * \note this function is called in the constructor
              */
-            void calculate_screen() noexcept
+            constexpr void calculate_screen() noexcept
             {
                 vector3d arbitrary_vector = {1, 0, 0}; //random vector
                 if (direction_ == arbitrary_vector)
@@ -60,9 +60,10 @@ namespace bardcore
              * \param screen_width width of the camera
              * \param screen_height height of the camera
              */
-            camera(const point3d& position, const vector3d& direction, const unsigned int screen_width,
-                   const unsigned int screen_height) : position_(position), direction_(direction.normalize()),
-                                                       screen_width_(screen_width), screen_height_(screen_height)
+            constexpr camera(const point3d& position, const vector3d& direction, const unsigned int screen_width,
+                             const unsigned int screen_height) : position_(position), direction_(direction.normalize()),
+                                                                 screen_width_(screen_width),
+                                                                 screen_height_(screen_height)
             {
                 set_width(screen_width);
                 set_height(screen_height);
@@ -71,13 +72,17 @@ namespace bardcore
 
             /**
              * \brief shoot a ray from the camera through a pixel on the screen
+             * \throws out_of_range_exception if x or y is greater than screen width or height
              * \param x x position on the screen
              * \param y y position on the screen
              * \param distance distance of the ray
              */
-            NODISCARD ray shoot_ray(const unsigned int x, const unsigned int y,
-                                    const float distance = 100) const
+            NODISCARD constexpr ray shoot_ray(const unsigned int x, const unsigned int y, const float distance) const
             {
+                if (x > screen_width_ || y > screen_height_)
+                    throw bardcore::exception::out_of_range_exception(
+                        "x and y must be smaller or equal to screen width and height");
+
                 //calculate the position on the screen
                 const float ratio_width = static_cast<float>(x) / static_cast<float>(screen_width_);
                 const float ratio_height = static_cast<float>(y) / static_cast<float>(screen_height_);
@@ -95,16 +100,16 @@ namespace bardcore
             ///////////////////////////////////////////////////////
 
         public:
-            NODISCARD unsigned int get_screen_width() const noexcept { return screen_width_; }
-            NODISCARD unsigned int get_screen_height() const noexcept { return screen_height_; }
-            NODISCARD const point3d& get_position() const noexcept { return position_; }
-            NODISCARD const vector3d& get_direction() const noexcept { return direction_; }
+            NODISCARD constexpr unsigned int get_screen_width() const noexcept { return screen_width_; }
+            NODISCARD constexpr unsigned int get_screen_height() const noexcept { return screen_height_; }
+            NODISCARD constexpr const point3d& get_position() const noexcept { return position_; }
+            NODISCARD constexpr const vector3d& get_direction() const noexcept { return direction_; }
 
             /**
              * \brief sets the position of the camera
              * \param position new position
              */
-            void set_position(const point3d& position) noexcept
+            constexpr void set_position(const point3d& position) noexcept
             {
                 position_ = position;
                 calculate_screen();
@@ -115,7 +120,7 @@ namespace bardcore
              * \throws zero_exception if length of direction is zero, e.g if direction is {0, 0, 0}
              * \param direction new direction
              */
-            void set_direction(const vector3d& direction)
+            constexpr void set_direction(const vector3d& direction)
             {
                 direction_ = direction.normalize();
                 calculate_screen();
@@ -126,7 +131,7 @@ namespace bardcore
              * \throws zero_exception if width is zero
              * \param width new width
              */
-            void set_width(const unsigned int width)
+            constexpr void set_width(const unsigned int width)
             {
                 if (width == 0)
                     throw exception::zero_exception("width and height must be greater than 0");
@@ -140,13 +145,72 @@ namespace bardcore
              * \throws zero_exception if height is zero
              * \param new_height new height
              */
-            void set_height(const unsigned int new_height)
+            constexpr void set_height(const unsigned int new_height)
             {
                 if (new_height == 0)
                     throw exception::zero_exception("width and height must be greater than 0");
 
                 screen_height_ = new_height;
                 calculate_screen();
+            }
+
+            ///////////////////////////////////////////////////////
+            ///                    operators                    ///
+            ///////////////////////////////////////////////////////
+
+            // operators like (+,-,*,/,<,>, etc) are not implemented because they don't make sense for a camera
+
+            /**
+             * \brief output operator, prints "{position: (x, y, z), direction: (x, y, z), screen_width: w, screen_height: h}"
+             * \param os output stream
+             * \param camera camera to output
+             * \return output stream "{position: (x, y, z), direction: (x, y, z), screen_width: w, screen_height: h}"
+             */
+            friend std::ostream& operator<<(std::ostream& os, const camera& camera)
+            {
+                return os << "{position: " << camera.position_ << ", direction: " << camera.direction_ <<
+                    ", screen_width: "
+                    << camera.screen_width_ << ", screen_height: " << camera.screen_height_ << "}";
+            }
+
+            /**
+             * \brief copy assignment
+             * \param camera camera to copy
+             * \return reference to this
+             */
+            constexpr camera& operator=(const camera& camera) noexcept = default;
+
+            /**
+             * \brief move assignment
+             * \param camera camera to move
+             * \return reference to this
+             */
+            constexpr camera& operator=(camera&& camera) noexcept = default;
+
+
+            /**
+             * \brief equal operator (position, direction, screen width and height are equal)
+             * \param left left camera
+             * \param right right camera
+             * \return true if left == right (position, direction, screen width and height are equal)
+             */
+            NODISCARD constexpr friend bool operator==(const camera& left, const camera& right) noexcept
+            {
+                return left.position_ == right.position_
+                    && left.direction_ == right.direction_
+                    && left.screen_width_ == right.screen_width_
+                    && left.screen_height_ == right.screen_height_;
+            }
+
+            /**
+             * \brief not equal operator (position, direction, screen width or height are not equal)
+             * \param left left camera
+             * \param right right camera
+             * \return true if left != right (position, direction, screen width or height are not equal)
+             */
+            NODISCARD constexpr friend bool operator!=(const camera& left, const camera& right) noexcept
+            {
+                return !(left == right);
             }
         };
     } // namespace utility

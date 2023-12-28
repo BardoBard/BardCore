@@ -189,6 +189,7 @@
     </ItemGroup>
     <ItemGroup>
         <ClInclude Include="include\bardcore\exception\negative_exception.h" />
+        <ClInclude Include="include\bardcore\exception\out_of_range_exception.h" />
         <ClInclude Include="include\bardcore\exception\same_object_exception.h" />
         <ClInclude Include="include\bardcore\exception\zero_exception.h" />
     </ItemGroup>

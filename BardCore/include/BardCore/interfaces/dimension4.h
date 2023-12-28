@@ -1,6 +1,7 @@
 #ifndef BARDCORE_dimension4_H
 #define BARDCORE_dimension4_H
 #include "BardCore/bardcore.h"
+#include "BardCore/math/math.h"
 
 namespace bardcore
 {
@@ -166,24 +167,26 @@ namespace bardcore
          * \param other other dimension4
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
-        void operator+=(const Derived& other) noexcept
+        constexpr Derived& operator+=(const Derived& other) noexcept
         {
             x += other.x;
             y += other.y;
             z += other.z;
             w += other.w;
+            return *this;
         }
 
         /**
          * \brief add a float from this dimension4
          * \param n float to add with
          */
-        void operator+=(const float n) noexcept
+        constexpr T& operator+=(const float n) noexcept
         {
             x += n;
             y += n;
             z += n;
             w += n;
+            return *this;
         }
 
         /**
@@ -192,36 +195,39 @@ namespace bardcore
          * \param other other dimension4
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
-        void operator-=(const Derived& other) noexcept
+        constexpr Derived& operator-=(const Derived& other) noexcept
         {
             x -= other.x;
             y -= other.y;
             z -= other.z;
             w -= other.w;
+            return *this;
         }
 
         /**
          * \brief subtracts a float from this dimension4
          * \param n float to subtract with
          */
-        void operator-=(const float n) noexcept
+        constexpr T& operator-=(const float n) noexcept
         {
             x -= n;
             y -= n;
             z -= n;
             w -= n;
+            return *this;
         }
 
         /**
          * \brief multiplies this dimension4 with n
          * \param n float to multiply with
         */
-        void operator*=(const float n) noexcept
+        constexpr T& operator*=(const float n) noexcept
         {
             x *= n;
             y *= n;
             z *= n;
             w *= n;
+            return *this;
         }
 
         /**
@@ -229,7 +235,7 @@ namespace bardcore
          * \throws zero_exception if n is 0
          * \param n float to divide with
         */
-        void operator/=(const float n)
+        constexpr T& operator/=(const float n)
         {
             if (n == 0.f)
                 throw exception::zero_exception("division by zero");
@@ -238,6 +244,7 @@ namespace bardcore
             y /= n;
             z /= n;
             w /= n;
+            return *this;
         }
 
         /**
@@ -245,14 +252,14 @@ namespace bardcore
          * \param other other dimension4
          * \return this
          */
-        dimension4& operator=(const dimension4& other) noexcept = default;
+        constexpr dimension4& operator=(const dimension4& other) noexcept = default;
 
         /**
          * \brief move assignment operator
          * \param other other dimension4
          * \return this
          */
-        dimension4& operator=(dimension4&& other) noexcept = default;
+        constexpr dimension4& operator=(dimension4&& other) noexcept = default;
 
         /**
          * \brief less than operator
@@ -262,10 +269,10 @@ namespace bardcore
          */
         NODISCARD constexpr friend bool operator<(const dimension4& left, const dimension4& right) noexcept
         {
-            return left.x < right.x
-                && left.y < right.y
-                && left.z < right.z
-                && left.w < right.w;
+            return math::fless_than(left.x, right.x)
+                && math::fless_than(left.y, right.y)
+                && math::fless_than(left.z, right.z)
+                && math::fless_than(left.w, right.w);
         }
 
         /**
@@ -309,10 +316,10 @@ namespace bardcore
          */
         NODISCARD constexpr friend bool operator==(const dimension4& left, const dimension4& right) noexcept
         {
-            return left.x == right.x
-                && left.y == right.y
-                && left.z == right.z
-                && left.w == right.w;
+            return math::fequals(left.x, right.x)
+                && math::fequals(left.y, right.y)
+                && math::fequals(left.z, right.z)
+                && math::fequals(left.w, right.w);
         }
 
         /**

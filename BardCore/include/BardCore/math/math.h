@@ -7,7 +7,7 @@ namespace bardcore
 {
     class math
     {
-    private:        
+    private:
         /**
          * \brief helper function for calculating the square root via Newton-Raphson 
          * \note credit: Alex Shtoff - https://stackoverflow.com/questions/8622256/in-c11-is-sqrt-defined-as-constexpr
@@ -49,7 +49,8 @@ namespace bardcore
             return degrees * math::pi / 180.0f;
         }
 
-    public:        
+    public:
+        static constexpr float epsilon = 0.0001f;
         /**
          * \brief calculates the square root via Newton-Raphson
          * \note sqrt(0) = 0, e.g : 0^(1/2) = 0
@@ -63,6 +64,53 @@ namespace bardcore
                 throw exception::negative_exception("value can not be negative");
 
             return sqrt_newton_raphson(value, value, 0);
+        }
+
+        /**
+         * \brief calculates the absolute value of a float value
+         * \note read more at: https://en.wikipedia.org/wiki/Absolute_value
+         * \param value float value
+         * \return absolute float value
+         */
+        NODISCARD constexpr static float fabs(const float value)
+        {
+            return value < 0 ? -value : value;
+        }
+
+        /**
+         * \brief checks if two float values are equal, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \param number1 number 1 to compare
+         * \param number2 number 2 to compare
+         * \return a == b with epsilon
+         */
+        NODISCARD constexpr bool static fequals(const float number1, const float number2)
+        {
+            return fabs(number1 - number2) <= (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
+        }
+
+        /**
+         * \brief checks if left float value is greater than right float value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \param number1 number 1 to compare
+         * \param number2 number 2 to compare
+         * \return a > b with epsilon
+         */
+        NODISCARD constexpr bool static fgreater_than(const float number1, const float number2)
+        {
+            return number1 - number2 > (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
+        }
+
+        /**
+         * \brief checks if left float value is less than right float value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \param number1 number 1 to compare
+         * \param number2 number 2 to compare
+         * \return a < b with epsilon
+         */
+        NODISCARD constexpr bool static fless_than(const float number1, const float number2)
+        {
+            return number2 - number1 > (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
         }
 
         /**

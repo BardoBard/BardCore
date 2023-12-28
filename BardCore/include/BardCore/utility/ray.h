@@ -167,21 +167,21 @@ namespace bardcore
              * \brief sets a new position of the ray
              * \param position new position of the ray
              */
-            void set_position(const point3d& position) noexcept { this->position_ = position; }
+            constexpr void set_position(const point3d& position) noexcept { this->position_ = position; }
 
             /**
              * \brief sets the direction of the ray, the direction will be normalized
              * \throws zero_exception if length of vector is zero
              * \param direction direction of the ray
              */
-            void set_direction(const vector3d& direction) { this->direction_ = direction.normalize(); }
+            constexpr void set_direction(const vector3d& direction) { this->direction_ = direction.normalize(); }
 
             /**
              * \brief sets the distance of the ray
              * \throws negative_exception if distance is negative
              * \param distance distance of the ray
              */
-            void set_distance(const float distance)
+            constexpr void set_distance(const float distance)
             {
                 if (distance < 0)
                     throw exception::negative_exception("distance can't be negative");
@@ -193,7 +193,7 @@ namespace bardcore
              * \brief sets the distance of the ray
              * \param point second point, distance will be calculated from the position to this point
              */
-            void set_distance(const point3d& point) noexcept { set_distance(position_.distance(point)); }
+            constexpr void set_distance(const point3d& point) noexcept { set_distance(position_.distance(point)); }
 
             ///////////////////////////////////////////////////////
             ///                    operators                    ///
@@ -218,15 +218,14 @@ namespace bardcore
              * \param ray ray to copy
              * \return reference to this
              */
-            ray& operator=(const ray& ray) noexcept = default;
+            constexpr ray& operator=(const ray& ray) noexcept = default;
 
             /**
              * \brief move assignment
              * \param ray ray to move
              * \return reference to this
              */
-            ray& operator=(ray&& ray) noexcept = default;
-
+            constexpr ray& operator=(ray&& ray) noexcept = default;
 
             /**
              * \brief equal operator (position, direction and distance are equal)
@@ -238,7 +237,7 @@ namespace bardcore
             {
                 return left.position_ == right.position_
                     && left.direction_ == right.direction_
-                    && left.distance_ == right.distance_;
+                    && math::fequals(left.distance_, right.distance_);
             }
 
             /**

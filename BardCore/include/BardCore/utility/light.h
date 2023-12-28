@@ -134,7 +134,7 @@ namespace bardcore
             NODISCARD constexpr friend bool operator==(const light& left, const light& right) noexcept
             {
                 return left.position == right.position
-                    && left.intensity == right.intensity;
+                    && math::fequals(left.intensity, right.intensity);
             }
 
             /**
