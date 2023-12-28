@@ -50,7 +50,8 @@ namespace bardcore
         }
 
     public:
-        static constexpr float epsilon = 0.0001f;
+        INLINE static constexpr float epsilon = 0.00015f;
+        
         /**
          * \brief calculates the square root via Newton-Raphson
          * \note sqrt(0) = 0, e.g : 0^(1/2) = 0
@@ -80,37 +81,40 @@ namespace bardcore
         /**
          * \brief checks if two float values are equal, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a == b with epsilon
          */
         NODISCARD constexpr bool static fequals(const float number1, const float number2)
         {
-            return fabs(number1 - number2) <= (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
+            return fabs(number1 - number2) <= epsilon;
         }
 
         /**
          * \brief checks if left float value is greater than right float value, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a > b with epsilon
          */
         NODISCARD constexpr bool static fgreater_than(const float number1, const float number2)
         {
-            return number1 - number2 > (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
+            return number1 - number2 > epsilon;
         }
 
         /**
          * \brief checks if left float value is less than right float value, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a < b with epsilon
          */
         NODISCARD constexpr bool static fless_than(const float number1, const float number2)
         {
-            return number2 - number1 > (fabs(number1) < fabs(number2) ? fabs(number2) : fabs(number1)) * epsilon;
+            return number2 - number1 > epsilon;
         }
 
         /**
