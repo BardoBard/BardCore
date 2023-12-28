@@ -73,6 +73,6 @@ namespace bardcore
 #include "BardCore/exception/zero_exception.h"
 #include "BardCore/exception/negative_exception.h"
 #include "BardCore/exception/same_object_exception.h"
-
+#include "BardCore/exception/out_of_range_exception.h"
 
 #endif //BARDCORE_BARDCORE_H

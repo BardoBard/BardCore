@@ -48,7 +48,7 @@ namespace bardcore
                 x * vector.y - y * vector.x
             };
         }
-        
+
         /**
          * \brief calculates the dot product of this and another vector
          * \note formula dot product: a . b = Σ a_i * b_i
@@ -59,7 +59,7 @@ namespace bardcore
         {
             return x * vector.x + y * vector.y + z * vector.z;
         }
-        
+
         /**
          * \brief calculates the length of the vector
          * \return length of vector
@@ -68,7 +68,7 @@ namespace bardcore
         {
             return math::sqrt(length_squared());
         }
-        
+
         /**
          * \brief calculates the length squared of the vector
          * \return length squared of vector
@@ -77,7 +77,7 @@ namespace bardcore
         {
             return x * x + y * y + z * z;
         }
-        
+
         /**
          * \brief calculates the angle from -1 to 1 between this and another vector
          * \note -1 means the vectors are opposite, 1 means the vectors are the same
@@ -94,7 +94,7 @@ namespace bardcore
 
             return this->normalize().dot(vector.normalize());
         }
-                
+
         /**
          * \brief calculates the angle in radians between this and another vector
          * \note this method is not constexpr because of the std::acos function, perhaps implement own at some point
@@ -107,7 +107,7 @@ namespace bardcore
         {
             return std::acos(angle_dot(vector));
         }
-        
+
         /**
          * \brief calculates the angle in degrees between this and another vector
          * \note this method is not constexpr because of the std::acos function, perhaps implement own at some point
@@ -124,7 +124,8 @@ namespace bardcore
 #if defined(CXX17) // C++17 or higher (std::optional)
 
         /**
-         * \brief calculates the reflection of this vector on a normalized(normal) only if this vector is not behind normal
+         * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
+         * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d
          * \param normal normal, the vector to reflect on, it will be normalized for you
@@ -134,6 +135,9 @@ namespace bardcore
         {
             const vector3d n = normal.normalize();
             const float dot = n.dot(*this);
+
+            // dot < 0 means the vector is behind the normal
+            // this is not what the reflection intends to do, so return nullopt
             return dot < 0
                        ? std::nullopt
                        : std::make_optional(n * (2 * dot) - *this);
@@ -141,7 +145,8 @@ namespace bardcore
 #elif defined(CXX14) // C++14 (no std::unique_ptr)
 
         /**
-         * \brief calculates the reflection of this vector on a normalized(normal) only if this vector is not behind normal
+         * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
+         * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d
          * \param normal normal, the vector to reflect on, it will be normalized for you
@@ -151,11 +156,14 @@ namespace bardcore
         {
             const vector3d n = normal.normalize();
             const float dot = n.dot(*this);
+
+            // dot < 0 means the vector is behind the normal
+            // this is not what the reflection intends to do, so return nullptr
             return dot < 0
                         ? nullptr
                         : std::make_unique<vector3d>(n * (2 * dot) - *this);
         }
-#endif
+#endif // C++14 (no std::unique_ptr)
     };
 } // namespace bardcore
 #endif //BARDCORE_VECTOR3D_H

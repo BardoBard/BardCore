@@ -87,56 +87,6 @@ namespace bardcore
 
             ~ray() = default;
 
-            /**
-             * \brief gets the position of the ray
-             * \return position of the ray
-             */
-            NODISCARD constexpr const point3d& get_position() const noexcept { return position_; }
-
-            /**
-             * \brief gets the direction of the ray
-             * \return direction of the ray
-             */
-            NODISCARD constexpr const vector3d& get_direction() const noexcept { return direction_; }
-
-            /**
-             * \brief gets distance from the position to the end of the ray
-             * \return distance of the ray
-             */
-            NODISCARD constexpr float get_distance() const noexcept { return distance_; }
-
-            /**
-             * \brief sets a new position of the ray
-             * \param position new position of the ray
-             */
-            void set_position(const point3d& position) noexcept { this->position_ = position; }
-
-            /**
-             * \brief sets the direction of the ray, the direction will be normalized
-             * \throws zero_exception if length of vector is zero
-             * \param direction direction of the ray
-             */
-            void set_direction(const vector3d& direction) { this->direction_ = direction.normalize(); }
-
-            /**
-             * \brief sets the distance of the ray
-             * \throws negative_exception if distance is negative
-             * \param distance distance of the ray
-             */
-            void set_distance(const float distance)
-            {
-                if (distance < 0)
-                    throw exception::negative_exception("distance can't be negative");
-
-                this->distance_ = distance;
-            }
-
-            /**
-             * \brief sets the distance of the ray
-             * \param point second point, distance will be calculated from the position to this point
-             */
-            void set_distance(const point3d& point) noexcept { set_distance(position_.distance(point)); }
-
 
             /**
              * \brief calculates if length is within range of the ray, this could be useful for a quick check before calculating the intersection
@@ -192,6 +142,60 @@ namespace bardcore
 #endif
 
             ///////////////////////////////////////////////////////
+            ///                 getters/setters                 ///
+            ///////////////////////////////////////////////////////
+
+            /**
+             * \brief gets the position of the ray
+             * \return position of the ray
+             */
+            NODISCARD constexpr const point3d& get_position() const noexcept { return position_; }
+
+            /**
+             * \brief gets the direction of the ray
+             * \return direction of the ray
+             */
+            NODISCARD constexpr const vector3d& get_direction() const noexcept { return direction_; }
+
+            /**
+             * \brief gets distance from the position to the end of the ray
+             * \return distance of the ray
+             */
+            NODISCARD constexpr float get_distance() const noexcept { return distance_; }
+
+            /**
+             * \brief sets a new position of the ray
+             * \param position new position of the ray
+             */
+            constexpr void set_position(const point3d& position) noexcept { this->position_ = position; }
+
+            /**
+             * \brief sets the direction of the ray, the direction will be normalized
+             * \throws zero_exception if length of vector is zero
+             * \param direction direction of the ray
+             */
+            constexpr void set_direction(const vector3d& direction) { this->direction_ = direction.normalize(); }
+
+            /**
+             * \brief sets the distance of the ray
+             * \throws negative_exception if distance is negative
+             * \param distance distance of the ray
+             */
+            constexpr void set_distance(const float distance)
+            {
+                if (distance < 0)
+                    throw exception::negative_exception("distance can't be negative");
+
+                this->distance_ = distance;
+            }
+
+            /**
+             * \brief sets the distance of the ray
+             * \param point second point, distance will be calculated from the position to this point
+             */
+            constexpr void set_distance(const point3d& point) noexcept { set_distance(position_.distance(point)); }
+
+            ///////////////////////////////////////////////////////
             ///                    operators                    ///
             ///////////////////////////////////////////////////////
 
@@ -223,7 +227,6 @@ namespace bardcore
              */
             ray& operator=(ray&& ray) noexcept = default;
 
-
             /**
              * \brief equal operator (position, direction and distance are equal)
              * \param left left ray
@@ -234,7 +237,7 @@ namespace bardcore
             {
                 return left.position_ == right.position_
                     && left.direction_ == right.direction_
-                    && left.distance_ == right.distance_;
+                    && math::fequals(left.distance_, right.distance_);
             }
 
             /**
