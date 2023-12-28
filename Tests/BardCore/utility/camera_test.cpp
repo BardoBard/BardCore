@@ -72,13 +72,13 @@ namespace testing
         constexpr unsigned int screen_height = 100;
         constexpr float distance = 7;
 
-        constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
+        CONSTEXPR utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
 
-        constexpr utility::ray ray = cam.shoot_ray(screen_width / 2, screen_height / 2, distance);
+        CONSTEXPR utility::ray ray = cam.shoot_ray(screen_width / 2, screen_height / 2, distance);
 
         constexpr utility::ray ray2_expected = utility::ray(
             position, vector3d(0.76534f, -0.27552f, 0.5816f), 73);
-        constexpr utility::ray ray2 = cam.shoot_ray(68, 12, 73);
+        CONSTEXPR utility::ray ray2 = cam.shoot_ray(68, 12, 73);
 
         EXPECT_EQ(ray, utility::ray(position, direction, distance));
         EXPECT_EQ(ray2, ray2_expected);
@@ -92,10 +92,10 @@ namespace testing
         constexpr unsigned int screen_height = 80;
         constexpr float distance = 50;
 
-        constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
+        CONSTEXPR utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
 
         constexpr auto ray_expected = utility::ray(position, vector3d(0.746306f, 0.38265f, 0.544615f), 50);
-        constexpr utility::ray ray = cam.shoot_ray(2, 63, distance);
+        CONSTEXPR utility::ray ray = cam.shoot_ray(2, 63, distance);
 
         EXPECT_EQ(ray, ray_expected);
     }
@@ -108,7 +108,7 @@ namespace testing
         constexpr unsigned int screen_height = 100;
         constexpr float distance = 56;
 
-        constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
+        CONSTEXPR utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
 
         EXPECT_THROW(cam.shoot_ray(screen_width + 1, screen_height + 1, distance), exception::out_of_range_exception);
         EXPECT_NO_THROW(cam.shoot_ray(screen_width, screen_height, distance));

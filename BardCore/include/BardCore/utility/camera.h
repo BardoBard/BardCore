@@ -172,22 +172,7 @@ namespace bardcore
                     ", screen_width: "
                     << camera.screen_width_ << ", screen_height: " << camera.screen_height_ << "}";
             }
-
-            /**
-             * \brief copy assignment
-             * \param camera camera to copy
-             * \return reference to this
-             */
-            constexpr camera& operator=(const camera& camera) noexcept = default;
-
-            /**
-             * \brief move assignment
-             * \param camera camera to move
-             * \return reference to this
-             */
-            constexpr camera& operator=(camera&& camera) noexcept = default;
-
-
+            
             /**
              * \brief equal operator (position, direction, screen width and height are equal)
              * \param left left camera

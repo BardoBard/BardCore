@@ -8,9 +8,6 @@ added fequals, fgreater_than, fless_than to math (all constexpr)
 added epsilon to math
 28/12/2023
 
-added operator correctnes to dimension3/4
-28/12/2023
-
 added camera class
 28/12/2023
 

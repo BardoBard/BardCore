@@ -17,4 +17,11 @@
 
 #include <BardCore/bardcore.h>
 
+#if defined(CXX20)
+    #define CONSTEXPR constexpr
+#else
+    #define CONSTEXPR const
+#endif
+
+
 using namespace bardcore;

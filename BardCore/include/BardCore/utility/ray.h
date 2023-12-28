@@ -218,14 +218,14 @@ namespace bardcore
              * \param ray ray to copy
              * \return reference to this
              */
-            constexpr ray& operator=(const ray& ray) noexcept = default;
+            ray& operator=(const ray& ray) noexcept = default;
 
             /**
              * \brief move assignment
              * \param ray ray to move
              * \return reference to this
              */
-            constexpr ray& operator=(ray&& ray) noexcept = default;
+            ray& operator=(ray&& ray) noexcept = default;
 
             /**
              * \brief equal operator (position, direction and distance are equal)
