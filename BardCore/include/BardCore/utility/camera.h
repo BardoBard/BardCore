@@ -25,7 +25,6 @@ namespace bardcore
             unsigned int screen_width_{}, screen_height_{}; // screen width and height
 
         private:
-            
             /**
              * \brief this is a helper function to calculate the screen topleft and horizontal and vertical vectors
              * \note this function is called in the constructor
@@ -69,6 +68,35 @@ namespace bardcore
                 set_height(screen_height);
                 calculate_screen();
             }
+
+            /**
+             * \brief copy constructor
+             * \param other camera to copy
+             */
+            constexpr camera(const camera& other) : position_(other.position_), direction_(other.direction_),
+                                                    top_left_(other.top_left_),
+                                                    half_horizontal_(other.half_horizontal_),
+                                                    half_vertical_(other.half_vertical_),
+                                                    screen_width_(other.screen_width_),
+                                                    screen_height_(other.screen_height_)
+            {
+            }
+
+            /**
+             * \brief move constructor
+             * \param other camera to move
+             */
+            constexpr camera(camera&& other) noexcept : position_(std::move(other.position_)),
+                                                        direction_(std::move(other.direction_)),
+                                                        top_left_(std::move(other.top_left_)),
+                                                        half_horizontal_(std::move(other.half_horizontal_)),
+                                                        half_vertical_(std::move(other.half_vertical_)),
+                                                        screen_width_(std::move(other.screen_width_)),
+                                                        screen_height_(std::move(other.screen_height_))
+            {
+            }
+
+            ~camera() = default;
 
             /**
              * \brief shoot a ray from the camera through a pixel on the screen
@@ -172,7 +200,21 @@ namespace bardcore
                     ", screen_width: "
                     << camera.screen_width_ << ", screen_height: " << camera.screen_height_ << "}";
             }
-            
+
+            /**
+             * \brief copy assignment operator
+             * \param other camera to copy
+             * \return this
+             */
+            camera& operator=(const camera&) = default;
+
+            /**
+             * \brief move assignment operator
+             * \param other camera to move
+             * \return this
+             */
+            camera& operator=(camera&&) noexcept = default;
+
             /**
              * \brief equal operator (position, direction, screen width and height are equal)
              * \param left left camera
