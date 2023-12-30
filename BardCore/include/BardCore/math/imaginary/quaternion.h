@@ -56,7 +56,7 @@ namespace bardcore
          * \return rotated 3D object
          */
         template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
-        NODISCARD static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, float theta)
+        NODISCARD constexpr static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, float theta)
         {
             if (to_be_rotated_3d == dimension3<T>::zero())
                 throw exception::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
@@ -65,8 +65,8 @@ namespace bardcore
             theta = math::degrees_to_radians(theta / 2);
 
             //get cos and sin
-            const float cos = std::cos(theta);
-            const float sin = std::sin(theta);
+            const float cos = math::fcos(theta);
+            const float sin = math::fsin(theta);
 
             //get unitvector (aka normalized vector mult sin)
             const vector3d unit_vector = rotation_vector.normalize() * sin; //throws zero_exception

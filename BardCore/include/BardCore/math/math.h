@@ -28,19 +28,24 @@ namespace bardcore
         /**
          * \brief epsilon value for float comparison
          */
-        INLINE static constexpr float epsilon = 0.00015f;
-        
+        INLINE static constexpr float epsilon = 0.0001f;
+
         /**
          * \brief pi constant
          */
         INLINE static constexpr float pi = 3.14159265358979323846f;
 
         /**
+         * \brief pi constant
+         */
+        INLINE static constexpr float pi_2 = 1.57079632679489661923f;
+
+        /**
          * \brief calculates the degrees from radians
          * \param radians radians
          * \return degrees
          */
-        NODISCARD constexpr static float radians_to_degrees(const float radians)
+        NODISCARD constexpr static float radians_to_degrees(const float radians) noexcept
         {
             return radians * 180.0f / math::pi;
         }
@@ -50,7 +55,7 @@ namespace bardcore
          * \param degrees degrees
          * \return radians
          */
-        NODISCARD constexpr static float degrees_to_radians(const float degrees)
+        NODISCARD constexpr static float degrees_to_radians(const float degrees) noexcept
         {
             return degrees * math::pi / 180.0f;
         }
@@ -69,16 +74,138 @@ namespace bardcore
             if (value < 0)
                 throw exception::negative_exception("value can not be negative");
 
+            if (!std::_Is_constant_evaluated())
+                return std::sqrt(value);
+
             // use std at runtime
             // use constexpr at compile time
-            return std::_Is_constant_evaluated()
-                       ? helper_sqrt_newton_raphson(value, value, 0)
-                       : std::sqrt(value);
+            return helper_sqrt_newton_raphson(value, value, 0);
+        }
+
+        /**
+         * \brief calculates the factorial of a number, it uses std at runtime
+         * \note read more at: https://en.wikipedia.org/wiki/Factorial
+         * \param value value to calculate the factorial from
+         * \return factorial of value, e.g: value!
+         */
+        NODISCARD constexpr static float factorial(const unsigned int value) noexcept
+        {
+            if (value == 0)
+                return 1;
+
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::tgammaf(static_cast<float>(value) + 1);
+            
+            return static_cast<float>(value) * factorial(value - 1);
+        }
+
+        /**
+         * \brief calculates the power of a number, it uses std at runtime
+         * \note read more at: https://en.wikipedia.org/wiki/Exponentiation
+         * \param base base, the value to calculate the power from
+         * \param exponent exponent
+         * \return float(base)^exponent
+         */
+        NODISCARD constexpr static float pow(const float base, const int exponent) noexcept
+        {
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::powf(base, static_cast<float>(exponent));
+
+            if (std::_Is_nan(base) || base == INFINITY || base == -INFINITY) // base is infinity
+                return NAN;
+
+            if (exponent == 0 || fequals(base, 1.f)) // base is 1 or exponent is 0
+                return 1;
+
+            return exponent > 0
+                       ? base * pow(base, exponent - 1)
+                       : 1 / (base * pow(base, -exponent - 1));
+        }
+
+        /**
+         * \brief calculates the exponential function of a number, it uses std at runtime
+         * \note read more at: https://en.wikipedia.org/wiki/Exponential_function#Formal_definition
+         * \note the algorithm is not accurate for a value above 12
+         * \param value exponent, the value to calculate the exponential function from (can be negative)
+         * \return exponential function of value
+         */
+        NODISCARD constexpr static float fexp(const float value) noexcept
+        {
+            // the algorithm is not accurate for a value above 12
+            if (!std::_Is_constant_evaluated() || fgreater_than(fabs(value), 12))
+                return std::exp(value);
+
+            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+                return NAN;
+
+            float result = 1.0f;
+
+            for (int index = 1; index < 1'000; ++index) // 1 thousand iterations as hard limit
+            {
+                const float r = pow(fabs(value), index) / factorial(index);
+
+                // r is near zero, adding it to the result will not change the result
+                // r is not a number or infinity, stop calculating
+                if (fequals(r, 0.f) || (std::_Is_nan(r) || r == INFINITY || r == -INFINITY))
+                    break;
+
+                result += r;
+            }
+
+            return fsign(value) == 1 ? result : 1.0f / result;
+        }
+
+        /**
+         * \brief calculates the cosine of a number, it uses std at runtime
+         * \note read more at: https://blogs.ubc.ca/infiniteseriesmodule/units/unit-3-power-series/taylor-series/the-maclaurin-expansion-of-cosx/
+         * \note using the Maclaurin Expansion
+         * \param value value to calculate the cosine from
+         * \return cosine of value
+         */
+        NODISCARD constexpr static float fcos(const float value) noexcept
+        {
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::cosf(value);
+
+            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+                return NAN;
+
+            float result = 0.0f;
+            for (int index = 0; index < 1'000; ++index) // 1 thousand iterations as hard limit
+            {
+                //formula: Σ (-1)^n * x^(2n) / (2n)!
+                const float r = pow(-1, index) * pow(value, 2 * index) / factorial(2 * index);
+
+                // r is near zero, adding it to the result will not change the result
+                // r is not a number or infinity, stop calculating
+                if (fequals(r, 0.f) || (std::_Is_nan(r) || r == INFINITY || r == -INFINITY))
+                    break;
+
+                result += r;
+            }
+
+            return result;
+        }
+
+        /**
+         * \brief calculates the sine of a number, it uses std at runtime
+         * \note read more at: https://blogs.ubc.ca/infiniteseriesmodule/units/unit-3-power-series/taylor-series/maclaurin-expansion-of-sinx/
+         * \note using the Maclaurin Expansion
+         * \param value value to calculate the sine from
+         * \return sine of value
+         */
+        NODISCARD constexpr static float fsin(const float value) noexcept
+        {
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::sinf(value);
+
+            return fcos(value - pi_2);
         }
 
         /**
          * \brief calculates the mod of a number, with a divisor
          * \note read more at: https://en.wikipedia.org/wiki/Modulo_operation
+         * \note reference: https://cplusplus.com/reference/cmath/fmod/
          * \note example: fmod(5.3, 2) = 1.3
          * \throws zero_exception if divisor is zero
          * \param number number to calculate the modulo from
@@ -94,7 +221,6 @@ namespace bardcore
                 return std::fmod(number, divisor);
 
             // for constexpr we don't care that much about performance
-
 
             if (fequals(number, 0.f))
                 return 0;
@@ -113,9 +239,9 @@ namespace bardcore
          * \param value float value
          * \return sign int value (-1, 0, 1), special case: 0
          */
-        NODISCARD constexpr static int fsign(const float value)
+        NODISCARD constexpr static int fsign(const float value) noexcept
         {
-            return value == 0
+            return fequals(value, 0)
                        ? 0
                        : (value < 0
                               ? -1
@@ -128,7 +254,7 @@ namespace bardcore
          * \param value float value
          * \return absolute float value
          */
-        NODISCARD constexpr static float fabs(const float value)
+        NODISCARD constexpr static float fabs(const float value) noexcept
         {
             return fless_than(value, 0)
                        ? -value
@@ -139,11 +265,12 @@ namespace bardcore
          * \brief checks if two float values are equal, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is INFINITY or NAN it will return false
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a == b with epsilon
          */
-        NODISCARD constexpr bool static fequals(const float number1, const float number2)
+        NODISCARD constexpr bool static fequals(const float number1, const float number2) noexcept
         {
             return fabs(number1 - number2) <= epsilon;
         }
@@ -152,11 +279,12 @@ namespace bardcore
          * \brief checks if left float value is greater than right float value, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is INFINITY or NAN it will return false
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a > b with epsilon
          */
-        NODISCARD constexpr bool static fgreater_than(const float number1, const float number2)
+        NODISCARD constexpr bool static fgreater_than(const float number1, const float number2) noexcept
         {
             return number1 - number2 > epsilon;
         }
@@ -165,11 +293,12 @@ namespace bardcore
          * \brief checks if left float value is less than right float value, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is INFINITY or NAN it will return false
          * \param number1 number 1 to compare
          * \param number2 number 2 to compare
          * \return a < b with epsilon
          */
-        NODISCARD constexpr bool static fless_than(const float number1, const float number2)
+        NODISCARD constexpr bool static fless_than(const float number1, const float number2) noexcept
         {
             return number2 - number1 > epsilon;
         }
