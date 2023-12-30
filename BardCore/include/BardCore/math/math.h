@@ -87,13 +87,14 @@ namespace bardcore
          */
         NODISCARD constexpr static float fmod(float number, const float divisor)
         {
-            if (!std::is_constant_evaluated()) // use std if runtime
-                std::fmod(number, divisor);
+            if (fequals(divisor, 0))
+                throw exception::zero_exception("divisor can not be zero");
+            
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::fmod(number, divisor);
 
             // for constexpr we don't care that much about performance
 
-            if (fequals(divisor, 0.f))
-                throw exception::zero_exception("divisor can not be zero");
 
             if (fequals(number, 0.f))
                 return 0;
@@ -190,9 +191,6 @@ namespace bardcore
             if (number1 < number2)
                 //TODO: make different exception
                 throw exception::negative_exception("a must be greater than b");
-
-            if (std::is_constant_evaluated())
-                std::gcd(number1, number2); // use std if runtime
 
             const unsigned int mod = number1 % number2;
 
