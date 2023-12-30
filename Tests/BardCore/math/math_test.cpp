@@ -82,20 +82,22 @@ namespace testing
     //test euclidean_gcd constexpr
     TEST(math_test, euclidean_gcd_test)
     {
-        constexpr int result = math::euclidean_gcd(1071, 462);
-        
-        ASSERT_EQ(21, result);
+        constexpr unsigned int result = math::euclidean_gcd(1071, 462);
+        constexpr unsigned int result2 = math::euclidean_gcd(564, 34);
+
+        ASSERT_EQ(21, result); // test compile time
+        ASSERT_EQ(2, result2); // test compile time
+
+        ASSERT_EQ(21, math::euclidean_gcd(1071, 462)); // test runtime
+        ASSERT_EQ(2, math::euclidean_gcd(564, 34)); // test runtime
     }
 
     //test euclidean_gcd exception
     TEST(math_test, euclidean_gcd_exception_test)
     {
-        ASSERT_THROW(math::euclidean_gcd(-1, 1), exception::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(1, -1), exception::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(-1, -1), exception::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(1, 0), exception::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(0, 1), exception::negative_exception);
-        ASSERT_THROW(math::euclidean_gcd(0, 0), exception::negative_exception);
+        ASSERT_THROW(math::euclidean_gcd(1, 0), exception::zero_exception);
+        ASSERT_THROW(math::euclidean_gcd(0, 1), exception::zero_exception);
+        ASSERT_THROW(math::euclidean_gcd(0, 0), exception::zero_exception);
         ASSERT_THROW(math::euclidean_gcd(1, 2), exception::negative_exception);
     }
 
@@ -146,7 +148,7 @@ namespace testing
         ASSERT_FALSE(math::fgreater_than(a, d1));
     }
 
-    TEST( test_math, fless_than_test)
+    TEST(test_math, fless_than_test)
     {
         constexpr float a = 1.0f;
         constexpr float b = 1.0f;
@@ -168,5 +170,57 @@ namespace testing
         ASSERT_FALSE(math::fless_than(a, b1));
         ASSERT_FALSE(math::fless_than(a, c1));
         ASSERT_FALSE(math::fless_than(a, d1));
+    }
+
+    TEST(math_test, sign_test)
+    {
+        constexpr float a = 1;
+        constexpr float b = 0;
+        constexpr float c = -1;
+        constexpr float d = -0.4;
+
+        ASSERT_EQ(1, math::fsign(a));
+        ASSERT_EQ(0, math::fsign(b));
+        ASSERT_EQ(-1, math::fsign(c));
+        ASSERT_EQ(-1, math::fsign(d));
+    }
+
+    TEST(math_test, abs_test)
+    {
+        constexpr float a = 1;
+        constexpr float b = 0;
+        constexpr float c = -1;
+        constexpr float d = -0.4;
+        constexpr float e = -1.2;
+        constexpr float f = -42;
+
+        ASSERT_TRUE(math::fequals(1, math::fabs(a)));
+        ASSERT_TRUE(math::fequals(0, math::fabs(b)));
+        ASSERT_TRUE(math::fequals(1, math::fabs(c)));
+        ASSERT_TRUE(math::fequals(0.4, math::fabs(d)));
+        ASSERT_TRUE(math::fequals(1.2, math::fabs(e)));
+        ASSERT_TRUE(math::fequals(42, math::fabs(f)));
+    }
+
+    TEST(math_test, fmod_test)
+    {
+        //https://cplusplus.com/reference/cmath/fmod/
+        constexpr float compile_time_a = math::fmod(5.3, 2);
+        constexpr float compile_time_b = math::fmod(18.5, 4.2);
+        constexpr float compile_time_c = math::fmod(0, 1.2);
+        constexpr float compile_time_e = math::fmod(1.2, 0.1);
+        constexpr float compile_time_f = math::fmod(1.2, -0.1);
+        constexpr float compile_time_g = math::fmod(-1.2, 0.1);
+
+        ASSERT_TRUE(math::fequals(1.3f, compile_time_a));
+        ASSERT_TRUE(math::fequals(1.7f, compile_time_b));
+        ASSERT_TRUE(math::fequals(0, compile_time_c));
+        ASSERT_TRUE(math::fequals(0, compile_time_e));
+        ASSERT_TRUE(math::fequals(0, compile_time_f));
+        ASSERT_TRUE(math::fequals(0, compile_time_g));
+        
+        ASSERT_THROW(math::fmod(1, 0), exception::zero_exception);
+        ASSERT_THROW(math::fmod(6, -0), exception::zero_exception);
+        ASSERT_THROW(math::fmod(-12, 0), exception::zero_exception);
     }
 } // namespace testing

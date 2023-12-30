@@ -16,14 +16,20 @@ namespace bardcore
          * \param prev previous value
          * \return square root of value
          */
-        NODISCARD constexpr static float sqrt_newton_raphson(const float value, const float curr, const float prev)
+        NODISCARD constexpr static float helper_sqrt_newton_raphson(const float value, const float curr,
+                                                                    const float prev)
         {
             return curr == prev
                        ? curr
-                       : sqrt_newton_raphson(value, 0.5f * (curr + value / curr), curr);
+                       : helper_sqrt_newton_raphson(value, 0.5f * (curr + value / curr), curr);
         }
 
     public:
+        /**
+         * \brief epsilon value for float comparison
+         */
+        INLINE static constexpr float epsilon = 0.00015f;
+        
         /**
          * \brief pi constant
          */
@@ -50,10 +56,9 @@ namespace bardcore
         }
 
     public:
-        INLINE static constexpr float epsilon = 0.00015f;
-        
         /**
-         * \brief calculates the square root via Newton-Raphson
+         * \brief calculates sqrt at compile time if possible, otherwise it uses std::sqrt
+         * \note calculates the square root via Newton-Raphson, during compile time
          * \note sqrt(0) = 0, e.g : 0^(1/2) = 0
          * \param value value to calculate the square root from
          * \throws negative_exception if value is negative
@@ -64,7 +69,56 @@ namespace bardcore
             if (value < 0)
                 throw exception::negative_exception("value can not be negative");
 
-            return sqrt_newton_raphson(value, value, 0);
+            // use std at runtime
+            // use constexpr at compile time
+            return std::_Is_constant_evaluated()
+                       ? helper_sqrt_newton_raphson(value, value, 0)
+                       : std::sqrt(value);
+        }
+
+        /**
+         * \brief calculates the mod of a number, with a divisor
+         * \note read more at: https://en.wikipedia.org/wiki/Modulo_operation
+         * \note example: fmod(5.3, 2) = 1.3
+         * \throws zero_exception if divisor is zero
+         * \param number number to calculate the modulo from
+         * \param divisor divisor, can not be zero
+         * \return 
+         */
+        NODISCARD constexpr static float fmod(float number, const float divisor)
+        {
+            if (!std::is_constant_evaluated()) // use std if runtime
+                std::fmod(number, divisor);
+
+            // for constexpr we don't care that much about performance
+
+            if (fequals(divisor, 0.f))
+                throw exception::zero_exception("divisor can not be zero");
+
+            if (fequals(number, 0.f))
+                return 0;
+
+            number = fabs(number); // make number positive, it doesn't make a difference
+
+            while (fgreater_than(number, fabs(divisor)) || fequals(number, fabs(divisor)))
+                number -= fabs(divisor);
+
+            return number * static_cast<float>(fsign(divisor));
+        }
+
+        /**
+         * \brief calculates the sign value of a float value
+         * \note read more at: https://en.wikipedia.org/wiki/Sign_(mathematics)
+         * \param value float value
+         * \return sign int value (-1, 0, 1), special case: 0
+         */
+        NODISCARD constexpr static int fsign(const float value)
+        {
+            return value == 0
+                       ? 0
+                       : (value < 0
+                              ? -1
+                              : 1);
         }
 
         /**
@@ -75,7 +129,9 @@ namespace bardcore
          */
         NODISCARD constexpr static float fabs(const float value)
         {
-            return value < 0 ? -value : value;
+            return fless_than(value, 0)
+                       ? -value
+                       : value;
         }
 
         /**
@@ -119,6 +175,7 @@ namespace bardcore
 
         /**
          * \brief calculates the greatest common divisor of two numbers, using the euclidean algorithm
+         * \note read more at: https://en.wikipedia.org/wiki/Euclidean_algorithm#Procedure
          * \note this algorithm is not fast but it was fun to make, it's quite fast for small numbers
          * \throws negative_exception if a or b is negative
          * \throws negative_exception if a or b is negative
@@ -126,15 +183,18 @@ namespace bardcore
          * \param number2 number 2
          * \return greatest common divisor of a and b
          */
-        NODISCARD constexpr static int euclidean_gcd(const int number1, const int number2)
+        NODISCARD constexpr static unsigned int euclidean_gcd(const unsigned int number1, const unsigned int number2)
         {
-            if (number1 <= 0 || number2 <= 0)
-                throw exception::negative_exception("a and b must not be negative");
+            if (number1 == 0 || number2 == 0)
+                throw exception::zero_exception("a and b must not be zero");
             if (number1 < number2)
                 //TODO: make different exception
                 throw exception::negative_exception("a must be greater than b");
 
-            const auto mod = number1 % number2;
+            if (std::is_constant_evaluated())
+                std::gcd(number1, number2); // use std if runtime
+
+            const unsigned int mod = number1 % number2;
 
             if (mod == 0) //stop condition
                 return number2;
