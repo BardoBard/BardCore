@@ -41,6 +41,11 @@ namespace bardcore
         INLINE static constexpr float pi_2 = 1.57079632679489661923f;
 
         /**
+         * \brief pi constant
+         */
+        INLINE static constexpr float pi_4 = 0.785398163397448309616f;
+
+        /**
          * \brief calculates the degrees from radians
          * \param radians radians
          * \return degrees
@@ -152,7 +157,9 @@ namespace bardcore
                 result += r;
             }
 
-            return fsign(value) == 1 ? result : 1.0f / result;
+            return fsign(value) == 1
+                       ? result
+                       : 1.0f / result;
         }
 
         /**
@@ -199,7 +206,35 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::sinf(value);
 
+            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+                return NAN;
+
             return fcos(value - pi_2);
+        }
+
+        /**
+         * \brief calculates the tangent of a number, it uses std at runtime
+         * \note read more at: https://en.wikipedia.org/wiki/Trigonometric_functions
+         * \note using the Maclaurin Expansion
+         * \note compile time might be slightly inaccurate when close to the limit, e.g: somewhere close to pi
+         * \param value value to calculate the tangent from
+         * \return tangent of value
+         */
+        NODISCARD constexpr static float ftan(const float value) noexcept
+        {
+            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+                return NAN;
+            
+            if (fequals(fmod(value, pi), 0.f)) // value is a multiple of pi
+                return 0;
+
+            if (!fequals(value, 0.f) && fequals(fmod(value, pi_2), 0.f)) // value is a multiple of pi/2
+                return NAN;
+            
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::tanf(value);
+            
+            return fsin(value) / fcos(value);
         }
 
         /**

@@ -254,6 +254,10 @@ namespace testing
         constexpr float compile_time_d = math::fsin(6);
         constexpr float compile_time_e = math::fsin(-6);
         constexpr float compile_time_f = math::fsin(10.6f);
+        constexpr float compile_time_g = math::fsin(math::pi);
+        constexpr float compile_time_h = math::fsin(math::pi_2);
+        constexpr float compile_time_i = math::fsin(INFINITY);
+        constexpr float compile_time_j = math::fsin(NAN);
 
         // compile time tests
         ASSERT_TRUE(math::fequals(0, compile_time_a));
@@ -262,6 +266,10 @@ namespace testing
         ASSERT_TRUE(math::fequals(-0.27942f, compile_time_d));
         ASSERT_TRUE(math::fequals(0.27942f, compile_time_e));
         ASSERT_TRUE(math::fequals(-0.92277f, compile_time_f));
+        ASSERT_TRUE(math::fequals(0, compile_time_g));
+        ASSERT_TRUE(math::fequals(1, compile_time_h));
+        ASSERT_TRUE(std::isnan(compile_time_i));
+        ASSERT_TRUE(std::isnan(compile_time_j));
 
         // runtime tests
         ASSERT_TRUE(math::fequals(0, math::fsin(0)));
@@ -270,6 +278,10 @@ namespace testing
         ASSERT_TRUE(math::fequals(-0.27942f, math::fsin(6)));
         ASSERT_TRUE(math::fequals(0.27942f, math::fsin(-6)));
         ASSERT_TRUE(math::fequals(-0.92277f, math::fsin(10.6f)));
+        ASSERT_TRUE(math::fequals(0, math::fsin(math::pi)));
+        ASSERT_TRUE(math::fequals(1, math::fsin(math::pi_2)));
+        ASSERT_TRUE(std::isnan(math::fsin(INFINITY)));
+        ASSERT_TRUE(std::isnan(math::fsin(NAN)));
     }
 
     TEST(math_test, fcos)
@@ -280,6 +292,9 @@ namespace testing
         constexpr float compile_time_d = math::fcos(6);
         constexpr float compile_time_e = math::fcos(-6);
         constexpr float compile_time_f = math::fcos(10.6f);
+        constexpr float compile_time_g = math::fcos(math::pi);
+        constexpr float compile_time_h = math::fcos(math::pi_2);
+        constexpr float compile_time_i = math::fcos(math::pi_4);
 
         // compile time tests
         ASSERT_TRUE(math::fequals(1, compile_time_a));
@@ -288,6 +303,9 @@ namespace testing
         ASSERT_TRUE(math::fequals(0.96017f, compile_time_d));
         ASSERT_TRUE(math::fequals(0.96017f, compile_time_e));
         ASSERT_TRUE(math::fequals(-0.3852f, compile_time_f));
+        ASSERT_TRUE(math::fequals(-1, compile_time_g));
+        ASSERT_TRUE(math::fequals(0, compile_time_h));
+        ASSERT_TRUE(math::fequals(math::sqrt(2) / 2, compile_time_i));
 
         // runtime tests
         ASSERT_TRUE(math::fequals(1, math::fcos(0)));
@@ -296,6 +314,9 @@ namespace testing
         ASSERT_TRUE(math::fequals(0.96017f, math::fcos(6)));
         ASSERT_TRUE(math::fequals(0.96017f, math::fcos(-6)));
         ASSERT_TRUE(math::fequals(-0.38534f, math::fcos(10.6f)));
+        ASSERT_TRUE(math::fequals(-1, math::fcos(math::pi)));
+        ASSERT_TRUE(math::fequals(0, math::fcos(math::pi_2)));
+        ASSERT_TRUE(math::fequals(math::sqrt(2) / 2, math::fcos(math::pi_4)));
 
         // infinity and nan tests
         constexpr float compile_time_nan = math::fcos(NAN);
@@ -304,6 +325,56 @@ namespace testing
         ASSERT_TRUE(std::isnan(math::fcos(NAN)));
         ASSERT_TRUE(std::isnan(math::fcos(INFINITY)));
         ASSERT_TRUE(std::isnan(math::fcos(-INFINITY)));
+
+        ASSERT_TRUE(std::isnan(compile_time_nan));
+        ASSERT_TRUE(std::isnan(compile_time_inf));
+        ASSERT_TRUE(std::isnan(compile_time_ninf));
+    }
+
+    TEST(math_test, ftan)
+    {
+        constexpr float compile_time_a = math::ftan(0);
+        constexpr float compile_time_b = math::ftan(1);
+        constexpr float compile_time_c = math::ftan(-1);
+        constexpr float compile_time_d = math::ftan(6);
+        constexpr float compile_time_e = math::ftan(-6);
+        constexpr float compile_time_f = math::ftan(10.6f);
+        constexpr float compile_time_g = math::ftan(math::pi);
+        constexpr float compile_time_h = math::ftan(math::pi_2);
+        constexpr float compile_time_i = math::ftan(math::pi_4);
+        constexpr float compile_time_j = math::ftan(math::pi_2 + 3 * math::pi - 0.05f);
+
+        // compile time tests
+        ASSERT_TRUE(math::fequals(0, compile_time_a));
+        ASSERT_TRUE(math::fequals(1.5575f, compile_time_b));
+        ASSERT_TRUE(math::fequals(-1.5575f, compile_time_c));
+        ASSERT_TRUE(math::fequals(-0.29101f, compile_time_d));
+        ASSERT_TRUE(math::fequals(0.29101f, compile_time_e));
+        ASSERT_TRUE(math::fequals(2.39534f, compile_time_f));
+        ASSERT_TRUE(math::fequals(0, compile_time_g));
+        ASSERT_TRUE(std::isnan(compile_time_h));
+        ASSERT_TRUE(math::fequals(1, compile_time_i));
+        ASSERT_NEAR(19.9f, compile_time_j, 0.1f);
+
+        // runtime tests
+        ASSERT_TRUE(math::fequals(0, math::ftan(0)));
+        ASSERT_TRUE(math::fequals(1.5574f, math::ftan(1)));
+        ASSERT_TRUE(math::fequals(-1.5574f, math::ftan(-1)));
+        ASSERT_TRUE(math::fequals(-0.29101f, math::ftan(6)));
+        ASSERT_TRUE(math::fequals(0.29101f, math::ftan(-6)));
+        ASSERT_TRUE(math::fequals(2.3947f, math::ftan(10.6f)));
+        ASSERT_TRUE(math::fequals(0, math::ftan(math::pi)));
+        ASSERT_TRUE(std::isnan(math::ftan(math::pi_2)));
+        ASSERT_TRUE(math::fequals(1, math::ftan(math::pi_4)));
+        ASSERT_NEAR(19.9f, math::ftan(math::pi_2 + 3 * math::pi - 0.05f), 0.1f);
+
+        // infinity and nan tests
+        constexpr float compile_time_nan = math::ftan(NAN);
+        constexpr float compile_time_inf = math::ftan(INFINITY);
+        constexpr float compile_time_ninf = math::ftan(-INFINITY);
+        ASSERT_TRUE(std::isnan(math::ftan(NAN)));
+        ASSERT_TRUE(std::isnan(math::ftan(INFINITY)));
+        ASSERT_TRUE(std::isnan(math::ftan(-INFINITY)));
 
         ASSERT_TRUE(std::isnan(compile_time_nan));
         ASSERT_TRUE(std::isnan(compile_time_inf));
