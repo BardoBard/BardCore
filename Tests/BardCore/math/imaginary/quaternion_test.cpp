@@ -62,7 +62,7 @@ namespace testing
         constexpr point3d point = {4, 5, 6};
         constexpr float theta = 0;
 
-        const point3d result = quaternion::rotate(point, vector, theta);
+        constexpr point3d result = quaternion::rotate(point, vector, theta);
 
 
         ASSERT_NEAR(4, result.x, ROUND_EPSILON);
@@ -76,7 +76,7 @@ namespace testing
         constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 270.f;
 
-        const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
+        constexpr vector3d result = quaternion::rotate(vector, rotation_vector, theta);
 
         ASSERT_NEAR(1.484f, result.x, ROUND_THREE_DECIMALS);
         ASSERT_NEAR(6.175f, result.y, ROUND_THREE_DECIMALS);
@@ -89,7 +89,7 @@ namespace testing
         constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 360.f;
 
-        const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
+        constexpr vector3d result = quaternion::rotate(vector, rotation_vector, theta);
 
         ASSERT_NEAR(4, result.x, ROUND_ONE_DECIMALS);
         ASSERT_NEAR(5, result.y, ROUND_ONE_DECIMALS);
@@ -103,7 +103,7 @@ namespace testing
         constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = 0;
 
-        const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
+        constexpr vector3d result = quaternion::rotate(vector, rotation_vector, theta);
 
         ASSERT_NEAR(4, result.x, ROUND_EPSILON);
         ASSERT_NEAR(5, result.y, ROUND_EPSILON);
@@ -117,7 +117,7 @@ namespace testing
         constexpr vector3d vector = {4, 5, 6};
         constexpr float theta = -90.f;
 
-        const vector3d result = quaternion::rotate(vector, rotation_vector, theta);
+        constexpr vector3d result = quaternion::rotate(vector, rotation_vector, theta);
 
         ASSERT_NEAR(1.484f, result.x, ROUND_THREE_DECIMALS);
         ASSERT_NEAR(6.175f, result.y, ROUND_THREE_DECIMALS);
