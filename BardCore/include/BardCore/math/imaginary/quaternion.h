@@ -80,7 +80,7 @@ namespace bardcore
             //quaternion from given point
             const quaternion p = quaternion(0, to_be_rotated_3d.x, to_be_rotated_3d.y, to_be_rotated_3d.z);
 
-            const quaternion result = con_q * p * q;
+            const quaternion result = con_q.multiply(p).multiply(q);
 
             return {result.y, result.z, result.w};
         }
@@ -112,7 +112,7 @@ namespace bardcore
             //quaternion from given point
             const quaternion p = quaternion(0, to_be_mirrored_3d.x, to_be_mirrored_3d.y, to_be_mirrored_3d.z);
 
-            const quaternion result = con_q * p * q;
+            const quaternion result = con_q.multiply(p.multiply(q));
 
             return {result.y, result.z, result.w};
         }
@@ -124,7 +124,7 @@ namespace bardcore
          * \param quaternion other quaternion
          * \return multiplied quaternion
          */
-        NODISCARD constexpr quaternion operator*(const quaternion& quaternion) const noexcept
+        NODISCARD constexpr quaternion multiply(const quaternion& quaternion) const noexcept
         {
             const float real = (x * quaternion.x - y * quaternion.y - z * quaternion.z - w * quaternion.w);
             const float i = (x * quaternion.y + y * quaternion.x + z * quaternion.w - w * quaternion.z);

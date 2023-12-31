@@ -8,7 +8,7 @@ namespace testing
         constexpr quaternion quaternion1 = {1, 2, 3, 4};
         constexpr quaternion quaternion2 = {5, 6, 7, 8};
 
-        constexpr quaternion result = quaternion1 * quaternion2;
+        constexpr quaternion result = quaternion1.multiply(quaternion2);
 
         ASSERT_EQ(-60.f, result.get_real());
         ASSERT_EQ(12.f, result.get_i());
@@ -21,7 +21,7 @@ namespace testing
         constexpr quaternion quaternion1 = {-56, 0, 2, 1};
         constexpr quaternion quaternion2 = {9, -3, 0, 9};
 
-        constexpr quaternion result = quaternion1 * quaternion2;
+        constexpr quaternion result = quaternion1.multiply(quaternion2);
 
         ASSERT_EQ(-513.f, result.get_real());
         ASSERT_EQ(186.f, result.get_i());

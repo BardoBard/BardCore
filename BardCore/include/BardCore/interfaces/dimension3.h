@@ -104,6 +104,7 @@ namespace bardcore
          * \brief subtracts a dimension3 from another dimension3 and stores the result in a new dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
+         * \return new dimension3
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         NODISCARD constexpr T operator-(const Derived& other) const noexcept
@@ -126,6 +127,7 @@ namespace bardcore
          * \brief adds a dimension3 from another dimension3 and stores the result in a new dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
+         * \return new dimension3
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
         NODISCARD constexpr T operator+(const Derived& other) const noexcept
@@ -146,6 +148,7 @@ namespace bardcore
         /**
          * \brief multiplies a dimension3 with n and stores the result in a new dimension3
          * \param n float to multiply with
+         * \return new dimension3
         */
         NODISCARD constexpr T operator*(const float n) const noexcept
         {
@@ -156,6 +159,7 @@ namespace bardcore
          * \brief divides a dimension3 with n and stores the result in a new dimension3
          * \throws std::invalid_argument if n is 0
          * \param n float to divide with
+         * \return new dimension3
         */
         NODISCARD constexpr T operator/(const float n) const
         {
@@ -169,9 +173,10 @@ namespace bardcore
          * \brief adds a dimension3 to this dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
+         * \return this
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
-        constexpr Derived& operator+=(const Derived& other) noexcept
+        constexpr dimension3& operator+=(const Derived& other) noexcept
         {
             x += other.x;
             y += other.y;
@@ -182,8 +187,9 @@ namespace bardcore
         /**
          * \brief adds a float to this dimension3
          * \param n float to add with
+         * \return this
          */
-        constexpr T& operator+=(const float n) noexcept
+        constexpr dimension3& operator+=(const float n) noexcept
         {
             x += n;
             y += n;
@@ -195,9 +201,10 @@ namespace bardcore
          * \brief subtracts this dimension3 from this dimension3
          * \tparam Derived a derived class of dimension3, e.g. point3d
          * \param other other dimension3
+         * \return this
         */
         template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
-        constexpr Derived& operator-=(const Derived& other) noexcept
+        constexpr dimension3& operator-=(const Derived& other) noexcept
         {
             x -= other.x;
             y -= other.y;
@@ -208,8 +215,9 @@ namespace bardcore
         /**
          * \brief subtracts a float from this dimension3
          * \param n float to subtract with
+         * \return this
          */
-        constexpr T& operator-=(const float n) noexcept
+        constexpr dimension3& operator-=(const float n) noexcept
         {
             x -= n;
             y -= n;
@@ -220,8 +228,9 @@ namespace bardcore
         /**
          * \brief multiplies this dimension3 with n
          * \param n float to multiply with
+         * \return this
         */
-        constexpr T& operator*=(const float n) noexcept
+        constexpr dimension3& operator*=(const float n) noexcept
         {
             x *= n;
             y *= n;
@@ -233,8 +242,9 @@ namespace bardcore
          * \brief divides this dimension3 with n
          * \throws zero_exception if n is 0
          * \param n float to divide with
+         * \return this
         */
-        constexpr T& operator/=(const float n)
+        constexpr dimension3& operator/=(const float n)
         {
             if (n == 0.f)
                 throw exception::zero_exception("division by zero");

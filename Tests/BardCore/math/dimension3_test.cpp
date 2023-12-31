@@ -128,4 +128,26 @@ namespace testing
         ASSERT_NEAR(101.5f, result.y, ROUND_ONE_DECIMALS);
         ASSERT_NEAR(136.5f, result.z, ROUND_ONE_DECIMALS);
     }
+
+    TEST(dimension3_test, operator_tests)
+    {
+        point3d point1 = {10, 20, 30}; //original point
+        const point3d point2 = {54, 32, 21};
+        const point3d point3 = {45, 23, 12};
+
+        const vector3d vector1 = {45, 23, 12};
+
+        ASSERT_EQ(point3d(64, 52, 51), point1 + point2);
+        ASSERT_EQ(point3d(-35, -3, 18), point1 - point3);
+        ASSERT_EQ(point3d(20, 40, 60), point1 * 2);
+        ASSERT_EQ(point3d(5, 10, 15), point1 / 2);
+
+        ASSERT_EQ(point3d(12, 22, 32), point1 += 2);
+        ASSERT_EQ(point3d(10, 20, 30), point1 -= 2);
+        ASSERT_EQ(point3d(20, 40, 60), point1 *= 2);
+        ASSERT_EQ(point3d(10, 20, 30), point1 /= 2);
+
+        ASSERT_EQ(point3d(55, 43, 42), point1 += vector1);
+        ASSERT_EQ(point3d(10, 20, 30), point1 -= vector1);
+    }
 } // namespace testing
