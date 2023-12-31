@@ -8,20 +8,20 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = {origin, direction, distance};
 
-        ASSERT_EQ(1.f, ray.get_position().x);
-        ASSERT_EQ(2.f, ray.get_position().y);
-        ASSERT_EQ(3.f, ray.get_position().z);
+        ASSERT_EQ(1.0, ray.get_position().x);
+        ASSERT_EQ(2.0, ray.get_position().y);
+        ASSERT_EQ(3.0, ray.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray.get_distance());
+        ASSERT_EQ(7.0, ray.get_distance());
     }
 
     //test constructor start point, end point
@@ -32,16 +32,16 @@ namespace testing
 
         constexpr utility::ray ray = {origin, end};
 
-        ASSERT_EQ(1.f, ray.get_position().x);
-        ASSERT_EQ(-2.f, ray.get_position().y);
-        ASSERT_EQ(3.f, ray.get_position().z);
+        ASSERT_EQ(1.0, ray.get_position().x);
+        ASSERT_EQ(-2.0, ray.get_position().y);
+        ASSERT_EQ(3.0, ray.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(-0.402f, ray.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.562f, ray.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.723f, ray.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.402, ray.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.562, ray.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.723, ray.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_NEAR(12.45f, ray.get_distance(), ROUND_TWO_DECIMALS);
+        ASSERT_NEAR(12.45, ray.get_distance(), ROUND_TWO_DECIMALS);
     }
 
     //test move constructor
@@ -49,22 +49,22 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = utility::ray(origin, direction, distance);
 
         constexpr utility::ray ray1 = std::move(ray);
 
-        ASSERT_EQ(1.f, ray1.get_position().x);
-        ASSERT_EQ(2.f, ray1.get_position().y);
-        ASSERT_EQ(3.f, ray1.get_position().z);
+        ASSERT_EQ(1.0, ray1.get_position().x);
+        ASSERT_EQ(2.0, ray1.get_position().y);
+        ASSERT_EQ(3.0, ray1.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray1.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray1.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray1.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray1.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray1.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray1.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray1.get_distance());
+        ASSERT_EQ(7.0, ray1.get_distance());
     }
 
     //test copy constructor
@@ -72,22 +72,22 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = utility::ray(origin, direction, distance);
 
         constexpr utility::ray ray1 = ray;
 
-        ASSERT_EQ(1.f, ray1.get_position().x);
-        ASSERT_EQ(2.f, ray1.get_position().y);
-        ASSERT_EQ(3.f, ray1.get_position().z);
+        ASSERT_EQ(1.0, ray1.get_position().x);
+        ASSERT_EQ(2.0, ray1.get_position().y);
+        ASSERT_EQ(3.0, ray1.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray1.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray1.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray1.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray1.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray1.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray1.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray1.get_distance());
+        ASSERT_EQ(7.0, ray1.get_distance());
     }
 
     //test assignment operator
@@ -95,7 +95,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = utility::ray(origin, direction, distance);
 
@@ -103,16 +103,16 @@ namespace testing
 
         ray1 = ray;
 
-        ASSERT_EQ(1.f, ray1.get_position().x);
-        ASSERT_EQ(2.f, ray1.get_position().y);
-        ASSERT_EQ(3.f, ray1.get_position().z);
+        ASSERT_EQ(1.0, ray1.get_position().x);
+        ASSERT_EQ(2.0, ray1.get_position().y);
+        ASSERT_EQ(3.0, ray1.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray1.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray1.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray1.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray1.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray1.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray1.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray1.get_distance());
+        ASSERT_EQ(7.0, ray1.get_distance());
     }
 
     //test move assignment operator
@@ -120,7 +120,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         utility::ray ray = utility::ray(origin, direction, distance);
 
@@ -128,16 +128,16 @@ namespace testing
 
         std::swap(ray1, ray);
 
-        ASSERT_EQ(1.f, ray1.get_position().x);
-        ASSERT_EQ(2.f, ray1.get_position().y);
-        ASSERT_EQ(3.f, ray1.get_position().z);
+        ASSERT_EQ(1.0, ray1.get_position().x);
+        ASSERT_EQ(2.0, ray1.get_position().y);
+        ASSERT_EQ(3.0, ray1.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray1.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray1.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray1.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray1.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray1.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray1.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray1.get_distance());
+        ASSERT_EQ(7.0, ray1.get_distance());
     }
 
 
@@ -145,7 +145,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = -7;
+        constexpr double distance = -7;
 
         //negative distance
         ASSERT_THROW(utility::ray(origin, direction, distance), exception::negative_exception);
@@ -168,7 +168,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         utility::ray ray = utility::ray(vector3d::up());
 
@@ -176,24 +176,24 @@ namespace testing
         ray.set_direction(direction);
         ray.set_distance(distance);
 
-        ASSERT_EQ(1.f, ray.get_position().x);
-        ASSERT_EQ(2.f, ray.get_position().y);
-        ASSERT_EQ(3.f, ray.get_position().z);
+        ASSERT_EQ(1.0, ray.get_position().x);
+        ASSERT_EQ(2.0, ray.get_position().y);
+        ASSERT_EQ(3.0, ray.get_position().z);
 
         //normalize direction
-        ASSERT_NEAR(0.456f, ray.get_direction().x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.570f, ray.get_direction().y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.684f, ray.get_direction().z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.456, ray.get_direction().x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.570, ray.get_direction().y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.684, ray.get_direction().z, ROUND_THREE_DECIMALS);
 
-        ASSERT_EQ(7.f, ray.get_distance());
+        ASSERT_EQ(7.0, ray.get_distance());
     }
 
     //test setter throw
     TEST(ray_test, setters_throw_test)
     {
-        constexpr float distance = -1;
-        constexpr float distance1 = -9;
-        constexpr float distance2 = -2;
+        constexpr double distance = -1;
+        constexpr double distance1 = -9;
+        constexpr double distance2 = -2;
 
         utility::ray ray = utility::ray(vector3d::up());
 
@@ -207,7 +207,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = {origin, direction, distance};
 
@@ -233,7 +233,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 50;
+        constexpr double distance = 50;
 
         constexpr utility::ray ray = {origin, direction, distance};
 
@@ -246,7 +246,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = {origin, direction, distance};
 
@@ -277,17 +277,17 @@ namespace testing
 #endif // CXX17
 
 
-        ASSERT_NEAR(1.f, point->x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(2.f, point->y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.f, point->z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.0, point->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(2.0, point->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.0, point->z, ROUND_THREE_DECIMALS);
 
-        ASSERT_NEAR(1.456f, point1->x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(2.570f, point1->y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.684f, point1->z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.456, point1->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(2.570, point1->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.684, point1->z, ROUND_THREE_DECIMALS);
 
-        ASSERT_NEAR(1.912f, point2->x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(3.140f, point2->y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(4.368f, point2->z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(1.912, point2->x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.140, point2->y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(4.368, point2->z, ROUND_THREE_DECIMALS);
     }
 
     //test get point throws
@@ -295,7 +295,7 @@ namespace testing
     {
         constexpr point3d origin = {1, 2, 3};
         constexpr vector3d direction = {4, 5, 6};
-        constexpr float distance = 7;
+        constexpr double distance = 7;
 
         constexpr utility::ray ray = {origin, direction, distance};
 

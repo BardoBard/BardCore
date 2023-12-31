@@ -11,9 +11,9 @@ namespace testing
 
         constexpr point3d result = point1 + point2;
 
-        ASSERT_EQ(8.f, result.x);
-        ASSERT_EQ(10.f, result.y);
-        ASSERT_EQ(12.f, result.z);
+        ASSERT_EQ(8.0, result.x);
+        ASSERT_EQ(10.0, result.y);
+        ASSERT_EQ(12.0, result.z);
     }
 
     //addition with negative result
@@ -24,9 +24,9 @@ namespace testing
 
         constexpr point3d result = point2 + point1;
 
-        ASSERT_NEAR(8.f, result.x, ROUND_EPSILON);
-        ASSERT_NEAR(10.f, result.y, ROUND_EPSILON);
-        ASSERT_NEAR(12.f, result.z, ROUND_EPSILON);
+        ASSERT_NEAR(8.0, result.x, ROUND_EPSILON);
+        ASSERT_NEAR(10.0, result.y, ROUND_EPSILON);
+        ASSERT_NEAR(12.0, result.z, ROUND_EPSILON);
     }
 
     //add zero
@@ -38,9 +38,9 @@ namespace testing
         constexpr point3d result = point1 + (point2);
 
         //assert near
-        ASSERT_NEAR(1.f, result.x, ROUND_EPSILON);
-        ASSERT_NEAR(2.f, result.y, ROUND_EPSILON);
-        ASSERT_NEAR(3.f, result.z, ROUND_EPSILON);
+        ASSERT_NEAR(1.0, result.x, ROUND_EPSILON);
+        ASSERT_NEAR(2.0, result.y, ROUND_EPSILON);
+        ASSERT_NEAR(3.0, result.z, ROUND_EPSILON);
     }
 
     TEST(dimension3_test, point_sub_test)
@@ -50,9 +50,9 @@ namespace testing
 
         constexpr point3d result = point1 - (point2);
 
-        ASSERT_EQ(-8.f, result.x);
-        ASSERT_EQ(-6.f, result.y);
-        ASSERT_EQ(-4.f, result.z);
+        ASSERT_EQ(-8.0, result.x);
+        ASSERT_EQ(-6.0, result.y);
+        ASSERT_EQ(-4.0, result.z);
     }
 
     //subtraction with negative result
@@ -64,9 +64,9 @@ namespace testing
         constexpr point3d result = point2 - (point1);
 
         //assert near
-        ASSERT_EQ(8.f, result.x);
-        ASSERT_EQ(6.f, result.y);
-        ASSERT_EQ(4.f, result.z);
+        ASSERT_EQ(8.0, result.x);
+        ASSERT_EQ(6.0, result.y);
+        ASSERT_EQ(4.0, result.z);
     }
 
     TEST(dimension3_test, point_multiply_test)
@@ -75,9 +75,9 @@ namespace testing
 
         constexpr point3d result = point1 * (5);
 
-        ASSERT_EQ(5.f, result.x);
-        ASSERT_EQ(10.f, result.y);
-        ASSERT_EQ(15.f, result.z);
+        ASSERT_EQ(5.0, result.x);
+        ASSERT_EQ(10.0, result.y);
+        ASSERT_EQ(15.0, result.z);
     }
 
     //multiply by zero
@@ -87,9 +87,9 @@ namespace testing
 
         constexpr point3d result = point1 * (0);
 
-        ASSERT_EQ(0.f, result.x);
-        ASSERT_EQ(0.f, result.y);
-        ASSERT_EQ(0.f, result.z);
+        ASSERT_EQ(0.0, result.x);
+        ASSERT_EQ(0.0, result.y);
+        ASSERT_EQ(0.0, result.z);
     }
 
     TEST(dimension3_test, point_divide_test)
@@ -98,9 +98,9 @@ namespace testing
 
         constexpr point3d result = point1 / (5);
 
-        ASSERT_EQ(2.f, result.x);
-        ASSERT_EQ(4.f, result.y);
-        ASSERT_EQ(6.f, result.z);
+        ASSERT_EQ(2.0, result.x);
+        ASSERT_EQ(4.0, result.y);
+        ASSERT_EQ(6.0, result.z);
     }
 
     //test divide by zero
@@ -116,17 +116,17 @@ namespace testing
         constexpr point3d point1 = {10, 20, 30}; //original point
         constexpr point3d point2 = {54, 32, 21}; //used for addition
         constexpr point3d point3 = {45, 23, 12}; //used for subtraction
-        constexpr float n1 = 7; //used for multiplication
-        constexpr float n2 = 2; //used for division
+        constexpr double n1 = 7; //used for multiplication
+        constexpr double n2 = 2; //used for division
 
         point3d result = point1 + (point2);
         result = result - (point3);
         result = result * (n1);
         result = result / (n2);
 
-        ASSERT_NEAR(66.5f, result.x, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(101.5f, result.y, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(136.5f, result.z, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(66.5, result.x, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(101.5, result.y, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(136.5, result.z, ROUND_ONE_DECIMALS);
     }
 
     TEST(dimension3_test, operator_tests)

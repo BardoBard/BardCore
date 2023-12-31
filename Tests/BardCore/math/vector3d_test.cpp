@@ -9,13 +9,13 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {4, 5, 6};
 
-        const float result_degrees = vector1.angle_degrees(vector2);
-        const float result_radians = vector1.angle_radians(vector2);
-        constexpr float result_dot = vector1.angle_dot(vector2);
+        const double result_degrees = vector1.angle_degrees(vector2);
+        const double result_radians = vector1.angle_radians(vector2);
+        constexpr double result_dot = vector1.angle_dot(vector2);
 
-        ASSERT_NEAR(12.94f, result_degrees, ROUND_TWO_DECIMALS);
-        ASSERT_NEAR(0.226f, result_radians, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.974f, result_dot, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(12.94, result_degrees, ROUND_TWO_DECIMALS);
+        ASSERT_NEAR(0.226, result_radians, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.974, result_dot, ROUND_THREE_DECIMALS);
     }
 
     //test angle with zero
@@ -55,9 +55,9 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {4, 5, 6};
 
-        constexpr float result = vector1.dot(vector2);
+        constexpr double result = vector1.dot(vector2);
 
-        ASSERT_EQ(32.f, result);
+        ASSERT_EQ(32.0, result);
     }
 
     //test dot with negative result
@@ -66,9 +66,9 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {-4, -5, -6};
 
-        constexpr float result = vector2.dot(vector1);
+        constexpr double result = vector2.dot(vector1);
 
-        ASSERT_EQ(-32.f, result);
+        ASSERT_EQ(-32.0, result);
     }
 
     //test dot with zero
@@ -77,9 +77,9 @@ namespace testing
         constexpr vector3d vector1 = {1, 2, 3};
         constexpr vector3d vector2 = {0, 0, 0};
 
-        constexpr float result = vector1.dot(vector2);
+        constexpr double result = vector1.dot(vector2);
 
-        ASSERT_EQ(0.f, result);
+        ASSERT_EQ(0.0, result);
     }
 
     //lenght test
@@ -87,9 +87,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {1, 2, 3};
 
-        constexpr float result = vector1.length();
+        constexpr double result = vector1.length();
 
-        ASSERT_NEAR(3.742f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.742, result, ROUND_THREE_DECIMALS);
     }
 
     //test length with negative input
@@ -97,9 +97,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {-1, -2, -3};
 
-        constexpr float result = vector1.length();
+        constexpr double result = vector1.length();
 
-        ASSERT_NEAR(3.742f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(3.742, result, ROUND_THREE_DECIMALS);
     }
 
     //test length with zero
@@ -107,9 +107,9 @@ namespace testing
     {
         constexpr vector3d vector1 = {0, 0, 0};
 
-        constexpr float result = vector1.length();
+        constexpr double result = vector1.length();
 
-        ASSERT_EQ(0.f, result);
+        ASSERT_EQ(0.0, result);
     }
 
 
@@ -120,9 +120,9 @@ namespace testing
 
         constexpr vector3d result = vector1.normalize();
 
-        ASSERT_NEAR(0.802f, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.535f, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.267f, result.z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.802, result.x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.535, result.y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.267, result.z, ROUND_THREE_DECIMALS);
     }
 
     //normalize test with negative input
@@ -132,21 +132,21 @@ namespace testing
 
         constexpr vector3d result = vector1.normalize();
 
-        ASSERT_NEAR(-0.802f, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.535f, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.267f, result.z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.802, result.x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.535, result.y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.267, result.z, ROUND_THREE_DECIMALS);
     }
 
     //normalize test 2
     TEST(vector3d_test, normalize2_test)
     {
-        constexpr vector3d vector1 = {-0.834f, -0.653f, -0.127f};
+        constexpr vector3d vector1 = {-0.834, -0.653, -0.127};
 
         constexpr vector3d result = vector1.normalize();
 
-        ASSERT_NEAR(-0.782f, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.612f, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.119f, result.z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.782, result.x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.612, result.y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(-0.119, result.z, ROUND_THREE_DECIMALS);
     }
 
     //normalize test with zero
@@ -164,33 +164,33 @@ namespace testing
         constexpr vector3d vector3 = {12, 76, 51}; //used for dot product
 
         //angle
-        float result = vector1.angle_degrees(vector2);
-        ASSERT_NEAR(15.09f, result, ROUND_TWO_DECIMALS);
+        double result = vector1.angle_degrees(vector2);
+        ASSERT_NEAR(15.09, result, ROUND_TWO_DECIMALS);
 
         result = vector1.angle_radians(vector2);
-        ASSERT_NEAR(0.263f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.263, result, ROUND_THREE_DECIMALS);
 
         result = vector1.angle_dot(vector2);
-        ASSERT_NEAR(0.966f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.966, result, ROUND_THREE_DECIMALS);
 
         //dot
         result = vector1.dot(vector3);
-        ASSERT_EQ(6950.f, result);
+        ASSERT_EQ(6950.0, result);
 
         //length
         result = vector1.length();
-        ASSERT_NEAR(95.567f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(95.567, result, ROUND_THREE_DECIMALS);
 
         //length
         result = vector3.length();
-        ASSERT_NEAR(92.309f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(92.309, result, ROUND_THREE_DECIMALS);
 
         //normalize
         constexpr vector3d result_normalize = vector1.normalize();
 
-        ASSERT_NEAR(0.471f, result_normalize.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.335f, result_normalize.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.816f, result_normalize.z, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.471, result_normalize.x, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.335, result_normalize.y, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(0.816, result_normalize.z, ROUND_THREE_DECIMALS);
     }
 
     //reflection
@@ -201,9 +201,9 @@ namespace testing
 
         const auto result = vector1.reflection(vector2);
 
-        ASSERT_NEAR(-1.f, result->x, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(-2.f, result->y, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(3.f, result->z, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(-1.0, result->x, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(-2.0, result->y, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(3.0, result->z, ROUND_ONE_DECIMALS);
     }
 
     //reflection with negative input

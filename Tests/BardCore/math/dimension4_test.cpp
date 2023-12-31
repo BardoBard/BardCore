@@ -78,14 +78,14 @@ namespace testing
     {
         constexpr quaternion quaternion1 = {1, 2, 3, 4};
 
-        ASSERT_EQ(quaternion(0.5f, 1, 1.5f, 2), quaternion1 / 2);
+        ASSERT_EQ(quaternion(0.5, 1, 1.5, 2), quaternion1 / 2);
     }
 
     TEST(dimension4_test, point_div_negative_test)
     {
         constexpr quaternion quaternion1 = {-1, 2, -3, 4};
 
-        ASSERT_EQ(quaternion(-0.5f, 1, -1.5f, 2), quaternion1 / 2);
+        ASSERT_EQ(quaternion(-0.5, 1, -1.5, 2), quaternion1 / 2);
     }
 
     TEST(dimension4_test, point_div_zero_test)
@@ -115,7 +115,7 @@ namespace testing
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1 + 0);
         ASSERT_EQ(quaternion(0, 1, 2, 3), quaternion1 - 1);
         ASSERT_EQ(quaternion(2, 4, 6, 8), quaternion1 * 2);
-        ASSERT_EQ(quaternion(0.5f, 1, 1.5f, 2), quaternion1 / 2);
+        ASSERT_EQ(quaternion(0.5, 1, 1.5, 2), quaternion1 / 2);
 
         ASSERT_EQ(quaternion(2,4,6,8), quaternion1 + quaternion2);
         ASSERT_EQ(quaternion(0, 0, 0, 0), quaternion1 - quaternion2);

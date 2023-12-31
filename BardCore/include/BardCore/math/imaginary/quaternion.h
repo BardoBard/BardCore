@@ -18,10 +18,10 @@ namespace bardcore
     public:
         using dimension4::dimension4; // inherit constructors
 
-        NODISCARD constexpr float get_real() const noexcept { return x; }
-        NODISCARD constexpr float get_i() const noexcept { return y; }
-        NODISCARD constexpr float get_j() const noexcept { return z; }
-        NODISCARD constexpr float get_k() const noexcept { return w; }
+        NODISCARD constexpr double get_real() const noexcept { return x; }
+        NODISCARD constexpr double get_i() const noexcept { return y; }
+        NODISCARD constexpr double get_j() const noexcept { return z; }
+        NODISCARD constexpr double get_k() const noexcept { return w; }
 
         /**
          * \brief default constructor with 0, 0, 0, 0
@@ -37,7 +37,7 @@ namespace bardcore
          * \param j j
          * \param k k
          */
-        constexpr quaternion(const float real, const float i, const float j, const float k)
+        constexpr quaternion(const double real, const double i, const double j, const double k)
         {
             x = real;
             y = i;
@@ -56,7 +56,7 @@ namespace bardcore
          * \return rotated 3D object
          */
         template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
-        NODISCARD constexpr static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, float theta)
+        NODISCARD constexpr static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, double theta)
         {
             if (to_be_rotated_3d == dimension3<T>::zero())
                 throw exception::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
@@ -65,8 +65,8 @@ namespace bardcore
             theta = math::degrees_to_radians(theta / 2);
 
             //get cos and sin
-            const float cos = math::fcos(theta);
-            const float sin = math::fsin(theta);
+            const double cos = math::cos(theta);
+            const double sin = math::sin(theta);
 
             //get unitvector (aka normalized vector mult sin)
             const vector3d unit_vector = rotation_vector.normalize() * sin; //throws zero_exception
@@ -126,10 +126,10 @@ namespace bardcore
          */
         NODISCARD constexpr quaternion multiply(const quaternion& quaternion) const noexcept
         {
-            const float real = (x * quaternion.x - y * quaternion.y - z * quaternion.z - w * quaternion.w);
-            const float i = (x * quaternion.y + y * quaternion.x + z * quaternion.w - w * quaternion.z);
-            const float j = (x * quaternion.z - y * quaternion.w + z * quaternion.x + w * quaternion.y);
-            const float k = (x * quaternion.w + y * quaternion.z - z * quaternion.y + w * quaternion.x);
+            const double real = (x * quaternion.x - y * quaternion.y - z * quaternion.z - w * quaternion.w);
+            const double i = (x * quaternion.y + y * quaternion.x + z * quaternion.w - w * quaternion.z);
+            const double j = (x * quaternion.z - y * quaternion.w + z * quaternion.x + w * quaternion.y);
+            const double k = (x * quaternion.w + y * quaternion.z - z * quaternion.y + w * quaternion.x);
             return {real, i, j, k};
         }
 
@@ -146,7 +146,7 @@ namespace bardcore
          * \brief calculates the length of the quaternion
          * \return length of the quaternion
          */
-        NODISCARD constexpr float length() const noexcept
+        NODISCARD constexpr double length() const noexcept
         {
             return math::sqrt(x * x + y * y + z * z + w * w);
         }
@@ -159,9 +159,9 @@ namespace bardcore
          */
         NODISCARD constexpr quaternion normalize() const
         {
-            const float l = length();
+            const double l = length();
 
-            if (l == 0.f)
+            if (l == 0)
                 throw exception::zero_exception("quaternion length must not be zero");
 
             return *this / l;

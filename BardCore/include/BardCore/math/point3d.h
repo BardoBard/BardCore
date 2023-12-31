@@ -36,7 +36,7 @@ namespace bardcore
          */
         NODISCARD constexpr point3d center(const point3d& point) const noexcept
         {
-            return point3d((point.x + x) / 2.f, (point.y + y) / 2.f, (point.z + z) / 2.f);
+            return point3d((point.x + x) / 2., (point.y + y) / 2., (point.z + z) / 2.);
         }
         
         /**
@@ -45,7 +45,7 @@ namespace bardcore
          * \param point other point
          * \return distance between two points
          */
-        NODISCARD constexpr float distance(const point3d& point) const noexcept
+        NODISCARD constexpr double distance(const point3d& point) const noexcept
         {
             return math::sqrt(distance_squared(point));
         }
@@ -56,11 +56,11 @@ namespace bardcore
          * \param point other point
          * \return distance squared between two points
          */
-        NODISCARD constexpr float distance_squared(const point3d& point) const noexcept
+        NODISCARD constexpr double distance_squared(const point3d& point) const noexcept
         {
-            const float x_diff = point.x - x;
-            const float y_diff = point.y - y;
-            const float z_diff = point.z - z;
+            const double x_diff = point.x - x;
+            const double y_diff = point.y - y;
+            const double z_diff = point.z - z;
             return x_diff * x_diff + y_diff * y_diff + z_diff * z_diff;
         }
     };

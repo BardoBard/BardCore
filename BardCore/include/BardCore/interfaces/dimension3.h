@@ -15,7 +15,7 @@ namespace bardcore
     class dimension3
     {
     public:
-        float x{}, y{}, z{};
+        double x{}, y{}, z{};
     public:
         NODISCARD constexpr INLINE static T zero() noexcept { return T(0, 0, 0); }
         NODISCARD constexpr INLINE static T one() noexcept { return T(1, 1, 1); }
@@ -76,7 +76,7 @@ namespace bardcore
          * \param y y
          * \param z z
          */
-        constexpr dimension3(const float x, const float y, const float z): x(x), y(y), z(z)
+        constexpr dimension3(const double x, const double y, const double z): x(x), y(y), z(z)
         {
         }
 
@@ -114,11 +114,11 @@ namespace bardcore
 
 
         /**
-         * \brief subtracts a float from a dimension3 and stores the result in a new dimension3
-         * \param n float to subtract with
+         * \brief subtracts a double from a dimension3 and stores the result in a new dimension3
+         * \param n double to subtract with
          * \return new dimension3
          */
-        NODISCARD constexpr T operator-(const float n) const noexcept
+        NODISCARD constexpr T operator-(const double n) const noexcept
         {
             return {x - n, y - n, z - n};
         }
@@ -136,21 +136,21 @@ namespace bardcore
         }
 
         /**
-         * \brief adds a float from a dimension3 and stores the result in a new dimension3
-         * \param n float to add with
+         * \brief adds a double from a dimension3 and stores the result in a new dimension3
+         * \param n double to add with
          * \return new dimension3
          */
-        NODISCARD constexpr T operator+(const float n) const noexcept
+        NODISCARD constexpr T operator+(const double n) const noexcept
         {
             return {x + n, y + n, z + n};
         }
 
         /**
          * \brief multiplies a dimension3 with n and stores the result in a new dimension3
-         * \param n float to multiply with
+         * \param n double to multiply with
          * \return new dimension3
         */
-        NODISCARD constexpr T operator*(const float n) const noexcept
+        NODISCARD constexpr T operator*(const double n) const noexcept
         {
             return {x * n, y * n, z * n};
         }
@@ -158,12 +158,12 @@ namespace bardcore
         /**
          * \brief divides a dimension3 with n and stores the result in a new dimension3
          * \throws std::invalid_argument if n is 0
-         * \param n float to divide with
+         * \param n double to divide with
          * \return new dimension3
         */
-        NODISCARD constexpr T operator/(const float n) const
+        NODISCARD constexpr T operator/(const double n) const
         {
-            if (n == 0.f)
+            if (n == 0)
                 throw exception::zero_exception("division by zero");
 
             return {x / n, y / n, z / n};
@@ -185,11 +185,11 @@ namespace bardcore
         }
 
         /**
-         * \brief adds a float to this dimension3
-         * \param n float to add with
+         * \brief adds a double to this dimension3
+         * \param n double to add with
          * \return this
          */
-        constexpr dimension3& operator+=(const float n) noexcept
+        constexpr dimension3& operator+=(const double n) noexcept
         {
             x += n;
             y += n;
@@ -213,11 +213,11 @@ namespace bardcore
         }
 
         /**
-         * \brief subtracts a float from this dimension3
-         * \param n float to subtract with
+         * \brief subtracts a double from this dimension3
+         * \param n double to subtract with
          * \return this
          */
-        constexpr dimension3& operator-=(const float n) noexcept
+        constexpr dimension3& operator-=(const double n) noexcept
         {
             x -= n;
             y -= n;
@@ -227,10 +227,10 @@ namespace bardcore
 
         /**
          * \brief multiplies this dimension3 with n
-         * \param n float to multiply with
+         * \param n double to multiply with
          * \return this
         */
-        constexpr dimension3& operator*=(const float n) noexcept
+        constexpr dimension3& operator*=(const double n) noexcept
         {
             x *= n;
             y *= n;
@@ -241,12 +241,12 @@ namespace bardcore
         /**
          * \brief divides this dimension3 with n
          * \throws zero_exception if n is 0
-         * \param n float to divide with
+         * \param n double to divide with
          * \return this
         */
-        constexpr dimension3& operator/=(const float n)
+        constexpr dimension3& operator/=(const double n)
         {
-            if (n == 0.f)
+            if (n == 0)
                 throw exception::zero_exception("division by zero");
 
             x /= n;
@@ -277,9 +277,9 @@ namespace bardcore
          */
         NODISCARD constexpr friend bool operator<(const dimension3& left, const dimension3& right) noexcept
         {
-            return math::fless_than(left.x, right.x)
-                && math::fless_than(left.y, right.y)
-                && math::fless_than(left.z, right.z);
+            return math::less_than(left.x, right.x)
+                && math::less_than(left.y, right.y)
+                && math::less_than(left.z, right.z);
         }
 
         /**
@@ -323,9 +323,9 @@ namespace bardcore
          */
         NODISCARD constexpr friend bool operator==(const dimension3& left, const dimension3& right) noexcept
         {
-            return math::fequals(left.x, right.x)
-                && math::fequals(left.y, right.y)
-                && math::fequals(left.z, right.z);
+            return math::equals(left.x, right.x)
+                && math::equals(left.y, right.y)
+                && math::equals(left.z, right.z);
         }
 
         /**

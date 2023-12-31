@@ -21,7 +21,7 @@ namespace bardcore
             /**
              * \brief intensity of the light
              */
-            float intensity;
+            double intensity;
 
         public:
             /**
@@ -29,7 +29,7 @@ namespace bardcore
              * \param position origin of the light
              * \param intensity intensity of the light
              */
-            constexpr light(const point3d& position, const float intensity) : position(position), intensity(intensity)
+            constexpr light(const point3d& position, const double intensity) : position(position), intensity(intensity)
             {
             }
 
@@ -60,9 +60,9 @@ namespace bardcore
              * \param length_squared length squared, e.g. length * length
              * \return intensity across distance
              */
-            NODISCARD constexpr float inverse_square_law_squared(const float length_squared) const
+            NODISCARD constexpr double inverse_square_law_squared(const double length_squared) const
             {
-                if (length_squared <= 0.f)
+                if (length_squared <= 0)
                     throw exception::zero_exception("length must not be zero");
 
                 return intensity / length_squared;
@@ -76,7 +76,7 @@ namespace bardcore
              * \param point point to calculate
              * \return intensity across distance
              */
-            NODISCARD constexpr float inverse_square_law(const point3d& point) const
+            NODISCARD constexpr double inverse_square_law(const point3d& point) const
             {
                 return inverse_square_law_squared(position.distance_squared(point));
             }
@@ -88,7 +88,7 @@ namespace bardcore
              * \param length length to calculate
              * \return intensity across distance
              */
-            NODISCARD constexpr float inverse_square_law(const float length) const
+            NODISCARD constexpr double inverse_square_law(const double length) const
             {
                 return inverse_square_law_squared(length * length);
             }
@@ -134,7 +134,7 @@ namespace bardcore
             NODISCARD constexpr friend bool operator==(const light& left, const light& right) noexcept
             {
                 return left.position == right.position
-                    && math::fequals(left.intensity, right.intensity);
+                    && math::equals(left.intensity, right.intensity);
             }
 
             /**
