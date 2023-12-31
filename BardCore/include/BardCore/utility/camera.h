@@ -68,7 +68,7 @@ namespace bardcore
              */
             constexpr camera(const point3d& position, const vector3d& direction, const unsigned int screen_width,
                              const unsigned int screen_height, const unsigned int fov = 90) : position_(position),
-                direction_(direction.normalize())
+                direction_(direction.normalize()), screen_width_(screen_width), screen_height_(screen_height), fov_(fov)
             {
                 if (screen_width == 0 || screen_height == 0)
                     throw exception::zero_exception("width and height must be greater than 0");
@@ -77,9 +77,6 @@ namespace bardcore
                 if (fov >= 180)
                     throw exception::out_of_range_exception("fov must be smaller than 180");
 
-                screen_width_ = screen_width;
-                screen_height_ = screen_height;
-                fov_ = fov;
                 calculate_screen();
             }
 
