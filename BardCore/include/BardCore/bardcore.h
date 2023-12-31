@@ -32,6 +32,7 @@
 // Standard includes
 #include <ostream>
 #include <exception>
+#include <numeric>
 #include <cmath>
 
 namespace bardcore

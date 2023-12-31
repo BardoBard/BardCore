@@ -13,3 +13,12 @@ added camera class
 
 added epsilon equals to all overloads of equals/less_than/greater_than
 28/12/2023
+
+added fabs, fsign, fmod, fcos, fsin, ftan, fexp, factorial to math 
+30/12/2023
+
+added compile time and runtime implementation to math, runtime uses std and compile time uses constexpr
+30/12/2023
+
+added fov for camera
+31/12/2023
