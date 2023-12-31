@@ -19,3 +19,6 @@ added fabs, fsign, fmod, fcos, fsin, ftan, fexp, factorial to math
 
 added compile time and runtime implementation to math, runtime uses std and compile time uses constexpr
 30/12/2023
+
+added fov for camera
+31/12/2023
