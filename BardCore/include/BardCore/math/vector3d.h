@@ -146,6 +146,7 @@ namespace bardcore
 
         /**
          * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
+         *        the result will not be normalized, meaning it will have the same length as the original vector
          * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d

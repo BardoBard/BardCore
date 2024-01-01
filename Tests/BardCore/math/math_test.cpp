@@ -211,21 +211,13 @@ namespace testing
         constexpr double compile_time_g = math::mod(-1.2, 0.1);
         constexpr double compile_time_h = math::mod(0, -0.1);
 
-        std::cout << compile_time_a << std::endl;
-        std::cout << compile_time_b << std::endl;
-        std::cout << compile_time_c << std::endl;
-        std::cout << compile_time_e << std::endl;
-        std::cout << compile_time_f << std::endl;
-        std::cout << compile_time_g << std::endl;
-        std::cout << compile_time_h << std::endl;
-
-        std::cout << math::mod(5.3, 2) << std::endl;
-        std::cout << math::mod(18.5, 4.2) << std::endl;
-        std::cout << math::mod(0, 1.2) << std::endl;
-        std::cout << math::mod(1.2, 0.1) << std::endl;
-        std::cout << math::mod(1.2, -0.1) << std::endl;
-        std::cout << math::mod(-1.2, 0.1) << std::endl;
-        std::cout << math::mod(0, -0.1) << std::endl;
+        ASSERT_TRUE(math::equals(1.3, compile_time_a));
+        ASSERT_TRUE(math::equals(1.7, compile_time_b));
+        ASSERT_TRUE(math::equals(0, compile_time_c));
+        ASSERT_TRUE(math::equals(0, compile_time_e));
+        ASSERT_TRUE(math::equals(0, compile_time_f));
+        ASSERT_TRUE(math::equals(0, compile_time_g));
+        ASSERT_TRUE(math::equals(0, compile_time_h));
 
         ASSERT_TRUE(math::equals(1.3, math::mod(5.3, 2)));
         ASSERT_TRUE(math::equals(1.7, math::mod(18.5, 4.2)));
@@ -397,35 +389,4 @@ namespace testing
         ASSERT_TRUE(math::equals(3628800, math::factorial(10)));
     }
 
-    TEST(math_test, test)
-    {
-        constexpr double sqrt = bardcore::math::sqrt(4);
-        constexpr double pow = bardcore::math::pow(2, 3);
-        constexpr double sin = bardcore::math::sin(4563);
-        constexpr double cos = bardcore::math::cos(-4563);
-        constexpr double tan = bardcore::math::tan(4573);
-        constexpr int sign = bardcore::math::sign(-2);
-        constexpr double abs = bardcore::math::abs(-2);
-
-        std::cout << "constexpr sqrt(4): " << sqrt << std::endl;
-        std::cout << "runtime sqrt(4): " << bardcore::math::sqrt(4) << std::endl;
-
-        std::cout << "constexpr pow(2, 3): " << pow << std::endl;
-        std::cout << "runtime pow(2, 3): " << bardcore::math::pow(2, 3) << std::endl;
-
-        std::cout << "constexpr sin(74): " << sin << std::endl;
-        std::cout << "runtime sin(74): " << bardcore::math::sin(45673) << std::endl;
-
-        std::cout << "constexpr cos(45673): " << cos << std::endl;
-        std::cout << "runtime cos(45673): " << bardcore::math::cos(-45673) << std::endl;
-
-        std::cout << "constexpr tan(12): " << tan << std::endl;
-        std::cout << "runtime tan(12): " << bardcore::math::tan(45673) << std::endl;
-
-        std::cout << "constexpr sign(-2): " << sign << std::endl;
-        std::cout << "runtime sign(-2): " << bardcore::math::sign(-2) << std::endl;
-
-        std::cout << "constexpr abs(-2): " << abs << std::endl;
-        std::cout << "runtime abs(-2): " << bardcore::math::abs(-2) << std::endl;
-    }
 } // namespace testing
