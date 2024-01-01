@@ -86,7 +86,7 @@ namespace testing
         constexpr unsigned int screen_width = 100;
         constexpr unsigned int screen_height = 100;
         constexpr double distance = 7;
-        constexpr double fov = 120;
+        constexpr unsigned int fov = 120;
 
         constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height, fov);
 
@@ -107,7 +107,7 @@ namespace testing
         constexpr unsigned int screen_width = 20;
         constexpr unsigned int screen_height = 80;
         constexpr double distance = 50;
-        constexpr double fov = 90;
+        constexpr unsigned int fov = 90;
 
         constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height, fov);
 
@@ -128,7 +128,8 @@ namespace testing
         constexpr utility::camera cam = utility::camera(position, direction, screen_width, screen_height);
 
         EXPECT_THROW(cam.shoot_ray(screen_width + 1, screen_height + 1, distance), exception::out_of_range_exception);
-        EXPECT_NO_THROW(cam.shoot_ray(screen_width, screen_height, distance));
+        EXPECT_THROW(cam.shoot_ray(screen_width, screen_height, distance), exception::out_of_range_exception);
         EXPECT_NO_THROW(cam.shoot_ray(0, 0, distance));
+        EXPECT_NO_THROW(cam.shoot_ray(screen_width - 1, screen_height - 1, distance));
     }
 } // namespace testing

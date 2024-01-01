@@ -288,14 +288,14 @@ namespace bardcore
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \note if the value is inf or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a == b with epsilon
          */
-        NODISCARD constexpr bool static equals(const double number1,
-                                                const double number2) noexcept
+        NODISCARD constexpr bool static equals(const double value1,
+                                                const double value2) noexcept
         {
-            return abs(number1 - number2) <= epsilon;
+            return abs(value1 - value2) <= epsilon;
         }
 
         /**
@@ -303,14 +303,14 @@ namespace bardcore
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \note if the value is inf or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a > b with epsilon
          */
-        NODISCARD constexpr bool static greater_than(const double number1,
-                                                      const double number2) noexcept
+        NODISCARD constexpr bool static greater_than(const double value1,
+                                                      const double value2) noexcept
         {
-            return number1 - number2 > epsilon;
+            return value1 - value2 > epsilon;
         }
 
         /**
@@ -318,14 +318,14 @@ namespace bardcore
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
          * \note if the value is inf or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a < b with epsilon
          */
-        NODISCARD constexpr bool static less_than(const double number1,
-                                                   const double number2) noexcept
+        NODISCARD constexpr bool static less_than(const double value1,
+                                                   const double value2) noexcept
         {
-            return number2 - number1 > epsilon;
+            return value2 - value1 > epsilon;
         }
 
         /**
@@ -334,24 +334,24 @@ namespace bardcore
          * \note this algorithm is not fast but it was fun to make, it's quite fast for small numbers
          * \throws negative_exception if a or b is negative
          * \throws negative_exception if a or b is negative
-         * \param number1 number 1
-         * \param number2 number 2
+         * \param value1 number 1
+         * \param value2 value 2
          * \return greatest common divisor of a and b
          */
-        NODISCARD constexpr static unsigned int euclidean_gcd(const unsigned int number1, const unsigned int number2)
+        NODISCARD constexpr static unsigned int euclidean_gcd(const unsigned int value1, const unsigned int value2)
         {
-            if (number1 == 0 || number2 == 0)
+            if (value1 == 0 || value2 == 0)
                 throw exception::zero_exception("a and b must not be zero");
-            if (number1 < number2)
+            if (value1 < value2)
                 //TODO: make different exception
                 throw exception::negative_exception("a must be greater than b");
 
-            const unsigned int mod = number1 % number2;
+            const unsigned int mod = value1 % value2;
 
             if (mod == 0) //stop condition
-                return number2;
+                return value2;
 
-            return euclidean_gcd(number2, mod);
+            return euclidean_gcd(value2, mod);
         }
     };
 } // namespace bardcore

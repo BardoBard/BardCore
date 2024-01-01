@@ -374,9 +374,9 @@ namespace testing
 
     TEST(math_test, factorial)
     {
-        constexpr unsigned int compile_time_a = math::factorial(0);
-        constexpr unsigned int compile_time_b = math::factorial(3);
-        constexpr unsigned int compile_time_c = math::factorial(10);
+        constexpr double compile_time_a = math::factorial(0);
+        constexpr double compile_time_b = math::factorial(3);
+        constexpr double compile_time_c = math::factorial(10);
 
         // compile time tests
         ASSERT_TRUE(math::equals(1, compile_time_a));
