@@ -16,43 +16,64 @@ namespace bardcore
          * \param prev previous value
          * \return square root of value
          */
-        NODISCARD constexpr static float helper_sqrt_newton_raphson(const float value, const float curr,
-                                                                    const float prev)
+        NODISCARD constexpr static double helper_sqrt_newton_raphson(
+            const double value, const double curr,
+            const double prev)
         {
             return curr == prev
                        ? curr
-                       : helper_sqrt_newton_raphson(value, 0.5f * (curr + value / curr), curr);
+                       : helper_sqrt_newton_raphson(value, 0.5 * (curr + value / curr), curr);
         }
 
     public:
         /**
-         * \brief epsilon value for float comparison
+         * \brief epsilon value for double comparison
          */
-        INLINE static constexpr float epsilon = 0.0001f;
+        INLINE static constexpr double epsilon = 0.00001;
+
+        /**
+         * \brief 180 / pi constant, used for converting radians to degrees
+         */
+        INLINE static constexpr double _180_div_pi = 57.295779513082323;
+
+        /**
+         * \brief pi / 180 constant, used for converting degrees to radians
+         */
+        INLINE static constexpr double pi_div_180 = 0.017453292519943295;
+
+        /**
+         * \brief 2 * pi constant
+         */
+        INLINE static constexpr double _2pi = 6.28318530717958647692;
 
         /**
          * \brief pi constant
          */
-        INLINE static constexpr float pi = 3.14159265358979323846f;
+        INLINE static constexpr double pi = 3.14159265358979323846;
 
         /**
-         * \brief pi constant
+         * \brief pi / 2 constant
          */
-        INLINE static constexpr float pi_2 = 1.57079632679489661923f;
+        INLINE static constexpr double pi_2 = 1.57079632679489661923;
 
         /**
-         * \brief pi constant
+         * \brief pi / 4 constant
          */
-        INLINE static constexpr float pi_4 = 0.785398163397448309616f;
+        INLINE static constexpr double pi_4 = 0.785398163397448309616;
+
+        /**
+         * \brief pi / 4 constant
+         */
+        INLINE static constexpr double inf = std::numeric_limits<double>::infinity();
 
         /**
          * \brief calculates the degrees from radians
          * \param radians radians
          * \return degrees
          */
-        NODISCARD constexpr static float radians_to_degrees(const float radians) noexcept
+        NODISCARD constexpr static double radians_to_degrees(const double radians) noexcept
         {
-            return radians * 180.0f / math::pi;
+            return radians * math::_180_div_pi;
         }
 
         /**
@@ -60,9 +81,9 @@ namespace bardcore
          * \param degrees degrees
          * \return radians
          */
-        NODISCARD constexpr static float degrees_to_radians(const float degrees) noexcept
+        NODISCARD constexpr static double degrees_to_radians(const double degrees) noexcept
         {
-            return degrees * math::pi / 180.0f;
+            return degrees * math::pi_div_180;
         }
 
     public:
@@ -74,7 +95,7 @@ namespace bardcore
          * \throws negative_exception if value is negative
          * \return square root of value
          */
-        NODISCARD constexpr static float sqrt(const float value)
+        NODISCARD constexpr static double sqrt(const double value)
         {
             if (value < 0)
                 throw exception::negative_exception("value can not be negative");
@@ -93,15 +114,15 @@ namespace bardcore
          * \param value value to calculate the factorial from
          * \return factorial of value, e.g: value!
          */
-        NODISCARD constexpr static float factorial(const unsigned int value) noexcept
+        NODISCARD constexpr static double factorial(const unsigned int value) noexcept
         {
             if (value == 0)
                 return 1;
 
             if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::tgammaf(static_cast<float>(value) + 1);
-            
-            return static_cast<float>(value) * factorial(value - 1);
+                return std::tgamma(static_cast<double>(value) + 1);
+
+            return static_cast<double>(value) * factorial(value - 1);
         }
 
         /**
@@ -109,17 +130,17 @@ namespace bardcore
          * \note read more at: https://en.wikipedia.org/wiki/Exponentiation
          * \param base base, the value to calculate the power from
          * \param exponent exponent
-         * \return float(base)^exponent
+         * \return double(base)^exponent
          */
-        NODISCARD constexpr static float pow(const float base, const int exponent) noexcept
+        NODISCARD constexpr static double pow(const double base, const int exponent) noexcept
         {
             if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::powf(base, static_cast<float>(exponent));
+                return std::pow(base, static_cast<double>(exponent));
 
-            if (std::_Is_nan(base) || base == INFINITY || base == -INFINITY) // base is infinity
+            if (std::_Is_nan(base) || base == inf || base == -inf) // base is inf
                 return NAN;
 
-            if (exponent == 0 || fequals(base, 1.f)) // base is 1 or exponent is 0
+            if (exponent == 0 || equals(base, 1.)) // base is 1 or exponent is 0
                 return 1;
 
             return exponent > 0
@@ -128,64 +149,49 @@ namespace bardcore
         }
 
         /**
-         * \brief calculates the exponential function of a number, it uses std at runtime
-         * \note read more at: https://en.wikipedia.org/wiki/Exponential_function#Formal_definition
-         * \note the algorithm is not accurate for a value above 12
-         * \param value exponent, the value to calculate the exponential function from (can be negative)
-         * \return exponential function of value
-         */
-        NODISCARD constexpr static float fexp(const float value) noexcept
-        {
-            // the algorithm is not accurate for a value above 12
-            if (!std::_Is_constant_evaluated() || fgreater_than(fabs(value), 12))
-                return std::exp(value);
-
-            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
-                return NAN;
-
-            float result = 1.0f;
-
-            for (int index = 1; index < 1'000; ++index) // 1 thousand iterations as hard limit
-            {
-                const float r = pow(fabs(value), index) / factorial(index);
-
-                // r is near zero, adding it to the result will not change the result
-                // r is not a number or infinity, stop calculating
-                if (fequals(r, 0.f) || (std::_Is_nan(r) || r == INFINITY || r == -INFINITY))
-                    break;
-
-                result += r;
-            }
-
-            return fsign(value) == 1
-                       ? result
-                       : 1.0f / result;
-        }
-
-        /**
          * \brief calculates the cosine of a number, it uses std at runtime
          * \note read more at: https://blogs.ubc.ca/infiniteseriesmodule/units/unit-3-power-series/taylor-series/the-maclaurin-expansion-of-cosx/
          * \note using the Maclaurin Expansion
-         * \param value value to calculate the cosine from
+         * \param value value to calculate the cosine from in radians
          * \return cosine of value
          */
-        NODISCARD constexpr static float fcos(const float value) noexcept
+        NODISCARD constexpr static double cos(const double value) noexcept
         {
             if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::cosf(value);
+                return std::cos(value);
 
-            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
                 return NAN;
 
-            float result = 0.0f;
+            return sin(value + pi_2);
+        }
+
+        /**
+         * \brief calculates the sine of a number, it uses std at runtime
+         * \note read more at: https://blogs.ubc.ca/infiniteseriesmodule/units/unit-3-power-series/taylor-series/maclaurin-expansion-of-sinx/
+         * \note using the Maclaurin Expansion
+         * \param value value to calculate the sine from in radians
+         * \return sine of value
+         */
+        NODISCARD constexpr static double sin(double value) noexcept
+        {
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::sin(value);
+
+            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+                return NAN;
+
+            value = mod(value, 2 * pi); // make value between 0 and 2pi
+
+            double result = 0;
             for (int index = 0; index < 1'000; ++index) // 1 thousand iterations as hard limit
             {
                 //formula: Σ (-1)^n * x^(2n) / (2n)!
-                const float r = pow(-1, index) * pow(value, 2 * index) / factorial(2 * index);
+                const double r = pow(-1, index) * pow(value, 2 * index + 1) / factorial(2 * index + 1);
 
                 // r is near zero, adding it to the result will not change the result
-                // r is not a number or infinity, stop calculating
-                if (fequals(r, 0.f) || (std::_Is_nan(r) || r == INFINITY || r == -INFINITY))
+                // r is not a number or inf, stop calculating
+                if (equals(r, 0) || (std::_Is_nan(r) || r == inf || r == -inf))
                     break;
 
                 result += r;
@@ -195,147 +201,131 @@ namespace bardcore
         }
 
         /**
-         * \brief calculates the sine of a number, it uses std at runtime
-         * \note read more at: https://blogs.ubc.ca/infiniteseriesmodule/units/unit-3-power-series/taylor-series/maclaurin-expansion-of-sinx/
-         * \note using the Maclaurin Expansion
-         * \param value value to calculate the sine from
-         * \return sine of value
-         */
-        NODISCARD constexpr static float fsin(const float value) noexcept
-        {
-            if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::sinf(value);
-
-            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
-                return NAN;
-
-            return fcos(value - pi_2);
-        }
-
-        /**
          * \brief calculates the tangent of a number, it uses std at runtime
          * \note read more at: https://en.wikipedia.org/wiki/Trigonometric_functions
          * \note using the Maclaurin Expansion
          * \note compile time might be slightly inaccurate when close to the limit, e.g: somewhere close to pi
-         * \param value value to calculate the tangent from
+         * \param value value to calculate the tangent from in radians
          * \return tangent of value
          */
-        NODISCARD constexpr static float ftan(const float value) noexcept
+        NODISCARD constexpr static double tan(const double value) noexcept
         {
-            if (std::_Is_nan(value) || value == INFINITY || value == -INFINITY) // value is infinity
+            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
                 return NAN;
-            
-            if (fequals(fmod(value, pi), 0.f)) // value is a multiple of pi
+
+            if (equals(mod(value, pi), 0)) // value is a multiple of pi
                 return 0;
 
-            if (!fequals(value, 0.f) && fequals(fmod(value, pi_2), 0.f)) // value is a multiple of pi/2
+            if (!equals(value, 0) && equals(mod(value, pi_2), 0)) // value is a multiple of pi/2
                 return NAN;
-            
+
             if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::tanf(value);
-            
-            return fsin(value) / fcos(value);
+                return std::tan(value);
+
+            return sin(value) / cos(value);
         }
 
         /**
          * \brief calculates the mod of a number, with a divisor
          * \note read more at: https://en.wikipedia.org/wiki/Modulo_operation
          * \note reference: https://cplusplus.com/reference/cmath/fmod/
-         * \note example: fmod(5.3, 2) = 1.3
+         * \note example: mod(5.3, 2) = 1.3
          * \throws zero_exception if divisor is zero
-         * \param number number to calculate the modulo from
+         * \param value number to calculate the modulo from
          * \param divisor divisor, can not be zero
          * \return 
          */
-        NODISCARD constexpr static float fmod(float number, const float divisor)
+        NODISCARD constexpr static double mod(const double value, const double divisor)
         {
-            if (fequals(divisor, 0))
+            if (equals(divisor, 0))
                 throw exception::zero_exception("divisor can not be zero");
-            
+
             if (!std::_Is_constant_evaluated()) // use std if runtime
-                return std::fmod(number, divisor);
+            {
+                const auto mod = std::fmod(value, divisor);
+                return equals(abs(mod), abs(divisor))
+                           ? 0
+                           : mod;
+            }
 
-            // for constexpr we don't care that much about performance
-
-            if (fequals(number, 0.f))
+            if (equals(value, 0))
                 return 0;
 
-            number = fabs(number); // make number positive, it doesn't make a difference
-
-            while (fgreater_than(number, fabs(divisor)) || fequals(number, fabs(divisor)))
-                number -= fabs(divisor);
-
-            return number * static_cast<float>(fsign(divisor));
+            const int multiplier = static_cast<int>(value / divisor + epsilon * sign(value / divisor)); // floor
+            return value - static_cast<double>(multiplier) * divisor + DBL_EPSILON * sign(value);
         }
 
         /**
-         * \brief calculates the sign value of a float value
+         * \brief calculates the sign value of a double value
          * \note read more at: https://en.wikipedia.org/wiki/Sign_(mathematics)
-         * \param value float value
+         * \param value double value
          * \return sign int value (-1, 0, 1), special case: 0
          */
-        NODISCARD constexpr static int fsign(const float value) noexcept
+        NODISCARD constexpr static int sign(const double value) noexcept
         {
-            return fequals(value, 0)
+            return equals(value, 0)
                        ? 0
-                       : (value < 0
+                       : (less_than(value, 0)
                               ? -1
                               : 1);
         }
 
         /**
-         * \brief calculates the absolute value of a float value
+         * \brief calculates the absolute value of a double value
          * \note read more at: https://en.wikipedia.org/wiki/Absolute_value
-         * \param value float value
-         * \return absolute float value
+         * \param value double value
+         * \return absolute double value
          */
-        NODISCARD constexpr static float fabs(const float value) noexcept
+        NODISCARD constexpr static double abs(const double value) noexcept
         {
-            return fless_than(value, 0)
+            return less_than(value, 0)
                        ? -value
                        : value;
         }
 
         /**
-         * \brief checks if two float values are equal, using an epsilon
-         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \brief checks if two double values are equal, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
-         * \note if the value is INFINITY or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \note if the value is inf or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a == b with epsilon
          */
-        NODISCARD constexpr bool static fequals(const float number1, const float number2) noexcept
+        NODISCARD constexpr bool static equals(const double value1,
+                                                const double value2) noexcept
         {
-            return fabs(number1 - number2) <= epsilon;
+            return abs(value1 - value2) <= epsilon;
         }
 
         /**
-         * \brief checks if left float value is greater than right float value, using an epsilon
-         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \brief checks if left double value is greater than right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
-         * \note if the value is INFINITY or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \note if the value is inf or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a > b with epsilon
          */
-        NODISCARD constexpr bool static fgreater_than(const float number1, const float number2) noexcept
+        NODISCARD constexpr bool static greater_than(const double value1,
+                                                      const double value2) noexcept
         {
-            return number1 - number2 > epsilon;
+            return value1 - value2 > epsilon;
         }
 
         /**
-         * \brief checks if left float value is less than right float value, using an epsilon
-         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-float-and-double-while-accounting-for-precision-loss
+         * \brief checks if left double value is less than right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
-         * \note if the value is INFINITY or NAN it will return false
-         * \param number1 number 1 to compare
-         * \param number2 number 2 to compare
+         * \note if the value is inf or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
          * \return a < b with epsilon
          */
-        NODISCARD constexpr bool static fless_than(const float number1, const float number2) noexcept
+        NODISCARD constexpr bool static less_than(const double value1,
+                                                   const double value2) noexcept
         {
-            return number2 - number1 > epsilon;
+            return value2 - value1 > epsilon;
         }
 
         /**
@@ -344,24 +334,24 @@ namespace bardcore
          * \note this algorithm is not fast but it was fun to make, it's quite fast for small numbers
          * \throws negative_exception if a or b is negative
          * \throws negative_exception if a or b is negative
-         * \param number1 number 1
-         * \param number2 number 2
+         * \param value1 number 1
+         * \param value2 value 2
          * \return greatest common divisor of a and b
          */
-        NODISCARD constexpr static unsigned int euclidean_gcd(const unsigned int number1, const unsigned int number2)
+        NODISCARD constexpr static unsigned int euclidean_gcd(const unsigned int value1, const unsigned int value2)
         {
-            if (number1 == 0 || number2 == 0)
+            if (value1 == 0 || value2 == 0)
                 throw exception::zero_exception("a and b must not be zero");
-            if (number1 < number2)
+            if (value1 < value2)
                 //TODO: make different exception
                 throw exception::negative_exception("a must be greater than b");
 
-            const unsigned int mod = number1 % number2;
+            const unsigned int mod = value1 % value2;
 
             if (mod == 0) //stop condition
-                return number2;
+                return value2;
 
-            return euclidean_gcd(number2, mod);
+            return euclidean_gcd(value2, mod);
         }
     };
 } // namespace bardcore

@@ -22,3 +22,15 @@ added compile time and runtime implementation to math, runtime uses std and comp
 
 added fov for camera
 31/12/2023
+
+fixed operators now returning correctly, added more tests
+31/12/2023
+
+float to double in entire codebase
+01/01/2023
+
+changed the way mod works, now it's accurate
+01/01/2023
+
+changed names from f(func) to (func), e.g fsin to sin
+01/01/2023

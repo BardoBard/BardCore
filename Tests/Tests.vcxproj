@@ -73,6 +73,7 @@
     <PropertyGroup Label="UserMacros" />
     <ItemGroup>
         <ClCompile Include="BardCore\math\dimension3_test.cpp" />
+        <ClCompile Include="BardCore\math\dimension4_test.cpp" />
         <ClCompile Include="BardCore\math\imaginary\quaternion_test.cpp" />
         <ClCompile Include="BardCore\math\math_test.cpp" />
         <ClCompile Include="BardCore\math\point3d_test.cpp" />

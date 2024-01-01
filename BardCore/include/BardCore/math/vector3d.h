@@ -23,13 +23,13 @@ namespace bardcore
          */
         NODISCARD constexpr vector3d normalize() const
         {
-            const float l = this->length();
+            const double l = this->length();
 
-            if (l == 0.f)
+            if (l == 0)
                 throw exception::zero_exception("vector length must not be zero");
 
             //branchless normalization
-            return l == 1.f
+            return l == 1.
                        ? *this
                        : *this / l;
         }
@@ -55,7 +55,7 @@ namespace bardcore
          * \param vector other vector
          * \return dot product of this and other vector
          */
-        NODISCARD constexpr float dot(const vector3d& vector) const noexcept
+        NODISCARD constexpr double dot(const vector3d& vector) const noexcept
         {
             return x * vector.x + y * vector.y + z * vector.z;
         }
@@ -64,7 +64,7 @@ namespace bardcore
          * \brief calculates the length of the vector
          * \return length of vector
          */
-        NODISCARD constexpr float length() const noexcept
+        NODISCARD constexpr double length() const noexcept
         {
             return math::sqrt(length_squared());
         }
@@ -73,7 +73,7 @@ namespace bardcore
          * \brief calculates the length squared of the vector
          * \return length squared of vector
          */
-        NODISCARD constexpr float length_squared() const noexcept
+        NODISCARD constexpr double length_squared() const noexcept
         {
             return x * x + y * y + z * z;
         }
@@ -87,7 +87,7 @@ namespace bardcore
          * \param vector other vector
          * \return -1 to 1 angle between this and other vector
          */
-        NODISCARD constexpr float angle_dot(const vector3d& vector) const
+        NODISCARD constexpr double angle_dot(const vector3d& vector) const
         {
             if (this == &vector)
                 throw exception::same_object_exception("vectors mustn't be the same");
@@ -103,7 +103,7 @@ namespace bardcore
          * \param vector other vector
          * \return angle in radians between this and other vector
          */
-        NODISCARD float angle_radians(const vector3d& vector) const
+        NODISCARD double angle_radians(const vector3d& vector) const
         {
             return std::acos(angle_dot(vector));
         }
@@ -116,7 +116,7 @@ namespace bardcore
          * \param vector other vector
          * \return angle in degrees between this and other vector
          */
-        NODISCARD float angle_degrees(const vector3d& vector) const
+        NODISCARD double angle_degrees(const vector3d& vector) const
         {
             return math::radians_to_degrees(angle_radians(vector));
         }
@@ -134,7 +134,7 @@ namespace bardcore
         NODISCARD std::optional<vector3d> reflection(const vector3d& normal) const
         {
             const vector3d n = normal.normalize();
-            const float dot = n.dot(*this);
+            const double dot = n.dot(*this);
 
             // dot < 0 means the vector is behind the normal
             // this is not what the reflection intends to do, so return nullopt
@@ -146,6 +146,7 @@ namespace bardcore
 
         /**
          * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
+         *        the result will not be normalized, meaning it will have the same length as the original vector
          * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d
@@ -155,7 +156,7 @@ namespace bardcore
         NODISCARD std::unique_ptr<vector3d> reflection(const vector3d& normal) const
         {
             const vector3d n = normal.normalize();
-            const float dot = n.dot(*this);
+            const double dot = n.dot(*this);
 
             // dot < 0 means the vector is behind the normal
             // this is not what the reflection intends to do, so return nullptr

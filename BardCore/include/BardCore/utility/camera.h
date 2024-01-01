@@ -44,7 +44,7 @@ namespace bardcore
                 //get center of screen
                 const auto center = position_ + direction_;
 
-                const float half_fov_tan = math::ftan(math::degrees_to_radians(static_cast<float>(fov_) / 2));
+                const double half_fov_tan = math::tan(math::degrees_to_radians(static_cast<double>(fov_) / 2));
 
                 //get horizontal and vertical vector
                 half_horizontal_ = direction_.cross(cross_factor).normalize() * half_fov_tan;
@@ -112,20 +112,20 @@ namespace bardcore
 
             /**
              * \brief shoot a ray from the camera through a pixel on the screen
-             * \throws out_of_range_exception if x or y is greater than screen width or height
+             * \throws out_of_range_exception if x or y is greater or equal to the screen width or height
              * \param x x position on the screen
              * \param y y position on the screen
              * \param distance distance of the ray
              */
-            NODISCARD constexpr ray shoot_ray(const unsigned int x, const unsigned int y, const float distance) const
+            NODISCARD constexpr ray shoot_ray(const unsigned int x, const unsigned int y, const double distance) const
             {
-                if (x > screen_width_ || y > screen_height_)
+                if (x >= screen_width_ || y >= screen_height_)
                     throw bardcore::exception::out_of_range_exception(
-                        "x and y must be smaller or equal to screen width and height");
+                        "x and y must be smaller than the screen width and height");
 
                 //calculate the position on the screen
-                const float ratio_width = static_cast<float>(x) / static_cast<float>(screen_width_);
-                const float ratio_height = static_cast<float>(y) / static_cast<float>(screen_height_);
+                const double ratio_width = static_cast<double>(x) / static_cast<double>(screen_width_);
+                const double ratio_height = static_cast<double>(y) / static_cast<double>(screen_height_);
 
                 //calculate the position on the screen
                 const vector3d horizontal = half_horizontal_ * 2 * ratio_width;

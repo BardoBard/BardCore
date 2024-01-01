@@ -11,9 +11,9 @@ namespace testing
 
         constexpr vector3d result = point1.get_vector(point2);
 
-        ASSERT_EQ(3.f, result.x);
-        ASSERT_EQ(3.f, result.y);
-        ASSERT_EQ(3.f, result.z);
+        ASSERT_EQ(3.0, result.x);
+        ASSERT_EQ(3.0, result.y);
+        ASSERT_EQ(3.0, result.z);
     }
 
     TEST(point3d_test, add_vector_test)
@@ -23,9 +23,9 @@ namespace testing
 
         constexpr point3d result = point1 + vector1;
 
-        ASSERT_EQ(5.f, result.x);
-        ASSERT_EQ(7.f, result.y);
-        ASSERT_EQ(9.f, result.z);
+        ASSERT_EQ(5.0, result.x);
+        ASSERT_EQ(7.0, result.y);
+        ASSERT_EQ(9.0, result.z);
     }
 
     TEST(point3d_test, distance_test)
@@ -33,9 +33,9 @@ namespace testing
         constexpr point3d point1 = {1, 2, 3};
         constexpr point3d point2 = {4, 5, 6};
 
-        constexpr float result = point1.distance(point2);
+        constexpr double result = point1.distance(point2);
 
-        ASSERT_NEAR(5.196f, result, ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(5.196, result, ROUND_THREE_DECIMALS);
         ASSERT_NO_THROW(point1.distance(point1));
     }
 
@@ -44,9 +44,9 @@ namespace testing
         constexpr point3d point1 = {-5, 3, 2};
         constexpr point3d point2 = {7, 9, -25};
 
-        constexpr float result = point1.distance(point2);
+        constexpr double result = point1.distance(point2);
 
-        ASSERT_NEAR(result, 30.1f, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(result, 30.1, ROUND_ONE_DECIMALS);
     }
     
     TEST(point3d_test, distance_squared_test)
@@ -54,9 +54,9 @@ namespace testing
         constexpr point3d point1 = {1, 2, 3};
         constexpr point3d point2 = {4, 5, 6};
 
-        constexpr float result = point1.distance_squared(point2);
+        constexpr double result = point1.distance_squared(point2);
 
-        ASSERT_EQ(27.f, result);
+        ASSERT_EQ(27.0, result);
     }
 
     TEST(point3d_test, distance_squared_test_neg)
@@ -64,9 +64,9 @@ namespace testing
         constexpr point3d point1 = {-5, 3, 2};
         constexpr point3d point2 = {7, 9, -25};
 
-        constexpr float result = point1.distance_squared(point2);
+        constexpr double result = point1.distance_squared(point2);
 
-        ASSERT_NEAR(result, 909.0f, ROUND_ONE_DECIMALS);
+        ASSERT_NEAR(result, 909.0, ROUND_ONE_DECIMALS);
     }
 
     //center test
@@ -77,8 +77,8 @@ namespace testing
 
         constexpr point3d result = point1.center(point2);
 
-        ASSERT_EQ(2.5f, result.x);
-        ASSERT_EQ(3.5f, result.y);
-        ASSERT_EQ(4.5f, result.z);
+        ASSERT_EQ(2.5, result.x);
+        ASSERT_EQ(3.5, result.y);
+        ASSERT_EQ(4.5, result.z);
     }
 } // namespace testing

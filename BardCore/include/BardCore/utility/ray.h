@@ -28,7 +28,7 @@ namespace bardcore
             /**
              * \brief distance from the position to the end of the ray, e.g 5
              */
-            float distance_{};
+            double distance_{};
 
         public:
             /**
@@ -59,7 +59,7 @@ namespace bardcore
              * \param direction direction of the ray
              * \param distance distance of the ray
              */
-            constexpr ray(const point3d& position, const vector3d& direction, const float distance) :
+            constexpr ray(const point3d& position, const vector3d& direction, const double distance) :
                 position_(position), direction_(direction.normalize()), distance_(distance)
             {
                 if (distance < 0)
@@ -94,7 +94,7 @@ namespace bardcore
              * \param length length to check
              * \return true if length is within the range of the ray, otherwise false
              */
-            NODISCARD constexpr bool within_range(const float length) const
+            NODISCARD constexpr bool within_range(const double length) const
             {
                 if (length < 0)
                     throw exception::negative_exception("length can't be negative");
@@ -120,7 +120,7 @@ namespace bardcore
              * \param distance distance from the position to the point
              * \return point on the ray at the given distance, if distance is out of range, nullopt
              */
-            NODISCARD std::optional<point3d> get_point(const float distance) const
+            NODISCARD std::optional<point3d> get_point(const double distance) const
             {
                 return within_range(distance)
                            ? std::make_optional<point3d>(position_ + direction_ * distance)
@@ -135,7 +135,7 @@ namespace bardcore
              * \param distance distance from the position to the point
              * \return point on the ray at the given distance, if distance is out of range, nullptr
              */
-            NODISCARD std::unique_ptr<point3d> get_point(const float distance) const
+            NODISCARD std::unique_ptr<point3d> get_point(const double distance) const
             {
                 return within_range(distance) ? std::make_unique<point3d>(position_ + direction_ * distance) : nullptr;
             }
@@ -161,7 +161,7 @@ namespace bardcore
              * \brief gets distance from the position to the end of the ray
              * \return distance of the ray
              */
-            NODISCARD constexpr float get_distance() const noexcept { return distance_; }
+            NODISCARD constexpr double get_distance() const noexcept { return distance_; }
 
             /**
              * \brief sets a new position of the ray
@@ -181,7 +181,7 @@ namespace bardcore
              * \throws negative_exception if distance is negative
              * \param distance distance of the ray
              */
-            constexpr void set_distance(const float distance)
+            constexpr void set_distance(const double distance)
             {
                 if (distance < 0)
                     throw exception::negative_exception("distance can't be negative");
@@ -237,7 +237,7 @@ namespace bardcore
             {
                 return left.position_ == right.position_
                     && left.direction_ == right.direction_
-                    && math::fequals(left.distance_, right.distance_);
+                    && math::equals(left.distance_, right.distance_);
             }
 
             /**
