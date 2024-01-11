@@ -132,10 +132,10 @@ namespace testing
     TEST(dimension3_test, operator_tests)
     {
         point3d point1 = {10, 20, 30}; //original point
-        const point3d point2 = {54, 32, 21};
-        const point3d point3 = {45, 23, 12};
+        constexpr point3d point2 = {54, 32, 21};
+        constexpr point3d point3 = {45, 23, 12};
 
-        const vector3d vector1 = {45, 23, 12};
+        constexpr vector3d vector1 = {45, 23, 12};
 
         ASSERT_EQ(point3d(64, 52, 51), point1 + point2);
         ASSERT_EQ(point3d(-35, -3, 18), point1 - point3);
@@ -149,5 +149,21 @@ namespace testing
 
         ASSERT_EQ(point3d(55, 43, 42), point1 += vector1);
         ASSERT_EQ(point3d(10, 20, 30), point1 -= vector1);
+    }
+
+    TEST(dimension3_test, operator_neg_pos_test)
+    {
+        point3d point1 = {10, 20, 30};
+        point3d point2 = {-54, 32, 21};
+        point3d point3 = {-45, 0, -12};
+
+        ASSERT_EQ(-point1, point3d(-10, -20, -30));
+        ASSERT_EQ(point1.abs(), point3d(10, 20, 30));
+
+        ASSERT_EQ(-point2, point3d(54, -32, -21));
+        ASSERT_EQ(point2.abs(), point3d(54, 32, 21));
+
+        ASSERT_EQ(-point3, point3d(45, 0, 12));
+        ASSERT_EQ(point3.abs(), point3d(45, 0, 12));
     }
 } // namespace testing

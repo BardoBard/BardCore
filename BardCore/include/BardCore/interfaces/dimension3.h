@@ -16,6 +16,7 @@ namespace bardcore
     {
     public:
         double x{}, y{}, z{};
+
     public:
         NODISCARD constexpr INLINE static T zero() noexcept { return T(0, 0, 0); }
         NODISCARD constexpr INLINE static T one() noexcept { return T(1, 1, 1); }
@@ -268,6 +269,30 @@ namespace bardcore
          * \return this
          */
         dimension3& operator=(dimension3&& other) noexcept = default;
+
+        /**
+         * \brief makes this dimension3 negative
+         * \return this
+        */
+        constexpr dimension3& operator-() noexcept
+        {
+            x = -x;
+            y = -y;
+            z = -z;
+            return *this;
+        }
+
+        /**
+         * \brief makes this dimension3 positive
+         * \return this
+         */
+        constexpr dimension3& abs() noexcept
+        {
+            x = math::abs(x);
+            y = math::abs(y);
+            z = math::abs(z);
+            return *this;
+        }
 
         /**
          * \brief less than operator

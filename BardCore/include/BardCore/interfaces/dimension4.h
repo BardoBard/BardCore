@@ -272,6 +272,32 @@ namespace bardcore
         dimension4& operator=(dimension4&& other) noexcept = default;
 
         /**
+         * \brief makes this dimension4 negative
+         * \return this
+        */
+        constexpr dimension4& operator-() noexcept
+        {
+            x = -x;
+            y = -y;
+            z = -z;
+            w = -w;
+            return *this;
+        }
+
+        /**
+         * \brief makes this dimension4 positive
+         * \return this
+         */
+        constexpr dimension4& abs() noexcept
+        {
+            x = math::abs(x);
+            y = math::abs(y);
+            z = math::abs(z);
+            w = math::abs(w);
+            return *this;
+        }
+
+        /**
          * \brief less than operator
          * \param left left dimension4
          * \param right right dimension4

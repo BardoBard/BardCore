@@ -110,7 +110,7 @@ namespace testing
     TEST(dimension4_test, operator2_test)
     {
         quaternion quaternion1 = {1, 2, 3, 4};
-        const quaternion quaternion2 = {1, 2, 3, 4};
+        constexpr quaternion quaternion2 = {1, 2, 3, 4};
 
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1 + 0);
         ASSERT_EQ(quaternion(0, 1, 2, 3), quaternion1 - 1);
@@ -127,10 +127,26 @@ namespace testing
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1 /= 2);
     }
 
+    TEST(dimension4_test, operator_neg_pos_test)
+    {
+        quaternion quaternion1 = {1, 2, 3, 4};
+        quaternion quaternion2 = {-1, 2, -3, -4};
+        quaternion quaternion3 = {0, 2, -3, -4};
+
+        ASSERT_EQ(quaternion(-1, -2, -3, -4), -quaternion1);
+        ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1.abs());
+
+        ASSERT_EQ(quaternion(1, -2, 3, 4), -quaternion2);
+        ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion2.abs());
+
+        ASSERT_EQ(quaternion(0, -2, 3, 4), -quaternion3);
+        ASSERT_EQ(quaternion(0, 2, 3, 4), quaternion3.abs());
+    }
+
     TEST(dimension4_test, assignment_test)
     {
         quaternion quaternion1 = {1, 2, 3, 4};
-        const quaternion quaternion2 = {1, 2, 3, 4};
+        constexpr quaternion quaternion2 = {1, 2, 3, 4};
 
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1);
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion2);
@@ -140,7 +156,7 @@ namespace testing
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion1);
         ASSERT_EQ(quaternion(1, 2, 3, 4), quaternion2);
 
-        const quaternion quaternion3 = {5, 6, 7, 8};
+        constexpr quaternion quaternion3 = {5, 6, 7, 8};
         quaternion1 = std::move(quaternion3);
 
         ASSERT_EQ(quaternion(5, 6, 7, 8), quaternion1);
