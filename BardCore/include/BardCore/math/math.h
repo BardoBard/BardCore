@@ -137,7 +137,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::pow(base, static_cast<double>(exponent));
 
-            if (std::_Is_nan(base) || base == inf || base == -inf) // base is inf
+            if (std::_Is_nan(base) || std::_Is_inf(base)) // base is inf
                 return NAN;
 
             if (exponent == 0 || equals(base, 1.)) // base is 1 or exponent is 0
@@ -160,7 +160,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::cos(value);
 
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             return sin(value + pi_2);
@@ -178,7 +178,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::sin(value);
 
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             value = mod(value, 2 * pi); // make value between 0 and 2pi
@@ -191,7 +191,7 @@ namespace bardcore
 
                 // r is near zero, adding it to the result will not change the result
                 // r is not a number or inf, stop calculating
-                if (equals(r, 0) || (std::_Is_nan(r) || r == inf || r == -inf))
+                if (equals(r, 0) || (std::_Is_nan(r) || std::_Is_inf(r)))
                     break;
 
                 result += r;
@@ -210,7 +210,7 @@ namespace bardcore
          */
         NODISCARD constexpr static double tan(const double value) noexcept
         {
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             if (equals(mod(value, pi), 0)) // value is a multiple of pi
@@ -265,7 +265,7 @@ namespace bardcore
         {
             return equals(value, 0)
                        ? 0
-                       : (less_than(value, 0)
+                       : (value < 0
                               ? -1
                               : 1);
         }
@@ -278,7 +278,7 @@ namespace bardcore
          */
         NODISCARD constexpr static double abs(const double value) noexcept
         {
-            return less_than(value, 0)
+            return value < 0
                        ? -value
                        : value;
         }
