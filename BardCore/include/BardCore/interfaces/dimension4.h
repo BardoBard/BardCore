@@ -369,5 +369,57 @@ namespace bardcore
             return !(left == right);
         }
     };
+    
+    /**
+     * \brief subtracts n from another dimension4 and stores the result in a new dimension4
+     * \param n double to subtract with
+     * \param other other dimension4
+     * \return new dimension4
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
+    NODISCARD constexpr dimension4<Derived> operator-(const double n, const dimension4<Derived>& other) noexcept
+    {
+        return {n - other.x, n - other.y, n - other.z, n - other.w};
+    }
+
+    /**
+     * \brief adds n from another dimension4 and stores the result in a new dimension4
+     * \param n double to add with
+     * \param other other dimension4
+     * \return new dimension4
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
+    NODISCARD constexpr dimension4<Derived> operator+(const double n, const dimension4<Derived>& other) noexcept
+    {
+        return other + n;
+    }
+    
+    /**
+     * \brief multiplies n from another dimension4 and stores the result in a new dimension4
+     * \param n double to multiply with
+     * \param other other dimension4
+     * \return new dimension4
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
+    NODISCARD constexpr dimension4<Derived> operator*(const double n, const dimension4<Derived>& other) noexcept
+    {
+        return other * n;
+    }
+
+    /**
+     * \brief divides n from another dimension4 and stores the result in a new dimension4
+     * \throws zero_exception if x, y, z or w is 0
+     * \param n double to divide with
+     * \param other other dimension4
+     * \return new dimension4
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
+    NODISCARD constexpr dimension4<Derived> operator/(const double n, const dimension4<Derived>& other)
+    {
+        if (other.x == 0 || other.y == 0 || other.z == 0 || other.w == 0)
+            throw exception::zero_exception("division by zero");
+        
+        return {n / other.x, n / other.y, n / other.z, n / other.w};
+    }
 } // namespace bardcore
 #endif //BARDCORE_dimension4_H

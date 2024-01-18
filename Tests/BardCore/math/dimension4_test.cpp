@@ -13,6 +13,15 @@ namespace testing
         ASSERT_EQ(quaternion(8, 10, 12, 14), quaternion1 + quaternion2);
     }
 
+    TEST(dimension4_test, point_add_n_test)
+    {
+        constexpr quaternion quaternion1 = {1, 2, 3, 4};
+        constexpr double n = 5;
+
+        ASSERT_EQ(quaternion(6, 7, 8, 9), quaternion1 + n);
+        ASSERT_EQ(quaternion(6, 7, 8, 9), n + quaternion1);
+    }
+
     TEST(dimension4_test, point_add_negative_test)
     {
         constexpr quaternion quaternion1 = {1, -2, 3, 4};
@@ -35,6 +44,15 @@ namespace testing
         constexpr quaternion quaternion2 = {9, 8, 7, 6};
 
         ASSERT_EQ(quaternion(-8, -6, -4, -2), quaternion1 - quaternion2);
+    }
+
+    TEST(dimension4_test, point_sub_n_test)
+    {
+        constexpr quaternion quaternion1 = {1, 2, 3, 4};
+        constexpr double n = 5;
+
+        ASSERT_EQ(quaternion(-4, -3, -2, -1), quaternion1 - n);
+        ASSERT_EQ(quaternion(4, 3, 2, 1), n - quaternion1);
     }
 
     TEST(dimension4_test, point_sub_negative_test)
@@ -60,6 +78,15 @@ namespace testing
         ASSERT_EQ(quaternion(2, 4, 6, 8), quaternion1 * 2);
     }
 
+    TEST(dimension4_test, point_mul_n_test)
+    {
+        constexpr quaternion quaternion1 = {1, 2, 3, 4};
+        constexpr double n = 5;
+
+        ASSERT_EQ(quaternion(5, 10, 15, 20), quaternion1 * n);
+        ASSERT_EQ(quaternion(5, 10, 15, 20), n * quaternion1);
+    }
+
     TEST(dimension4_test, point_mul_negative_test)
     {
         constexpr quaternion quaternion1 = {-1, 2, -3, 4};
@@ -79,6 +106,14 @@ namespace testing
         constexpr quaternion quaternion1 = {1, 2, 3, 4};
 
         ASSERT_EQ(quaternion(0.5, 1, 1.5, 2), quaternion1 / 2);
+    }
+
+    TEST(dimension4_test, point_div_n_test)
+    {
+        constexpr quaternion quaternion1 = {10, 20, 30, 40};
+        constexpr double n = 5;
+
+        ASSERT_EQ(quaternion(2, 4, 6, 8), quaternion1 / n);
     }
 
     TEST(dimension4_test, point_div_negative_test)
