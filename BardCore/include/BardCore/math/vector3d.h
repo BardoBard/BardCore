@@ -125,6 +125,8 @@ namespace bardcore
 
         /**
          * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
+         *
+         * the result will not be normalized, meaning it will have the same length as the original vector
          * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d
@@ -142,11 +144,12 @@ namespace bardcore
                        ? std::nullopt
                        : std::make_optional(n * (2 * dot) - *this);
         }
-#elif defined(CXX14) // C++14 (no std::unique_ptr)
+#elif defined(CXX14) // C++14 (std::unique_ptr)
 
         /**
          * \brief calculates the reflection of this vector on a normal only if this vector is not behind normal
-         *        the result will not be normalized, meaning it will have the same length as the original vector
+         *
+         * the result will not be normalized, meaning it will have the same length as the original vector
          * \throws zero_exception if length of normal vector is zero
          * \note read more at https://math.stackexchange.com/a/4019883
          * \note formula: r = n (2 * (d . n)) − d
