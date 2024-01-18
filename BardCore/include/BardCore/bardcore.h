@@ -29,6 +29,8 @@
     #error BardCore requires at least C++14
 #endif
 
+#define DEPRECATED(msg) [[deprecated(msg)]]
+
 // Standard includes
 #include <ostream>
 #include <exception>
