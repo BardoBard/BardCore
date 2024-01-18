@@ -16,6 +16,15 @@ namespace testing
         ASSERT_EQ(12.0, result.z);
     }
 
+    TEST(dimension3_test, point_add_n_test)
+    {
+        constexpr point3d point1 = {1, 2, 3};
+        constexpr double n = 5;
+
+        ASSERT_EQ(point3d(6, 7, 8), point1 + n);
+        ASSERT_EQ(point3d(6, 7, 8), n + point1);
+    }
+
     //addition with negative result
     TEST(dimension3_test, point_add_negative_test)
     {
@@ -55,13 +64,22 @@ namespace testing
         ASSERT_EQ(-4.0, result.z);
     }
 
+    TEST(dimension3_test, point_subtract_n_test)
+    {
+        constexpr point3d point1 = {1, 2, 3};
+        constexpr double n = 5;
+
+        ASSERT_EQ(point3d(-4, -3, -2), point1 - n);
+        ASSERT_EQ(point3d(4, 3, 2), n - point1);
+    }
+
     //subtraction with negative result
     TEST(dimension3_test, point_sub_negative_test)
     {
         constexpr point3d point1 = {1, 2, 3};
         constexpr point3d point2 = {9, 8, 7};
 
-        constexpr point3d result = point2 - (point1);
+        constexpr point3d result = point2 - point1;
 
         //assert near
         ASSERT_EQ(8.0, result.x);
@@ -73,11 +91,20 @@ namespace testing
     {
         constexpr point3d point1 = {1, 2, 3};
 
-        constexpr point3d result = point1 * (5);
+        constexpr point3d result = point1 * 5;
 
         ASSERT_EQ(5.0, result.x);
         ASSERT_EQ(10.0, result.y);
         ASSERT_EQ(15.0, result.z);
+    }
+
+    TEST(dimension3_test, point_multiply_n_test)
+    {
+        constexpr point3d point1 = {1, 2, 3};
+        constexpr double n = 5;
+
+        ASSERT_EQ(point3d(5, 10, 15), point1 * n);
+        ASSERT_EQ(point3d(5, 10, 15), n * point1);
     }
 
     //multiply by zero
@@ -85,7 +112,7 @@ namespace testing
     {
         constexpr point3d point1 = {1, 2, 3};
 
-        constexpr point3d result = point1 * (0);
+        constexpr point3d result = point1 * 0;
 
         ASSERT_EQ(0.0, result.x);
         ASSERT_EQ(0.0, result.y);
@@ -96,11 +123,19 @@ namespace testing
     {
         constexpr point3d point1 = {10, 20, 30};
 
-        constexpr point3d result = point1 / (5);
+        constexpr point3d result = point1 / 5;
 
         ASSERT_EQ(2.0, result.x);
         ASSERT_EQ(4.0, result.y);
         ASSERT_EQ(6.0, result.z);
+    }
+
+    TEST(dimension3_test, point_divide_n_test)
+    {
+        constexpr point3d point1 = {10, 20, 30};
+        constexpr double n = 5;
+
+        ASSERT_EQ(point3d(2, 4, 6), point1 / n);
     }
 
     //test divide by zero
