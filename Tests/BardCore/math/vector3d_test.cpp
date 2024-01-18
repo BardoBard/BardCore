@@ -220,4 +220,29 @@ namespace testing
         ASSERT_EQ(nullptr, result);
 #endif
     }
+
+    TEST(vector3d_test, refraction_test)
+    {
+        constexpr vector3d l = {0.707107, -0.707107, 0.0};
+        constexpr vector3d n = {0.0, 1.0, 0.0};
+        constexpr double refractive_ratio = 0.9;
+        constexpr vector3d result = l.refraction(n, refractive_ratio);
+
+        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), result);
+        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), l.refraction(n, refractive_ratio));
+    }
+
+    TEST(vector3d_test, refraction_exception_test)
+    {
+        constexpr vector3d l = {1, 2, 3};
+        constexpr vector3d n = {0.0, 1.0, 0.0};
+
+        constexpr vector3d zero_n = {0.0, 0.0, 0.0};
+        constexpr double negative_refractive_ratio = -0.9;
+        constexpr double zero_refractive_ratio = 0;
+
+        ASSERT_THROW(l.refraction(n, negative_refractive_ratio), exception::negative_exception);
+        ASSERT_THROW(l.refraction(n, zero_refractive_ratio), exception::negative_exception);
+        ASSERT_THROW(l.refraction(zero_n, 0.9), exception::zero_exception);
+    }
 } // namespace testing

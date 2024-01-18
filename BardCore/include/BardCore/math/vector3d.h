@@ -121,6 +121,46 @@ namespace bardcore
             return math::radians_to_degrees(angle_radians(vector));
         }
 
+        /**
+         * \brief calculates the refraction of this vector on a normal
+         * \throws zero_exception if length of normal vector is zero
+         * \throws negative_exception if refractive index is smaller or equal to zero
+         * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+         * \param normal normal, the vector to refract on, it will be normalized for you
+         * \param refraction_ratio refraction_ratio, this is the ratio between mediums, for example air and water, read more at https://en.wikipedia.org/wiki/Refractive_index
+         * \return refraction of this vector on a normalized(normal), note that the result is not normalized
+         */
+        NODISCARD constexpr vector3d refraction(const vector3d& normal, const double refraction_ratio) const
+        {
+            return refraction(normal, refraction_ratio, 1.);
+        }
+
+        /**
+         * \brief calculates the refraction of this vector on a normal
+         * \throws zero_exception if length of normal vector is zero
+         * \throws negative_exception if refractive index is smaller or equal to zero
+         * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+         * \param normal normal, the vector to refract on, it will be normalized for you
+         * \param refractive_medium1 refractive_medium1, this is the refractive index of the medium the vector is coming from, for example air, read more at https://en.wikipedia.org/wiki/Refractive_index
+         * \param refractive_medium2 refractive_medium2, this is the refractive index of the medium the vector is going to, for example water, read more at https://en.wikipedia.org/wiki/Refractive_index
+         * \return refraction of this vector on a normalized(normal), note that the result is not normalized
+         */
+        NODISCARD constexpr vector3d refraction(const vector3d& normal, const double refractive_medium1,
+                                                const double refractive_medium2) const
+        {
+            const double refractive_ratio = refractive_medium1 / refractive_medium2;
+            if (refractive_ratio <= 0)
+                throw exception::negative_exception("refractive ratio must be bigger than zero");
+
+            const vector3d normalized_normal = normal.normalize();
+            const double c = -normalized_normal.dot(*this);
+
+            //formula: refraction = r*l + (r*c - sqrt(1 - r^2 * (1 - c^2))) * n
+            //https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+            return *this * refractive_ratio + normalized_normal * (refractive_ratio * c - math::sqrt(
+                1 - refractive_ratio * refractive_ratio * (1 - c * c)));
+        }
+
 #if defined(CXX17) // C++17 or higher (std::optional)
 
         /**
