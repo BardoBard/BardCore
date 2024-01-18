@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BardCore/math/vector3d.h"
 
+#include "BardCore/math/imaginary/quaternion.h"
+
 namespace testing
 {
     //test angle
@@ -226,10 +228,23 @@ namespace testing
         constexpr vector3d l = {0.707107, -0.707107, 0.0};
         constexpr vector3d n = {0.0, 1.0, 0.0};
         constexpr double refractive_ratio = 0.9;
-        constexpr vector3d result = l.refraction(n, refractive_ratio);
+        const auto result = l.refraction(n, refractive_ratio);
 
-        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), result);
-        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), l.refraction(n, refractive_ratio));
+        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *result);
+        ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *l.refraction(n, refractive_ratio));
+    }
+
+    TEST(vector3d_test, refraction_internal_reflection_test)
+    {
+        constexpr vector3d l = {1.191752, 1, 0}; // 50 degrees
+        constexpr vector3d n = {0.0, 1.0, 0.0};
+        constexpr double refractive_ratio = 1.333; // ratio for internal reflection
+        constexpr double refractive_ratio_2 = 1.2; // ratio for refraction
+
+        ASSERT_FALSE(l.refraction(n, refractive_ratio));
+
+        ASSERT_EQ(1, l.refraction(n, refractive_ratio_2)->length());
+        ASSERT_EQ(vector3d(0.919253, -0.393668, 0), *l.refraction(n, refractive_ratio_2));
     }
 
     TEST(vector3d_test, refraction_exception_test)
@@ -242,7 +257,7 @@ namespace testing
         constexpr double zero_refractive_ratio = 0;
 
         ASSERT_THROW(l.refraction(n, negative_refractive_ratio), exception::negative_exception);
-        ASSERT_THROW(l.refraction(n, zero_refractive_ratio), exception::negative_exception);
+        ASSERT_THROW(l.refraction(n, zero_refractive_ratio), exception::zero_exception);
         ASSERT_THROW(l.refraction(zero_n, 0.9), exception::zero_exception);
     }
 } // namespace testing
