@@ -216,11 +216,7 @@ namespace testing
 
         const auto result = vector1.reflection(vector2);
 
-#if defined(CXX17)
-        ASSERT_FALSE(result.has_value());
-#elif defined(CXX14)
-        ASSERT_EQ(nullptr, result);
-#endif
+        ASSERT_FALSE(result);
     }
 
     TEST(vector3d_test, refraction_test)
@@ -243,7 +239,7 @@ namespace testing
 
         ASSERT_FALSE(l.refraction(n, refractive_ratio));
 
-        ASSERT_EQ(1, l.refraction(n, refractive_ratio_2)->length());
+        ASSERT_TRUE(math::equals(l.refraction(n, refractive_ratio_2)->length(), 1));
         ASSERT_EQ(vector3d(0.919253, -0.393668, 0), *l.refraction(n, refractive_ratio_2));
     }
 

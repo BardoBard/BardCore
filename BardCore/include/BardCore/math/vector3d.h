@@ -159,6 +159,8 @@ namespace bardcore
             if (math::greater_than(theta_sin_2, 1)) //this means we have a total internal reflection
                 return std::nullopt;
 
+            //no ternary operator because otherwise constexpr doesn't work on make_optional???
+            //the compiler will optimize this anyway
             return std::make_optional(
                 this->normalize() * refractive_ratio + normalized_normal * (refractive_ratio * theta_cos_1 - math::sqrt(
                     1 - theta_sin_2 * theta_sin_2)));
@@ -181,11 +183,14 @@ namespace bardcore
 
             // dot < 0 means the vector is behind the normal
             // this is not what the reflection intends to do, so return nullopt
-            return dot < 0
-                       ? std::nullopt
-                       : std::make_optional(n * (2 * dot) - *this);
+            if (dot < 0)
+                return std::nullopt;
+
+            //no ternary operator because otherwise constexpr doesn't work on make_optional???
+            //the compiler will optimize this anyway
+            return std::make_optional(n * (2 * dot) - *this);
         }
-        
+
 #elif defined(CXX14) // C++14 (std::unique_ptr)
         /**
          * \brief calculates the normalized refraction of this vector on a normal
