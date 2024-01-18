@@ -149,7 +149,7 @@ namespace testing
         ASSERT_FALSE(math::greater_than(-INFINITY, 100));
     }
 
-    TEST(test_math, less_than_test)
+    TEST(math_test, less_than_test)
     {
         ASSERT_TRUE(math::less_than(1.0, 2));
         ASSERT_TRUE(math::less_than(1.0, 1.0001));

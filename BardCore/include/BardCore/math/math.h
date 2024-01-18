@@ -62,6 +62,16 @@ namespace bardcore
         INLINE static constexpr double pi_4 = 0.785398163397448309616;
 
         /**
+         * \brief sqrt(2) constant
+         */
+        INLINE static constexpr double sqrt_2 = 1.41421356237309504880;
+
+        /**
+         * \brief sqrt(3) constant
+         */
+        INLINE static constexpr double sqrt_3 = 1.73205080756887729352;
+
+        /**
          * \brief pi / 4 constant
          */
         INLINE static constexpr double inf = std::numeric_limits<double>::infinity();
@@ -98,7 +108,7 @@ namespace bardcore
         NODISCARD constexpr static double sqrt(const double value)
         {
             if (value < 0)
-                throw exception::negative_exception("value can not be negative");
+                throw exception::negative_exception("sqrt(value) can not be negative");
 
             if (!std::_Is_constant_evaluated())
                 return std::sqrt(value);
