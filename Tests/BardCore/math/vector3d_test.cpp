@@ -229,18 +229,44 @@ namespace testing
         ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *result);
         ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *l.refraction(n, refractive_ratio));
     }
+    
+    TEST(vector3d_test, refraction2_test){
+        constexpr vector3d l = {1.191752, 1, 0}; // 50 degrees
+        constexpr vector3d n = {0.0, 1.0, 0.0};
+        constexpr double refractive_ratio_2 = 1.2;
+
+        // calculate refraction
+        ASSERT_TRUE(math::equals(l.refraction(n, refractive_ratio_2)->length(), 1));
+        ASSERT_EQ(vector3d(0.919253, -0.393668, 0), *l.refraction(n, refractive_ratio_2));
+
+        // calculate angle in degrees
+        ASSERT_NEAR(66.817, 180 -l.refraction(n, refractive_ratio_2)->angle_degrees(n), ROUND_THREE_DECIMALS);
+    }
 
     TEST(vector3d_test, refraction_internal_reflection_test)
     {
         constexpr vector3d l = {1.191752, 1, 0}; // 50 degrees
         constexpr vector3d n = {0.0, 1.0, 0.0};
         constexpr double refractive_ratio = 1.333; // ratio for internal reflection
-        constexpr double refractive_ratio_2 = 1.2; // ratio for refraction
+        constexpr double refractive_ratio_2 = 1.7; // ratio for refraction
 
         ASSERT_FALSE(l.refraction(n, refractive_ratio));
+        ASSERT_FALSE(l.refraction(n, refractive_ratio_2));;
+    }
 
-        ASSERT_TRUE(math::equals(l.refraction(n, refractive_ratio_2)->length(), 1));
-        ASSERT_EQ(vector3d(0.919253, -0.393668, 0), *l.refraction(n, refractive_ratio_2));
+    TEST(vector3d_test, refraction3_test)
+    {
+        constexpr vector3d l = {6,1,8};
+        constexpr vector3d n = {1,2,3};
+        constexpr double refractive_medium1 = 1.00029; // air
+        constexpr double refractive_medium2 = 1.333; // water
+
+        // calculate refraction
+        ASSERT_TRUE(math::equals(l.refraction(n, refractive_medium1, refractive_medium2)->length(), 1));
+        ASSERT_EQ(vector3d(0.03171, -0.75793, -0.65156), *l.refraction(n, refractive_medium1, refractive_medium2));
+
+        // calculate angle in degrees
+        ASSERT_NEAR(23.21, 180 - l.refraction(n, refractive_medium1, refractive_medium2)->angle_degrees(n), ROUND_TWO_DECIMALS);
     }
 
     TEST(vector3d_test, refraction_exception_test)
@@ -249,11 +275,11 @@ namespace testing
         constexpr vector3d n = {0.0, 1.0, 0.0};
 
         constexpr vector3d zero_n = {0.0, 0.0, 0.0};
-        constexpr double negative_refractive_ratio = -0.9;
-        constexpr double zero_refractive_ratio = 0;
-
-        ASSERT_THROW(l.refraction(n, negative_refractive_ratio), exception::negative_exception);
-        ASSERT_THROW(l.refraction(n, zero_refractive_ratio), exception::zero_exception);
+        
+        ASSERT_THROW(l.refraction(n, -0.9), exception::negative_exception);
+        ASSERT_THROW(l.refraction(n, 0), exception::zero_exception);
+        ASSERT_THROW(l.refraction(n, 0, 1), exception::zero_exception);
+        ASSERT_THROW(l.refraction(n, 1, 0), exception::zero_exception);
         ASSERT_THROW(l.refraction(zero_n, 0.9), exception::zero_exception);
     }
 } // namespace testing

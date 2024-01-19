@@ -125,18 +125,37 @@ namespace bardcore
          * \brief calculates the normalized refraction of this vector on a normal
          *
          * if there is no refraction, only internal reflection, this method will return std::nullopt
+         * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
          * \throws zero_exception if length of normal vector is zero
          * \throws zero_exception if refractive mediums are zero
-         * \throws negative_exception if refractive index is smaller or equal to zero
+         * \throws negative_exception if refractive ratio is smaller or equal to zero
+         * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+         * \param normal normal, the vector to refract on, it will be normalized for you
+         * \param refractive_ratio this is the ratio between the refractive mediums, for example air and water, read more at https://en.wikipedia.org/wiki/Refractive_index
+         * \return normalized refraction vector of this vector on a normalized(normal), std::nullopt if there is no refraction
+         */
+        NODISCARD constexpr std::optional<vector3d> refraction(const vector3d& normal, const double refractive_ratio) const
+        {
+            return refraction(normal, refractive_ratio, 1.);
+        }
+        
+         /**
+         * \brief calculates the normalized refraction of this vector on a normal
+         *
+         * if there is no refraction, only internal reflection, this method will return std::nullopt
+         * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+         * \throws zero_exception if length of normal vector is zero
+         * \throws zero_exception if refractive mediums are zero
+         * \throws negative_exception if refractive ratio is smaller or equal to zero
          * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
          * \param normal normal, the vector to refract on, it will be normalized for you
          * \param refractive_medium1 refractive_medium1, this is the refractive index of the medium the vector is coming from, for example air, read more at https://en.wikipedia.org/wiki/Refractive_index
          * \param refractive_medium2 refractive_medium2, this is the refractive index of the medium the vector is going to, for example water, read more at https://en.wikipedia.org/wiki/Refractive_index
-         * \return normalized refraction vector of this vector on a normalized(normal)
+         * \return normalized refraction vector of this vector on a normalized(normal), std::nullopt if there is no refraction
          */
         NODISCARD constexpr std::optional<vector3d> refraction(const vector3d& normal,
                                                                        const double refractive_medium1,
-                                                                       const double refractive_medium2 = 1) const
+                                                                       const double refractive_medium2) const
         {
             //we cannot divide by zero
             if (math::equals(refractive_medium1, 0.) || math::equals(refractive_medium2, 0.))
@@ -195,17 +214,36 @@ namespace bardcore
          * \brief calculates the normalized refraction of this vector on a normal
          *
          * if there is no refraction, only internal reflection, this method will return nullptr
+         * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
          * \throws zero_exception if length of normal vector is zero
          * \throws zero_exception if refractive mediums are zero
-         * \throws negative_exception if refractive index is smaller or equal to zero
+         * \throws negative_exception if refractive ratio is smaller or equal to zero
+         * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+         * \param normal normal, the vector to refract on, it will be normalized for you
+         * \param refractive_ratio this is the ratio between the refractive mediums, for example air and water, read more at https://en.wikipedia.org/wiki/Refractive_index
+         * \return normalized refraction vector of this vector on a normalized(normal), nullptr if there is no refraction
+         */
+        NODISCARD std::unique_ptr<vector3d> refraction(const vector3d& normal, const double refractive_ratio) const
+        {
+            return refraction(normal, refractive_ratio, 1.);
+        }
+        
+        /**
+         * \brief calculates the normalized refraction of this vector on a normal
+         *
+         * if there is no refraction, only internal reflection, this method will return nullptr
+         * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form 
+         * \throws zero_exception if length of normal vector is zero
+         * \throws zero_exception if refractive mediums are zero
+         * \throws negative_exception if refractive ratio is smaller or equal to zero
          * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
          * \param normal normal, the vector to refract on, it will be normalized for you
          * \param refractive_medium1 refractive_medium1, this is the refractive index of the medium the vector is coming from, for example air, read more at https://en.wikipedia.org/wiki/Refractive_index
          * \param refractive_medium2 refractive_medium2, this is the refractive index of the medium the vector is going to, for example water, read more at https://en.wikipedia.org/wiki/Refractive_index
-         * \return normalized refraction vector of this vector on a normalized(normal)
+         * \return normalized refraction vector of this vector on a normalized(normal), nullptr if there is no refraction
          */
         NODISCARD std::unique_ptr<vector3d> refraction(const vector3d& normal, const double refractive_medium1,
-                                                      const double refractive_medium2 = 1) const
+                                                      const double refractive_medium2) const
         {
             //we cannot divide by zero
             if (math::equals(refractive_medium1, 0.) || math::equals(refractive_medium2, 0.))
