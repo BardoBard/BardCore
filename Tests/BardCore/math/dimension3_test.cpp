@@ -138,6 +138,19 @@ namespace testing
         ASSERT_EQ(point3d(2, 4, 6), point1 / n);
     }
 
+    TEST(dimension3_test, point_divide_exception_test)
+    {
+        ASSERT_THROW(5 / point3d(0, 1, 2), exception::zero_exception);
+        ASSERT_THROW(5 / point3d(1, 0, 2), exception::zero_exception);
+        ASSERT_THROW(5 / point3d(1, 2, 0), exception::zero_exception);
+        ASSERT_THROW(5 / point3d(1, 2, 0.00001), exception::zero_exception);
+        
+        ASSERT_NO_THROW(5 / point3d(1, 2, 3));
+        ASSERT_NO_THROW(5 / point3d(-1, -2, -3));
+        ASSERT_NO_THROW(5 / point3d(0.1, -2, -3));
+        ASSERT_NO_THROW(5 / point3d(1, -0.0001, -3));
+    }
+
     //test divide by zero
     TEST(dimension3_test, point_divide_zero_test)
     {

@@ -1,5 +1,4 @@
-#ifndef BARDCORE_MATH_H
-#define BARDCORE_MATH_H
+#pragma once
 
 #include "BardCore/bardcore.h"
 
@@ -365,4 +364,3 @@ namespace bardcore
         }
     };
 } // namespace bardcore
-#endif //BARDCORE_MATH_H

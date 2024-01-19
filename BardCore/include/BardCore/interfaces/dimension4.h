@@ -1,5 +1,5 @@
-#ifndef BARDCORE_dimension4_H
-#define BARDCORE_dimension4_H
+#pragma once
+
 #include "BardCore/bardcore.h"
 #include "BardCore/math/math.h"
 
@@ -416,10 +416,9 @@ namespace bardcore
     template <typename Derived, ENABLE_IF_DERIVED(dimension4, Derived)>
     NODISCARD constexpr dimension4<Derived> operator/(const double n, const dimension4<Derived>& other)
     {
-        if (other.x == 0 || other.y == 0 || other.z == 0 || other.w == 0)
+        if (math::equals(other.x, 0.) || math::equals(other.y, 0.) || math::equals(other.z, 0.) || math::equals(other.w, 0.))
             throw exception::zero_exception("division by zero");
         
         return {n / other.x, n / other.y, n / other.z, n / other.w};
     }
 } // namespace bardcore
-#endif //BARDCORE_dimension4_H

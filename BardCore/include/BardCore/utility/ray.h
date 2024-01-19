@@ -1,5 +1,4 @@
-#ifndef BARDCORE_RAY_H
-#define BARDCORE_RAY_H
+#pragma once
 
 #include "BardCore/math/point3d.h"
 #include "BardCore/math/vector3d.h"
@@ -253,4 +252,3 @@ namespace bardcore
         };
     } // namespace bardcore::utility
 } // namespace bardcore
-#endif //BARDCORE_RAY_H

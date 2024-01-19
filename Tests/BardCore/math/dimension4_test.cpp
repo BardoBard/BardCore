@@ -116,6 +116,23 @@ namespace testing
         ASSERT_EQ(quaternion(2, 4, 6, 8), quaternion1 / n);
     }
 
+    TEST(dimension4_test, point_div_n_exception_test)
+    {
+
+        ASSERT_THROW(5 / quaternion(0, 1, 2, 3), bardcore::exception::zero_exception);
+        ASSERT_THROW(5 / quaternion(1, 0, 2, 3), bardcore::exception::zero_exception);
+        ASSERT_THROW(5 / quaternion(1, 2, 0, 3), bardcore::exception::zero_exception);
+        ASSERT_THROW(5 / quaternion(1, 2, 3, 0), bardcore::exception::zero_exception);
+        ASSERT_THROW(5 / quaternion(1, 2, 3, 0.00001), bardcore::exception::zero_exception);
+        ASSERT_THROW(5 / quaternion(1, 2, -0.00001, 3), bardcore::exception::zero_exception);
+
+        ASSERT_NO_THROW(5 / quaternion(1, 2, 3, 4));
+        ASSERT_NO_THROW(5 / quaternion(-1, 2, -3, 4));
+        ASSERT_NO_THROW(5 / quaternion(-1, 2, -3, 4));
+        ASSERT_NO_THROW(5 / quaternion(-1, 0.0001, 3, 4));
+        ASSERT_NO_THROW(5 / quaternion(-1, -0.0001, 3, 4));
+    }
+
     TEST(dimension4_test, point_div_negative_test)
     {
         constexpr quaternion quaternion1 = {-1, 2, -3, 4};

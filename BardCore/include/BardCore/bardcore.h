@@ -1,5 +1,5 @@
-#ifndef BARDCORE_BARDCORE_H
-#define BARDCORE_BARDCORE_H
+#ifndef BARDCORE_H
+#define BARDCORE_H
 
 // C++ version has to be 14 or later
 
@@ -28,6 +28,8 @@
 #else // earlier than c++ 14
     #error BardCore requires at least C++14
 #endif
+
+#define DEPRECATED(msg) [[deprecated(msg)]]
 
 // Standard includes
 #include <ostream>
@@ -76,4 +78,4 @@ namespace bardcore
 #include "BardCore/exception/same_object_exception.h"
 #include "BardCore/exception/out_of_range_exception.h"
 
-#endif //BARDCORE_BARDCORE_H
+#endif // BARDCORE_H
