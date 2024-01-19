@@ -34,10 +34,11 @@ namespace bardcore
         }
 
         /**
-         * \brief calculates the cross product of this and another vector
+         * \brief calculates the cross product of this and another vector, it produces a perpendicular vector
+         * \note read more at https://en.wikipedia.org/wiki/Cross_product
          * \note formula cross product: a x b = (a_y * b_z - a_z * b_y, a_z * b_x - a_x * b_z, a_x * b_y - a_y * b_x)
          * \param vector other vector 
-         * \return cross product of this and other vector
+         * \return cross product of this and other vector, aka perpendicular vector
          */
         NODISCARD constexpr vector3d cross(const vector3d& vector) const noexcept
         {
@@ -49,7 +50,8 @@ namespace bardcore
         }
 
         /**
-         * \brief calculates the dot product of this and another vector
+         * \brief calculates the dot product of this and another vector, it produces a scalar which is the angle between the vectors
+         * \note read more at https://en.wikipedia.org/wiki/Dot_product
          * \note formula dot product: a . b = Σ a_i * b_i
          * \param vector other vector
          * \return dot product of this and other vector
@@ -102,9 +104,9 @@ namespace bardcore
          * \param vector other vector, it will be normalized for you
          * \return angle in radians between this and other vector
          */
-        NODISCARD double angle_radians(const vector3d& vector) const
+        NODISCARD constexpr double angle_radians(const vector3d& vector) const
         {
-            return std::acos(angle_dot(vector));
+            return math::arccos(angle_dot(vector));
         }
 
         /**
@@ -115,7 +117,7 @@ namespace bardcore
          * \param vector other vector
          * \return angle in degrees between this and other vector
          */
-        NODISCARD double angle_degrees(const vector3d& vector) const
+        NODISCARD constexpr double angle_degrees(const vector3d& vector) const
         {
             return math::radians_to_degrees(angle_radians(vector));
         }
@@ -134,28 +136,29 @@ namespace bardcore
          * \param refractive_ratio this is the ratio between the refractive mediums, for example air and water, read more at https://en.wikipedia.org/wiki/Refractive_index
          * \return normalized refraction vector of this vector on a normalized(normal), std::nullopt if there is no refraction
          */
-        NODISCARD constexpr std::optional<vector3d> refraction(const vector3d& normal, const double refractive_ratio) const
+        NODISCARD constexpr std::optional<vector3d> refraction(const vector3d& normal,
+                                                               const double refractive_ratio) const
         {
             return refraction(normal, refractive_ratio, 1.);
         }
-        
-         /**
-         * \brief calculates the normalized refraction of this vector on a normal
-         *
-         * if there is no refraction, only internal reflection, this method will return std::nullopt
-         * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
-         * \throws zero_exception if length of normal vector is zero
-         * \throws zero_exception if refractive mediums are zero
-         * \throws negative_exception if refractive ratio is smaller or equal to zero
-         * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
-         * \param normal normal, the vector to refract on, it will be normalized for you
-         * \param refractive_medium1 refractive_medium1, this is the refractive index of the medium the vector is coming from, for example air, read more at https://en.wikipedia.org/wiki/Refractive_index
-         * \param refractive_medium2 refractive_medium2, this is the refractive index of the medium the vector is going to, for example water, read more at https://en.wikipedia.org/wiki/Refractive_index
-         * \return normalized refraction vector of this vector on a normalized(normal), std::nullopt if there is no refraction
-         */
+
+        /**
+        * \brief calculates the normalized refraction of this vector on a normal
+        *
+        * if there is no refraction, only internal reflection, this method will return std::nullopt
+        * \note this uses snell's law, read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+        * \throws zero_exception if length of normal vector is zero
+        * \throws zero_exception if refractive mediums are zero
+        * \throws negative_exception if refractive ratio is smaller or equal to zero
+        * \note read more at https://en.wikipedia.org/wiki/Snell%27s_law#Vector_form
+        * \param normal normal, the vector to refract on, it will be normalized for you
+        * \param refractive_medium1 refractive_medium1, this is the refractive index of the medium the vector is coming from, for example air, read more at https://en.wikipedia.org/wiki/Refractive_index
+        * \param refractive_medium2 refractive_medium2, this is the refractive index of the medium the vector is going to, for example water, read more at https://en.wikipedia.org/wiki/Refractive_index
+        * \return normalized refraction vector of this vector on a normalized(normal), std::nullopt if there is no refraction
+        */
         NODISCARD constexpr std::optional<vector3d> refraction(const vector3d& normal,
-                                                                       const double refractive_medium1,
-                                                                       const double refractive_medium2) const
+                                                               const double refractive_medium1,
+                                                               const double refractive_medium2) const
         {
             //we cannot divide by zero
             if (math::equals(refractive_medium1, 0.) || math::equals(refractive_medium2, 0.))

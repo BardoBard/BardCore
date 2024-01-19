@@ -74,9 +74,15 @@ namespace testing
         constexpr double result2 = math::sqrt(52);
         constexpr double result3 = math::sqrt(10000000);
 
+        // compile time tests
         ASSERT_NEAR(10, result, ROUND_ZERO);
-        ASSERT_NEAR(7.21, result2, ROUND_TWO_DECIMALS);
-        ASSERT_NEAR(3162, result3, ROUND_ONE);
+        ASSERT_NEAR(7.2111, result2, ROUND_FOUR_DECIMALS);
+        ASSERT_NEAR(3162.28, result3, ROUND_TWO_DECIMALS);
+
+        // runtime tests
+        ASSERT_TRUE(math::equals(10, math::sqrt(100))) << math::sqrt(100);
+        ASSERT_TRUE(math::equals(7.2111, math::sqrt(52))) << math::sqrt(52);
+        ASSERT_TRUE(math::equals(3162.27766, math::sqrt(10000000))) << math::sqrt(10000000);
     }
 
     //test euclidean_gcd constexpr
@@ -232,7 +238,7 @@ namespace testing
         ASSERT_THROW(math::mod(-12, 0), exception::zero_exception);
     }
 
-    TEST(math_test, sin)
+    TEST(math_test, sin_test)
     {
         constexpr double compile_time_a = math::sin(0);
         constexpr double compile_time_b = math::sin(1);
@@ -270,7 +276,7 @@ namespace testing
         ASSERT_TRUE(std::isnan(math::sin(NAN)));
     }
 
-    TEST(math_test, cos)
+    TEST(math_test, cos_test)
     {
         constexpr double compile_time_a = math::cos(0);
         constexpr double compile_time_b = math::cos(1);
@@ -317,7 +323,7 @@ namespace testing
         ASSERT_TRUE(std::isnan(compile_time_ninf));
     }
 
-    TEST(math_test, tan)
+    TEST(math_test, tan_test)
     {
         constexpr double compile_time_a = math::tan(0);
         constexpr double compile_time_b = math::tan(1);
@@ -372,6 +378,173 @@ namespace testing
         ASSERT_TRUE(std::isnan(compile_time_ninf));
     }
 
+    TEST(math_test, arcsin_test)
+    {
+        constexpr double compile_time_a = math::arcsin(0);
+        constexpr double compile_time_b = math::arcsin(1);
+        constexpr double compile_time_c = math::arcsin(-1);
+        constexpr double compile_time_d = math::arcsin(0.1);
+        constexpr double compile_time_e = math::arcsin(-0.4);
+        constexpr double compile_time_f = math::arcsin(math::pi_4); 
+        constexpr double compile_time_g = math::arcsin(0.2);
+        constexpr double compile_time_h = math::arcsin(0.7);
+        constexpr double compile_time_i = math::arcsin(0.9);
+        constexpr double compile_time_j = math::arcsin(0.99);
+        constexpr double compile_time_k = math::arcsin(-0.99);
+
+        // compile time tests
+        ASSERT_TRUE(math::equals(0, compile_time_a));
+        ASSERT_TRUE(math::equals(math::pi_2, compile_time_b));
+        ASSERT_TRUE(math::equals(-math::pi_2, compile_time_c));
+        ASSERT_TRUE(math::equals(0.100165, compile_time_d));
+        ASSERT_TRUE(math::equals(-0.41150, compile_time_e));
+        ASSERT_TRUE(math::equals(0.90332, compile_time_f)); 
+        ASSERT_TRUE(math::equals(0.20136, compile_time_g));
+        ASSERT_TRUE(math::equals(0.77539, compile_time_h));
+        ASSERT_TRUE(math::equals(1.11973, compile_time_i));
+        ASSERT_TRUE(math::equals(1.42738, compile_time_j));
+        ASSERT_TRUE(math::equals(-1.42738, compile_time_k));
+
+        ASSERT_TRUE(math::equals(0, math::arcsin(0)));
+        ASSERT_TRUE(math::equals(1.5708, math::arcsin(1)));
+        ASSERT_TRUE(math::equals(-1.5708, math::arcsin(-1)));
+        ASSERT_TRUE(math::equals(0.100165, math::arcsin(0.1)));
+        ASSERT_TRUE(math::equals(-0.41152, math::arcsin(-0.4)));
+        ASSERT_TRUE(math::equals(0.90334, math::arcsin(math::pi_4)));
+        ASSERT_TRUE(math::equals(0.20136, math::arcsin(0.2)));
+        ASSERT_TRUE(math::equals(0.77539, math::arcsin(0.7)));
+        ASSERT_TRUE(math::equals(1.11977, math::arcsin(0.9)));
+        ASSERT_TRUE(math::equals(1.42925, math::arcsin(0.99)));
+        ASSERT_TRUE(math::equals(-1.42925, math::arcsin(-0.99)));
+    }
+
+    TEST(math_test, arccos_test)
+    {
+        constexpr double compile_time_a = math::arccos(0);
+        constexpr double compile_time_b = math::arccos(1);
+        constexpr double compile_time_c = math::arccos(-1);
+        constexpr double compile_time_d = math::arccos(0.1);
+        constexpr double compile_time_e = math::arccos(-0.4);
+        constexpr double compile_time_f = math::arccos(math::pi_4);
+        constexpr double compile_time_g = math::arccos(0.2);
+        constexpr double compile_time_h = math::arccos(0.7);
+        constexpr double compile_time_i = math::arccos(0.9);
+        constexpr double compile_time_j = math::arccos(0.99);
+        constexpr double compile_time_k = math::arccos(-0.99);
+
+        // compile time tests
+        ASSERT_TRUE(math::equals(math::pi_2, compile_time_a));
+        ASSERT_TRUE(math::equals(0, compile_time_b));
+        ASSERT_TRUE(math::equals(math::pi, compile_time_c));
+        ASSERT_TRUE(math::equals(1.47063, compile_time_d));
+        ASSERT_TRUE(math::equals(1.98230, compile_time_e));
+        ASSERT_TRUE(math::equals(0.66747, compile_time_f));
+        ASSERT_TRUE(math::equals(1.36944, compile_time_g));
+        ASSERT_TRUE(math::equals(0.79540, compile_time_h));
+        ASSERT_TRUE(math::equals(0.45106, compile_time_i));
+        ASSERT_TRUE(math::equals(0.14341, compile_time_j));
+        ASSERT_TRUE(math::equals(2.99818, compile_time_k));
+
+        ASSERT_TRUE(math::equals(math::pi_2, math::arccos(0)));
+        ASSERT_TRUE(math::equals(0, math::arccos(1)));
+        ASSERT_TRUE(math::equals(math::pi, math::arccos(-1)));
+        ASSERT_TRUE(math::equals(1.47062, math::arccos(0.1)));
+        ASSERT_TRUE(math::equals(1.98231, math::arccos(-0.4)));
+        ASSERT_TRUE(math::equals(0.66745, math::arccos(math::pi_4)));
+        ASSERT_TRUE(math::equals(1.36944, math::arccos(0.2)));
+        ASSERT_TRUE(math::equals(0.79539, math::arccos(0.7)));
+        ASSERT_TRUE(math::equals(0.45103, math::arccos(0.9)));
+        ASSERT_TRUE(math::equals(0.14154, math::arccos(0.99)));
+        ASSERT_TRUE(math::equals(3.00005, math::arccos(-0.99)));
+    }
+
+    TEST(math_test, arccos_exception_test)
+    {
+        ASSERT_THROW(math::arccos(1.0001), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(-1.0001), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(-20), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(20), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(5), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(-199), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(-INFINITY), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(INFINITY), exception::out_of_range_exception);
+        ASSERT_THROW(math::arccos(NAN), exception::out_of_range_exception);
+        
+        ASSERT_NO_THROW(math::arccos(1));
+        ASSERT_NO_THROW(math::arccos(-1));
+    }
+
+    TEST(math_test, arcsin_exception_test)
+    {
+        ASSERT_THROW(math::arcsin(1.0001), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(-1.0001), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(-20), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(20), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(5), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(-199), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(-INFINITY), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(INFINITY), exception::out_of_range_exception);
+        ASSERT_THROW(math::arcsin(NAN), exception::out_of_range_exception);
+        
+        ASSERT_NO_THROW(math::arcsin(1));
+        ASSERT_NO_THROW(math::arcsin(-1));
+    }
+
+    TEST(math_test, arctan_test)
+    {
+        constexpr double compile_time_a = math::arctan(0);
+        constexpr double compile_time_b = math::arctan(1);
+        constexpr double compile_time_c = math::arctan(-1);
+        constexpr double compile_time_d = math::arctan(0.1);
+        constexpr double compile_time_e = math::arctan(-0.4);
+        constexpr double compile_time_f = math::arctan(math::pi_4);
+        constexpr double compile_time_g = math::arctan(0.2);
+        constexpr double compile_time_h = math::arctan(0.7);
+        constexpr double compile_time_i = math::arctan(0.9);
+        constexpr double compile_time_j = math::arctan(0.99);
+        constexpr double compile_time_k = math::arctan(-0.99);
+        constexpr double compile_time_l = math::arctan(500);
+
+        // compile time tests
+        ASSERT_TRUE(math::equals(0, compile_time_a));
+        ASSERT_TRUE(math::equals(0.78539, compile_time_b));
+        ASSERT_TRUE(math::equals(-0.78539, compile_time_c));
+        ASSERT_TRUE(math::equals(0.09967, compile_time_d));
+        ASSERT_TRUE(math::equals(-0.38051, compile_time_e));
+        ASSERT_TRUE(math::equals(0.66577, compile_time_f));
+        ASSERT_TRUE(math::equals(0.19739, compile_time_g));
+        ASSERT_TRUE(math::equals(0.61072, compile_time_h));
+        ASSERT_TRUE(math::equals(0.73281, compile_time_i));
+        ASSERT_TRUE(math::equals(0.78003, compile_time_j));
+        ASSERT_TRUE(math::equals(-0.78003, compile_time_k));
+        ASSERT_TRUE(math::equals(1.56879, compile_time_l));
+
+        ASSERT_TRUE(math::equals(0, math::arctan(0)));
+        ASSERT_TRUE(math::equals(0.78539, math::arctan(1)));
+        ASSERT_TRUE(math::equals(-0.78539, math::arctan(-1)));
+        ASSERT_TRUE(math::equals(0.09967, math::arctan(0.1)));
+        ASSERT_TRUE(math::equals(-0.38051, math::arctan(-0.4)));
+        ASSERT_TRUE(math::equals(0.66577, math::arctan(math::pi_4)));
+        ASSERT_TRUE(math::equals(0.19739, math::arctan(0.2)));
+        ASSERT_TRUE(math::equals(0.61072, math::arctan(0.7)));
+        ASSERT_TRUE(math::equals(0.73281, math::arctan(0.9)));
+        ASSERT_TRUE(math::equals(0.78037, math::arctan(0.99)));
+        ASSERT_TRUE(math::equals(-0.78037, math::arctan(-0.99)));
+        ASSERT_TRUE(math::equals(1.56879, math::arctan(500)));
+
+        // infinity and nan tests
+        constexpr double compile_time_nan = math::arctan(NAN);
+        constexpr double compile_time_inf = math::arctan(INFINITY);
+        constexpr double compile_time_ninf = math::arctan(-INFINITY);
+        ASSERT_TRUE(std::isnan(compile_time_nan));
+        ASSERT_TRUE(math::equals(math::pi_2, compile_time_inf));
+        ASSERT_TRUE(math::equals(-math::pi_2, compile_time_ninf));
+
+        ASSERT_TRUE(std::isnan(math::arctan(NAN)));
+        ASSERT_TRUE(math::equals(math::arctan(INFINITY),math::pi_2));
+        ASSERT_TRUE(math::equals(math::arctan(-INFINITY),-math::pi_2));
+    }
+
     TEST(math_test, factorial)
     {
         constexpr double compile_time_a = math::factorial(0);
@@ -388,5 +561,4 @@ namespace testing
         ASSERT_TRUE(math::equals(6, math::factorial(3)));
         ASSERT_TRUE(math::equals(3628800, math::factorial(10)));
     }
-
 } // namespace testing
