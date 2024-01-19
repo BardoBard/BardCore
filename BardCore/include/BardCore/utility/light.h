@@ -1,5 +1,4 @@
-#ifndef BARDCORE_LIGHT_H
-#define BARDCORE_LIGHT_H
+#pragma once
 
 #include "BardCore/math/point3d.h"
 
@@ -150,4 +149,3 @@ namespace bardcore
         };
     } // namespace bardcore::utility
 } // namespace bardcore
-#endif //BARDCORE_LIGHT_H

@@ -1,5 +1,4 @@
-#ifndef BARDCORE_BARDCORE_H
-#define BARDCORE_BARDCORE_H
+#pragma once
 
 // C++ version has to be 14 or later
 
@@ -77,5 +76,3 @@ namespace bardcore
 #include "BardCore/exception/negative_exception.h"
 #include "BardCore/exception/same_object_exception.h"
 #include "BardCore/exception/out_of_range_exception.h"
-
-#endif //BARDCORE_BARDCORE_H

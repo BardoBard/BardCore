@@ -1,5 +1,5 @@
-#ifndef BARDCORE_SAME_OBJECT_EXCEPTION_H
-#define BARDCORE_SAME_OBJECT_EXCEPTION_H
+#pragma once
+
 #include "BardCore/bardcore.h"
 
 namespace bardcore
@@ -13,5 +13,3 @@ namespace bardcore
         };
     } // namespace bardcore::exceptions
 } // namespace bardcore
-
-#endif //BARDCORE_SAME_OBJECT_EXCEPTION_H

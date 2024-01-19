@@ -1,5 +1,5 @@
-#ifndef BARDCORE_ZERO_DIVISION_H
-#define BARDCORE_ZERO_DIVISION_H
+#pragma once
+
 #include "BardCore/bardcore.h"
 
 namespace bardcore
@@ -13,5 +13,3 @@ namespace bardcore
         };
     } // namespace bardcore::exceptions
 } // namespace bardcore
-
-#endif //BARDCORE_ZERO_DIVISION_H

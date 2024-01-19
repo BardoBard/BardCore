@@ -1,5 +1,4 @@
-#ifndef BARDCORE_QUATERNION_H
-#define BARDCORE_QUATERNION_H
+#pragma once
 
 #include "BardCore/interfaces/dimension4.h"
 #include "BardCore/math/math.h"
@@ -193,4 +192,3 @@ namespace bardcore
         }
     };
 } // namespace bardcore
-#endif //BARDCORE_QUATERNION_H

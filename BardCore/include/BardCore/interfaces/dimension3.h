@@ -1,5 +1,5 @@
-#ifndef BARDCORE_DIMENSION3_H
-#define BARDCORE_DIMENSION3_H
+#pragma once
+
 #include "BardCore/bardcore.h"
 #include "BardCore/math/math.h"
 
@@ -416,4 +416,3 @@ namespace bardcore
         return {n / other.x, n / other.y, n / other.z};
     }
 } // namespace bardcore
-#endif //BARDCORE_DIMENSION3_H

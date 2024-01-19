@@ -1,5 +1,4 @@
-#ifndef BARDCORE_POINT3D_H
-#define BARDCORE_POINT3D_H
+#pragma once
 
 #include "BardCore/interfaces/dimension3.h"
 #include "BardCore/math/vector3d.h"
@@ -65,4 +64,3 @@ namespace bardcore
         }
     };
 } // namespace bardcore
-#endif //BARDCORE_POINT3D_H

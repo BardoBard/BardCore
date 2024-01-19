@@ -1,5 +1,4 @@
-#ifndef BARDCORE_VECTOR3D_H
-#define BARDCORE_VECTOR3D_H
+#pragma once
 
 #include "BardCore/interfaces/dimension3.h"
 #include "BardCore/math/math.h"
@@ -252,7 +251,6 @@ namespace bardcore
                         ? nullptr
                         : std::make_unique<vector3d>(n * (2 * dot) - *this);
         }
-#endif // C++14 (no std::unique_ptr)
+#endif // C++14 (std::unique_ptr)
     };
 } // namespace bardcore
-#endif //BARDCORE_VECTOR3D_H
