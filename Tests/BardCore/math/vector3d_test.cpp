@@ -119,43 +119,23 @@ namespace testing
     TEST(vector3d_test, normalize_test)
     {
         constexpr vector3d vector1 = {3, 2, -1};
+        constexpr vector3d vector2 = {-3, -2, 1};
+        constexpr vector3d vector3 = {-0.834, -0.653, -0.127};
 
         constexpr vector3d result = vector1.normalize();
+        constexpr vector3d result2 = vector2.normalize();
+        constexpr vector3d result3 = vector3.normalize();
 
-        ASSERT_NEAR(0.802, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.535, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.267, result.z, ROUND_THREE_DECIMALS);
-    }
-
-    //normalize test with negative input
-    TEST(vector3d_test, normalize_negative_test)
-    {
-        constexpr vector3d vector1 = {-3, -2, 1};
-
-        constexpr vector3d result = vector1.normalize();
-
-        ASSERT_NEAR(-0.802, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.535, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.267, result.z, ROUND_THREE_DECIMALS);
-    }
-
-    //normalize test 2
-    TEST(vector3d_test, normalize2_test)
-    {
-        constexpr vector3d vector1 = {-0.834, -0.653, -0.127};
-
-        constexpr vector3d result = vector1.normalize();
-
-        ASSERT_NEAR(-0.782, result.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.612, result.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(-0.119, result.z, ROUND_THREE_DECIMALS);
+        ASSERT_EQ(vector3d(0.80178, 0.534522, -0.267261), result);
+        ASSERT_EQ(vector3d(-0.80178, -0.534522, 0.267261), result2);
+        ASSERT_EQ(vector3d(-0.781766, -0.61210, -0.119045), result3);
     }
 
     //normalize test with zero
     TEST(vector3d_test, normalize_zero_test)
     {
         constexpr vector3d vector1 = {0, 0, 0};
-        ASSERT_ANY_THROW(vector1.normalize());
+        ASSERT_THROW(vector1.normalize(), exception::zero_exception);
     }
 
     //all tests
@@ -190,9 +170,7 @@ namespace testing
         //normalize
         constexpr vector3d result_normalize = vector1.normalize();
 
-        ASSERT_NEAR(0.471, result_normalize.x, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.335, result_normalize.y, ROUND_THREE_DECIMALS);
-        ASSERT_NEAR(0.816, result_normalize.z, ROUND_THREE_DECIMALS);
+        ASSERT_EQ(vector3d(0.470875, 0.334844, 0.81618), result_normalize);
     }
 
     //reflection
@@ -203,9 +181,7 @@ namespace testing
 
         const auto result = incoming_vector.reflection(normal);
 
-        ASSERT_NEAR(-1.0, result->x, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(-2.0, result->y, ROUND_ONE_DECIMALS);
-        ASSERT_NEAR(3.0, result->z, ROUND_ONE_DECIMALS);
+        ASSERT_EQ(vector3d(-1, -2, 3), *result);
     }
 
     //reflection with negative input
@@ -219,6 +195,26 @@ namespace testing
         ASSERT_FALSE(result);
     }
 
+    TEST(vector3d_test, reflection_exception_test)
+    {
+        constexpr vector3d incoming_vector = {1, 2, 3};
+        constexpr vector3d normal = {0, 0, 0};
+
+        ASSERT_THROW(incoming_vector.reflection(normal), exception::zero_exception);
+    }
+
+    TEST(vector3d_test, reflection_edge_cases_test)
+    {
+        // vec = normal
+        ASSERT_EQ(vector3d(0, 0, 1), *vector3d(0, 0, 1).reflection(vector3d(0, 0, 1)));
+
+        // vec perpendicular to normal
+        ASSERT_EQ(vector3d(-1, 0, 0), *vector3d(1, 0, 0).reflection(vector3d(0, 0, 1)));
+
+        // vec = (0,0,0)
+        ASSERT_EQ(vector3d(0, 0, 0), *vector3d(0, 0, 0).reflection(vector3d(0, 0, 1)));
+    }
+
     TEST(vector3d_test, refraction_test)
     {
         constexpr vector3d vec = {0.707107, -0.707107, 0.0};
@@ -229,8 +225,9 @@ namespace testing
         ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *result);
         ASSERT_EQ(vector3d(0.636396, -0.771363, 0.0), *vec.refraction(normal, refractive_ratio));
     }
-    
-    TEST(vector3d_test, refraction2_test){
+
+    TEST(vector3d_test, refraction2_test)
+    {
         constexpr vector3d vec = {1.191752, 1, 0}; // 50 degrees
         constexpr vector3d normal = {0.0, 1.0, 0.0};
         constexpr double refractive_ratio_2 = 1.2;
@@ -240,7 +237,8 @@ namespace testing
         ASSERT_EQ(vector3d(0.919253, -0.393668, 0), *vec.refraction(normal, refractive_ratio_2));
 
         // calculate angle in degrees
-        ASSERT_NEAR(66.817, 180 -vec.refraction(normal, refractive_ratio_2)->angle_degrees(normal), ROUND_THREE_DECIMALS);
+        ASSERT_NEAR(66.817, 180 -vec.refraction(normal, refractive_ratio_2)->angle_degrees(normal),
+                    ROUND_THREE_DECIMALS);
     }
 
     TEST(vector3d_test, refraction_internal_reflection_test)
@@ -256,17 +254,34 @@ namespace testing
 
     TEST(vector3d_test, refraction3_test)
     {
-        constexpr vector3d vec = {6,1,8};
-        constexpr vector3d normal = {1,2,3};
+        constexpr vector3d vec = {6, 1, 8};
+        constexpr vector3d normal = {1, 2, 3};
         constexpr double refractive_medium1 = 1.00029; // air
         constexpr double refractive_medium2 = 1.333; // water
 
         // calculate refraction
         ASSERT_TRUE(math::equals(vec.refraction(normal, refractive_medium1, refractive_medium2)->length(), 1));
-        ASSERT_EQ(vector3d(0.03171, -0.75793, -0.65156), *vec.refraction(normal, refractive_medium1, refractive_medium2));
+        ASSERT_EQ(vector3d(0.03171, -0.75793, -0.65156),
+                  *vec.refraction(normal, refractive_medium1, refractive_medium2));
 
         // calculate angle in degrees
-        ASSERT_NEAR(23.21, 180 - vec.refraction(normal, refractive_medium1, refractive_medium2)->angle_degrees(normal), ROUND_TWO_DECIMALS);
+        ASSERT_NEAR(23.21, 180 - vec.refraction(normal, refractive_medium1, refractive_medium2)->angle_degrees(normal),
+                    ROUND_TWO_DECIMALS);
+    }
+
+    TEST(vector3d_test, refraction_edge_cases_test)
+    {
+        // vec = normal
+        ASSERT_EQ(vector3d(0, -1, 0), *vector3d(0, 1, 0).refraction(vector3d(0,1,0), 1, 1.333));
+
+        // refractive_ratio = 1
+        ASSERT_EQ(vector3d(1, -2, 3).normalize(), *vector3d(1, 2, 3).refraction(vector3d(0, 1, 0), 1, 1));
+
+        // critical angle
+        ASSERT_FALSE(vector3d(0, 0.75311, -0.657895).refraction(vector3d(0, 1, 0), 1.52));
+
+        // total internal reflection
+        ASSERT_FALSE(vector3d(0, 0.75311, -0.657895).refraction(vector3d(0, 1, 0), 1.53));
     }
 
     TEST(vector3d_test, refraction_exception_test)
@@ -275,7 +290,7 @@ namespace testing
         constexpr vector3d normal = {0.0, 1.0, 0.0};
 
         constexpr vector3d zero_n = {0.0, 0.0, 0.0};
-        
+
         ASSERT_THROW(vec.refraction(normal, -0.9), exception::negative_exception);
         ASSERT_THROW(vec.refraction(normal, 0), exception::zero_exception);
         ASSERT_THROW(vec.refraction(normal, 0, 1), exception::zero_exception);

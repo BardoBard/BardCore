@@ -177,7 +177,7 @@ namespace bardcore
             const double theta_sin_2 = refractive_ratio * math::sqrt(1 - theta_cos_1 * theta_cos_1);
 
             //check if we've found a total internal reflection
-            if (math::greater_than(theta_sin_2, 1)) //this means we have a total internal reflection
+            if (math::greater_than_or_equals(theta_sin_2, 1)) //this means we have a total internal reflection
                 return std::nullopt;
 
             //no ternary operator because otherwise constexpr doesn't work on make_optional???
@@ -265,7 +265,7 @@ namespace bardcore
             const double theta_sin_2 = refractive_ratio * math::sqrt(1 - theta_cos_1 * theta_cos_1);
 
             //check if we've found a total internal reflection
-            if (math::greater_than(theta_sin_2, 1)) //this means we have a total internal reflection
+            if (math::greater_than_or_equals(theta_sin_2, 1)) //this means we have a total internal reflection
                 return nullptr;
 
             return std::make_unique<vector3d>(this->normalize() * refractive_ratio + normalized_normal * (refractive_ratio * theta_cos_1 - math::sqrt(1 - theta_sin_2 * theta_sin_2)));

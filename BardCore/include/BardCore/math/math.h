@@ -410,7 +410,7 @@ namespace bardcore
          * \return a == b with epsilon
          */
         NODISCARD constexpr bool static equals(const double value1,
-                                                const double value2) noexcept
+                                               const double value2) noexcept
         {
             return abs(value1 - value2) <= epsilon;
         }
@@ -425,9 +425,24 @@ namespace bardcore
          * \return a > b with epsilon
          */
         NODISCARD constexpr bool static greater_than(const double value1,
-                                                      const double value2) noexcept
+                                                     const double value2) noexcept
         {
             return value1 - value2 > epsilon;
+        }
+
+        /**
+         * \brief checks if left double value is greater than or equal to right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is INF or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
+         * \return a >= b with epsilon
+         */
+        NODISCARD constexpr bool static greater_than_or_equals(const double value1,
+                                                               const double value2) noexcept
+        {
+            return greater_than(value1, value2) || equals(value1, value2);
         }
 
         /**
@@ -440,9 +455,24 @@ namespace bardcore
          * \return a < b with epsilon
          */
         NODISCARD constexpr bool static less_than(const double value1,
-                                                   const double value2) noexcept
+                                                  const double value2) noexcept
         {
             return value2 - value1 > epsilon;
+        }
+
+        /**
+         * \brief checks if left double value is less than or equal to right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is inf or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
+         * \return a <= b with epsilon
+         */
+        NODISCARD constexpr bool static less_than_or_equals(const double value1,
+                                                            const double value2) noexcept
+        {
+            return less_than(value1, value2) || equals(value1, value2);
         }
 
         /**
