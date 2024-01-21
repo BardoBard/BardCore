@@ -1,5 +1,5 @@
-#ifndef BARDCORE_DIMENSION3_H
-#define BARDCORE_DIMENSION3_H
+#pragma once
+
 #include "BardCore/bardcore.h"
 #include "BardCore/math/math.h"
 
@@ -16,6 +16,7 @@ namespace bardcore
     {
     public:
         double x{}, y{}, z{};
+
     public:
         NODISCARD constexpr INLINE static T zero() noexcept { return T(0, 0, 0); }
         NODISCARD constexpr INLINE static T one() noexcept { return T(1, 1, 1); }
@@ -111,7 +112,6 @@ namespace bardcore
         {
             return {x - other.x, y - other.y, z - other.z};
         }
-
 
         /**
          * \brief subtracts a double from a dimension3 and stores the result in a new dimension3
@@ -270,6 +270,30 @@ namespace bardcore
         dimension3& operator=(dimension3&& other) noexcept = default;
 
         /**
+         * \brief makes this dimension3 negative
+         * \return this
+        */
+        constexpr dimension3& operator-() noexcept
+        {
+            x = -x;
+            y = -y;
+            z = -z;
+            return *this;
+        }
+
+        /**
+         * \brief makes this dimension3 positive
+         * \return this
+         */
+        constexpr dimension3& abs() noexcept
+        {
+            x = math::abs(x);
+            y = math::abs(y);
+            z = math::abs(z);
+            return *this;
+        }
+
+        /**
          * \brief less than operator
          * \param left left dimension3
          * \param right right dimension3
@@ -339,5 +363,56 @@ namespace bardcore
             return !(left == right);
         }
     };
+
+    /**
+     * \brief subtracts n from another dimension3 and stores the result in a new dimension3
+     * \param n double to subtract with
+     * \param other other dimension3
+     * \return new dimension3
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
+    NODISCARD constexpr dimension3<Derived> operator-(const double n, const dimension3<Derived>& other) noexcept
+    {
+        return {n - other.x, n - other.y, n - other.z};
+    }
+
+    /**
+     * \brief adds n to another dimension3 and stores the result in a new dimension3
+     * \param n double to add with
+     * \param other other dimension3
+     * \return new dimension3
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
+    NODISCARD constexpr dimension3<Derived> operator+(const double n, const dimension3<Derived>& other) noexcept
+    {
+        return other + n;
+    }
+
+    /**
+     * \brief multiplies n with another dimension3 and stores the result in a new dimension3
+     * \param n double to multiply with
+     * \param other other dimension3
+     * \return new dimension3
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
+    NODISCARD constexpr dimension3<Derived> operator*(const double n, const dimension3<Derived>& other) noexcept
+    {
+        return other * n;
+    }
+
+    /**
+     * \brief divides n with another dimension3 and stores the result in a new dimension3
+     * \throws zero_exception if x, y or z is 0
+     * \param n double to divide with
+     * \param other other dimension3
+     * \return new dimension3
+     */
+    template <typename Derived, ENABLE_IF_DERIVED(dimension3, Derived)>
+    NODISCARD constexpr dimension3<Derived> operator/(const double n, const dimension3<Derived>& other)
+    {
+        if (math::equals(other.x, 0.) || math::equals(other.y, 0.) || math::equals(other.z, 0.))
+            throw exception::zero_exception("division by zero");
+
+        return {n / other.x, n / other.y, n / other.z};
+    }
 } // namespace bardcore
-#endif //BARDCORE_DIMENSION3_H

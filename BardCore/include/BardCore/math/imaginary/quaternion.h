@@ -1,16 +1,13 @@
-#ifndef BARDCORE_QUATERNION_H
-#define BARDCORE_QUATERNION_H
+#pragma once
 
 #include "BardCore/interfaces/dimension4.h"
 #include "BardCore/math/math.h"
-#include "BardCore/math/point3d.h"
+#include "BardCore/math/vector3d.h"
 
 namespace bardcore
 {
     /**
      * \brief quaternion is a 4D object, this quaternion class is pretty basic in the sense that it only supports the basic operations
-     *
-     *  perhaps later there will be things like ring theory, matrix representation
      */
     class quaternion : public dimension4<quaternion>
     {
@@ -46,6 +43,16 @@ namespace bardcore
         }
 
         /**
+         * \brief deprecated, use rotate_degrees/rotate_radians instead
+         */
+        template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
+        DEPRECATED("Use rotate_degrees/rotate_radians instead of this function.") NODISCARD constexpr static T rotate(
+            const T& to_be_rotated_3d, const vector3d& rotation_vector, const double theta)
+        {
+            return rotate_radians(to_be_rotated_3d, rotation_vector, math::degrees_to_radians(theta));
+        }
+
+        /**
          * \brief calculates the rotation of a 3D object (to_be_rotated3d) around a given axis (rotation_vector) with a given angle (theta)
          * \throws zero_exception if length of to_be_rotated_3d is zero
          * \throws zero_exception if length of rotation_vector is zero
@@ -56,13 +63,30 @@ namespace bardcore
          * \return rotated 3D object
          */
         template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
-        NODISCARD constexpr static T rotate(const T& to_be_rotated_3d, const vector3d& rotation_vector, double theta)
+        NODISCARD constexpr static T rotate_degrees(const T& to_be_rotated_3d, const vector3d& rotation_vector,
+                                                    const double theta)
+        {
+            return rotate_radians(to_be_rotated_3d, rotation_vector, math::degrees_to_radians(theta));
+        }
+
+        /**
+         * \brief calculates the rotation of a 3D object (to_be_rotated3d) around a given axis (rotation_vector) with a given angle (theta)
+         * \throws zero_exception if length of to_be_rotated_3d is zero
+         * \throws zero_exception if length of rotation_vector is zero
+         * \tparam T an inherited class of dimension3, e.g. point3d, vector3d, ...
+         * \param to_be_rotated_3d the 3D object that should be rotated
+         * \param rotation_vector the axis around which the object should be rotated
+         * \param theta the angle in radians
+         * \return rotated 3D object
+         */
+        template <typename T, ENABLE_IF_DERIVED(dimension3, T)>
+        NODISCARD constexpr static T rotate_radians(const T& to_be_rotated_3d, const vector3d& rotation_vector,
+                                                    double theta)
         {
             if (to_be_rotated_3d == dimension3<T>::zero())
-                throw exception::zero_exception("to_be_mirrored_3d must not be (0,0,0)");
+                throw exception::zero_exception("to_be_rotated_3d must not be (0,0,0)");
 
-            //theta from degrees to rad
-            theta = math::degrees_to_radians(theta / 2);
+            theta /= 2;
 
             //get cos and sin
             const double cos = math::cos(theta);
@@ -168,4 +192,3 @@ namespace bardcore
         }
     };
 } // namespace bardcore
-#endif //BARDCORE_QUATERNION_H

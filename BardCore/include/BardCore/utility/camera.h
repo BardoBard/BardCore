@@ -1,5 +1,4 @@
-#ifndef BARDCORE_CAMERA_H
-#define BARDCORE_CAMERA_H
+#pragma once
 
 #include <BardCore/bardcore.h>
 #include <BardCore/math/vector3d.h>
@@ -273,6 +272,3 @@ namespace bardcore
         };
     } // namespace utility
 } // namespace bardcore
-
-
-#endif //BARDCORE_CAMERA_H

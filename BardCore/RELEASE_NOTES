@@ -1,36 +1,23 @@
-reflection for vector
-27/12/2023
+added negative operator and abs for 3d/4d
+11/01/24
 
-out_of_range_exception added, update constexpr correctness
-28/12/2023
+added correct constexpr inf check
+15/01/24
 
-added fequals, fgreater_than, fless_than to math (all constexpr) 
-added epsilon to math
-28/12/2023
+added sqrt(2) sqrt(3) to math
+18/01/24
 
-added camera class
-28/12/2023
+refraction added
+18/01/24
 
-added epsilon equals to all overloads of equals/less_than/greater_than
-28/12/2023
+added opposite operator overloading e.g n - 3d, n / 3d
+18/01/24
 
-added fabs, fsign, fmod, fcos, fsin, ftan, fexp, factorial to math 
-30/12/2023
+added rotate depreciation to quaternion, use rotate_degrees/rotate_radians now
+18/01/24
 
-added compile time and runtime implementation to math, runtime uses std and compile time uses constexpr
-30/12/2023
+added pragma once instead of the ifndefs
+19/01/24
 
-added fov for camera
-31/12/2023
-
-fixed operators now returning correctly, added more tests
-31/12/2023
-
-float to double in entire codebase
-01/01/2023
-
-changed the way mod works, now it's accurate
-01/01/2023
-
-changed names from f(func) to (func), e.g fsin to sin
-01/01/2023
+added arcsin. arccos, arctan constexpr
+19/01/24

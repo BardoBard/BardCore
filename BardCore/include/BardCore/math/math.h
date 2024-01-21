@@ -1,5 +1,4 @@
-#ifndef BARDCORE_MATH_H
-#define BARDCORE_MATH_H
+#pragma once
 
 #include "BardCore/bardcore.h"
 
@@ -62,6 +61,16 @@ namespace bardcore
         INLINE static constexpr double pi_4 = 0.785398163397448309616;
 
         /**
+         * \brief sqrt(2) constant
+         */
+        INLINE static constexpr double sqrt_2 = 1.41421356237309504880;
+
+        /**
+         * \brief sqrt(3) constant
+         */
+        INLINE static constexpr double sqrt_3 = 1.73205080756887729352;
+
+        /**
          * \brief pi / 4 constant
          */
         INLINE static constexpr double inf = std::numeric_limits<double>::infinity();
@@ -98,7 +107,7 @@ namespace bardcore
         NODISCARD constexpr static double sqrt(const double value)
         {
             if (value < 0)
-                throw exception::negative_exception("value can not be negative");
+                throw exception::negative_exception("sqrt(value) can not be negative");
 
             if (!std::_Is_constant_evaluated())
                 return std::sqrt(value);
@@ -137,7 +146,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::pow(base, static_cast<double>(exponent));
 
-            if (std::_Is_nan(base) || base == inf || base == -inf) // base is inf
+            if (std::_Is_nan(base) || std::_Is_inf(base)) // base is inf
                 return NAN;
 
             if (exponent == 0 || equals(base, 1.)) // base is 1 or exponent is 0
@@ -160,7 +169,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::cos(value);
 
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             return sin(value + pi_2);
@@ -178,7 +187,7 @@ namespace bardcore
             if (!std::_Is_constant_evaluated()) // use std if runtime
                 return std::sin(value);
 
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             value = mod(value, 2 * pi); // make value between 0 and 2pi
@@ -191,7 +200,7 @@ namespace bardcore
 
                 // r is near zero, adding it to the result will not change the result
                 // r is not a number or inf, stop calculating
-                if (equals(r, 0) || (std::_Is_nan(r) || r == inf || r == -inf))
+                if (equals(r, 0) || (std::_Is_nan(r) || std::_Is_inf(r)))
                     break;
 
                 result += r;
@@ -210,7 +219,7 @@ namespace bardcore
          */
         NODISCARD constexpr static double tan(const double value) noexcept
         {
-            if (std::_Is_nan(value) || value == inf || value == -inf) // value is inf
+            if (std::_Is_nan(value) || std::_Is_inf(value)) // value is inf
                 return NAN;
 
             if (equals(mod(value, pi), 0)) // value is a multiple of pi
@@ -226,6 +235,114 @@ namespace bardcore
         }
 
         /**
+         * \brief calculates the arcsine of a number, it uses std at runtime
+         *
+         * it's pretty accurate compile time, ~0.001 error margin,
+         * When approaching 1 or -1 it will be less accurate, ~0.02 error margin
+         * \note read more at: https://proofwiki.org/wiki/Power_Series_Expansion_for_Real_Arcsine_Function
+         * \note using the power series expansion
+         * \throws out_of_range_exception if value is not between -1 and 1
+         * \param value value to calculate the arcsin from
+         * \return arcsine of value
+         */
+        NODISCARD constexpr static double arcsin(const double value)
+        {
+            if (math::greater_than(math::abs(value), 1.) || std::_Is_nan(value) || std::_Is_inf(value))
+                throw exception::out_of_range_exception("arcsin(x) must be between -1 and 1");
+
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::asin(value);
+
+            if (equals(math::abs(value), 1))
+                return pi_2 * sign(value);
+
+            double result = 0;
+            for (int index = 0; index < 1'000; ++index) // 1 thousand iterations as hard limit
+            {
+                //formula: Σ ((2n)! / (2^(2n) * (n!)^2)) * (x^(2n+1) / (2n+1))
+                const double r = factorial(2 * index) / (pow(2, 2 * index) * pow(factorial(index), 2)) * pow(
+                    value, 2 * index + 1) / (2 * index + 1);
+
+                // r is near zero, adding it to the result will not change the result
+                // r is not a number or inf, stop calculating
+                if (equals(r, 0) || (std::_Is_nan(r) || std::_Is_inf(r)))
+                    break;
+
+                result += r;
+            }
+
+            return result;
+        }
+
+        /**
+         * \brief calculates the arccos of a number, it uses std at runtime
+         * 
+         * it's pretty accurate compile time, ~0.001 error margin,
+         * When approaching 1 or -1 it will be less accurate, ~0.02 error margin
+         * \note read more at: https://proofwiki.org/wiki/Power_Series_Expansion_for_Real_Arccosine_Function
+         * \note using the power series expansion
+         * \throws out_of_range_exception if value is not between -1 and 1
+         * \param value value to calculate the arccos from
+         * \return arccosine of value
+         */
+        NODISCARD constexpr static double arccos(const double value)
+        {
+            if (math::greater_than(math::abs(value), 1.) || std::_Is_nan(value) || std::_Is_inf(value))
+                throw exception::out_of_range_exception("arccos(x) must be between -1 and 1");
+
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::acos(value);
+
+            return pi_2 - arcsin(value);
+        }
+
+        /**
+         * \brief calculates the arctan of a number, it uses std at runtime
+         * \note read more at: https://socratic.org/questions/what-is-the-taylor-series-of-f-x-arctan-x
+         * \note using the Taylor Series
+         * \note returns [-pi/2, pi/2] if value is inf
+         * \param value value to calculate the arctan from
+         * \return arccosine of value
+         */
+        NODISCARD constexpr static double arctan(const double value) noexcept
+        {
+            if (!std::_Is_constant_evaluated()) // use std if runtime
+                return std::atan(value);
+
+            if (std::_Is_nan(value))
+                return NAN;
+
+            if (std::_Is_inf(value)) // value is inf
+                return pi_2 * sign(value); //https://en.cppreference.com/w/cpp/numeric/math/atan
+
+            if (equals(value, 0)) // value is zero
+                return 0;
+
+            if (equals(math::abs(value), 1)) // value is 1 or -1
+                return pi_4 * sign(value);
+
+            // if value is greater than 1, use the formula: arctan(x) = pi/2 - arctan(1/x), which doesn't produce a limit
+            if (math::greater_than(math::abs(value), 1.))
+                return pi_2 * sign(value) - arctan(1 / value);
+
+            double result = 0;
+            for (int index = 0; index < 100; ++index) // 1 hundred iterations as hard limit
+            {
+                //formula: Σ (-1)^n * (x^(2n+1) / (2n+1))
+                const double r = pow(-1, index) * pow(value, 2 * index + 1) / (2 * index + 1);
+
+                // r is near zero, adding it to the result will not change the result
+                // r is not a number or inf, stop calculating
+                if (equals(r, 0) || (std::_Is_nan(r) || std::_Is_inf(r)))
+                    break;
+
+                result += r;
+            }
+
+            return result;
+        }
+
+        /**
          * \brief calculates the mod of a number, with a divisor
          * \note read more at: https://en.wikipedia.org/wiki/Modulo_operation
          * \note reference: https://cplusplus.com/reference/cmath/fmod/
@@ -238,7 +355,7 @@ namespace bardcore
         NODISCARD constexpr static double mod(const double value, const double divisor)
         {
             if (equals(divisor, 0))
-                throw exception::zero_exception("divisor can not be zero");
+                throw exception::zero_exception("mod divisor can not be zero");
 
             if (!std::_Is_constant_evaluated()) // use std if runtime
             {
@@ -265,7 +382,7 @@ namespace bardcore
         {
             return equals(value, 0)
                        ? 0
-                       : (less_than(value, 0)
+                       : (value < 0
                               ? -1
                               : 1);
         }
@@ -278,7 +395,7 @@ namespace bardcore
          */
         NODISCARD constexpr static double abs(const double value) noexcept
         {
-            return less_than(value, 0)
+            return value < 0
                        ? -value
                        : value;
         }
@@ -287,13 +404,13 @@ namespace bardcore
          * \brief checks if two double values are equal, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
-         * \note if the value is inf or NAN it will return false
-         * \param value1 value 1to compare
+         * \note if the value is INF or NAN it will return false
+         * \param value1 value 1 to compare
          * \param value2 value 2 to compare
          * \return a == b with epsilon
          */
         NODISCARD constexpr bool static equals(const double value1,
-                                                const double value2) noexcept
+                                               const double value2) noexcept
         {
             return abs(value1 - value2) <= epsilon;
         }
@@ -302,15 +419,30 @@ namespace bardcore
          * \brief checks if left double value is greater than right double value, using an epsilon
          * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
          * \note it uses an epsilon which means with big numbers it will be inaccurate
-         * \note if the value is inf or NAN it will return false
+         * \note if the value is INF or NAN it will return false
          * \param value1 value 1to compare
          * \param value2 value 2 to compare
          * \return a > b with epsilon
          */
         NODISCARD constexpr bool static greater_than(const double value1,
-                                                      const double value2) noexcept
+                                                     const double value2) noexcept
         {
             return value1 - value2 > epsilon;
+        }
+
+        /**
+         * \brief checks if left double value is greater than or equal to right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is INF or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
+         * \return a >= b with epsilon
+         */
+        NODISCARD constexpr bool static greater_than_or_equals(const double value1,
+                                                               const double value2) noexcept
+        {
+            return greater_than(value1, value2) || equals(value1, value2);
         }
 
         /**
@@ -323,9 +455,24 @@ namespace bardcore
          * \return a < b with epsilon
          */
         NODISCARD constexpr bool static less_than(const double value1,
-                                                   const double value2) noexcept
+                                                  const double value2) noexcept
         {
             return value2 - value1 > epsilon;
+        }
+
+        /**
+         * \brief checks if left double value is less than or equal to right double value, using an epsilon
+         * \note thanks to https://stackoverflow.com/questions/17333/how-do-you-compare-double-and-double-while-accounting-for-precision-loss
+         * \note it uses an epsilon which means with big numbers it will be inaccurate
+         * \note if the value is inf or NAN it will return false
+         * \param value1 value 1to compare
+         * \param value2 value 2 to compare
+         * \return a <= b with epsilon
+         */
+        NODISCARD constexpr bool static less_than_or_equals(const double value1,
+                                                            const double value2) noexcept
+        {
+            return less_than(value1, value2) || equals(value1, value2);
         }
 
         /**
@@ -355,4 +502,3 @@ namespace bardcore
         }
     };
 } // namespace bardcore
-#endif //BARDCORE_MATH_H
