@@ -36,7 +36,7 @@ jobs:
           $NUGET_VERSION = (nuget list BardCore) -replace "BardCore ",''
           $LAST_NUMBER = $NUGET_VERSION.Split('.')[-1]
           
-          $NUGET_VERSION = $NUGET_VERSION -replace "$LAST_NUMBER", ""
+          $NUGET_VERSION = $NUGET_VERSION.Substring(0, $NUGET_VERSION.Length - $LAST_NUMBER.Length)
           
           $NUGET_VERSION += ([int]$LAST_NUMBER + 1)
 
