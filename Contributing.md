@@ -1,0 +1,89 @@
+# Contributing
+
+As this is an open-source project, any contributions are welcome, as long as it follows these guidelines below.
+
+## Conventions
+
+This is a c++ project, which means that we'll be following basic c++ conventions, such as:
+
+### General c++ conventions
+
+- Use of `#pragma once` instead of include guards.
+- Use of `#include <header>` instead of `#include "header"`.
+- Use of `nullptr` instead of `NULL`.
+- Use of `std::` instead of `using namespace std;`.
+- Use of `auto` only when the type is obvious, preferably use the actual type.
+- Use of `const` on parameters that are not meant to be modified.
+- Use of reference`&` on non-primitive parameters that are `const`.
+- Absolutely no use of c-style casts, use `static_cast`, `dynamic_cast`, `const_cast` and `reinterpret_cast` instead.
+
+### Formatting
+
+- Use of single tabs for indentation, with a tab size of 4.
+- Use of space after pointers and references, e.g `int* ptr`.
+- Use of space after commas, e.g `int a, int b`.
+- Use of space after keywords, e.g `if (condition)`.
+- No brackets for single-line `if` statements.
+- Use of space after operators, e.g `int a = 5 + 5`.
+- No or one space after `//`;
+
+### Naming
+
+- Use of [`snake_case`](https://en.wikipedia.org/wiki/Snake_case) for variables, functions, classes and directories.
+- Use of [`UPPER_SNAKE_CASE`](https://en.wikipedia.org/wiki/Snake_case) for defines.
+- Use of [`PascalCase`](https://en.wikipedia.org/wiki/Pascal_case) for generic type parameters, e.g `T`.
+
+### Comments
+
+- Use `//` for single-line comments.
+- Use `/* */` for multi-line comments.
+- Use `/** */` for documentation comments, using doxygen style.
+- For doxygen use ` \ ` instead of `@` for commands, e.g `\param` instead of `@param`.
+- Use of `\note` for notes like formulas, references, etc.
+- Comment only when necessary, and when it adds value to the code, like a formula, or a complex algorithm.
+
+### Classes
+
+- Private members should be postfixed with an underscore, e.g `int value_`.
+- Variables don't have to be private, it's implementation dependent, for example if the variable can hold any value
+  without breaking the class, it can be public.
+
+
+- All classes are within the `bardcore` namespace, and should be named accordingly.
+- Always use documentation comments for classes, explaining what the purpose of the class is.
+- Use of `final` should be used when a class is not meant to be inherited from.
+- Constructors and destructors should where possible be `explicit` and `constexpr`.
+- Almost always add move semantics to classes e.g move constructor, move assignment operator.
+- Almost always use assignment operator overloads, they are default constexpr and noexcept.
+- Use of operator overloads should be used when it makes sense.
+
+- Exception classes should be inherited from `bard_exception`.
+
+### Functions
+
+- Use of `constexpr` and `noexecpt` where possible.
+- Use of `override` should always be used when overriding a function.
+- Use [`NODISCARD`](https://github.com/search?q=repo%3ABardoBard%2FBardCore+NODISCARD+path%3A*%2Fbardcore.h&type=code)
+  when a function returns a value that should not be discarded.
+- Use [`INLINE`](https://github.com/search?q=repo%3ABardoBard%2FBardCore+INLINE+path%3A*%2Fbardcore.h&type=code) when a
+  function should be inlined.
+- Always use documentation comments for functions.
+
+### Summary
+
+Here are the general bullet points that should be followed:
+
+Use of doxygen style comments for all functions and classes, use is ` \ ` instead of `@` for commands, e.g `\param`
+instead of `@param`. \
+Snake case for variables, functions, classes and directories.
+
+All classes should be within the `bardcore` namespace, and should be named accordingly. \
+Classes should where possible always be `constexpr` just like the functions. \
+Private member variables should be postfixed with an underscore, e.g `int value_`. \
+Not all member variables have to be private, it's implementation dependent, for example if the variable can hold any
+value
+without breaking the class, it can be public.
+
+BardCore has `NODISCARD` and `INLINE` macros, which should be used when a function returns a value that should not be
+discarded, and when a function should be inlined, respectively. \
+BardCore also has a `bard_exception` class, which should be inherited from when creating a new exception class.
