@@ -32,6 +32,7 @@ This is a c++ project, which means that we'll be following basic c++ conventions
 - Use of [`snake_case`](https://en.wikipedia.org/wiki/Snake_case) for variables, functions, classes and directories.
 - Use of [`UPPER_SNAKE_CASE`](https://en.wikipedia.org/wiki/Snake_case) for defines.
 - Use of [`PascalCase`](https://en.wikipedia.org/wiki/Pascal_case) for generic type parameters, e.g `T`.
+- Private/protected members should be postfixed with an underscore, e.g `int value_`.
 
 ### Comments
 
@@ -44,7 +45,6 @@ This is a c++ project, which means that we'll be following basic c++ conventions
 
 ### Classes
 
-- Private members should be postfixed with an underscore, e.g `int value_`.
 - Variables don't have to be private, it's implementation dependent, for example if the variable can hold any value
   without breaking the class, it can be public.
 
@@ -69,21 +69,28 @@ This is a c++ project, which means that we'll be following basic c++ conventions
   function should be inlined.
 - Always use documentation comments for functions.
 
-### Summary
+## Testing
 
-Here are the general bullet points that should be followed:
+This project uses Google Test for testing, and all code should be well tested. \
+When adding new code, make sure to add tests that cover the new code. \
+When fixing a bug, make sure to add a test that reproduces the bug.
 
-Use of doxygen style comments for all functions and classes, use is ` \ ` instead of `@` for commands, e.g `\param`
-instead of `@param`. \
-Snake case for variables, functions, classes and directories.
+The github environment has a CI/CD pipeline that runs the tests on every pull request, if the tests fail, the pull request will be rejected.
 
-All classes should be within the `bardcore` namespace, and should be named accordingly. \
-Classes should where possible always be `constexpr` just like the functions. \
-Private member variables should be postfixed with an underscore, e.g `int value_`. \
-Not all member variables have to be private, it's implementation dependent, for example if the variable can hold any
-value
-without breaking the class, it can be public.
+## Pull requests
 
-BardCore has `NODISCARD` and `INLINE` macros, which should be used when a function returns a value that should not be
-discarded, and when a function should be inlined, respectively. \
-BardCore also has a `bard_exception` class, which should be inherited from when creating a new exception class.
+If you want to contribute to this project, fork the repository, and make a pull request with the changes you want to make.
+
+Make sure to follow the [conventions](#conventions) when making changes. \
+Follow the [testing](#testing) guidelines when adding new code or fixing bugs. \
+Make sure to add a description of the changes you made in the pull request. \
+Make sure to add documentation comments to the code you added or changed.
+
+## Feature requests
+
+If you have a feature request, please open an issue with the `feature request` label, and describe the feature you want to be added. \
+If you want to implement the feature yourself, please follow the [pull request](#pull-requests) guidelines.
+
+# Thank you for contributing!
+
+If you have any questions, feel free to ask in the [discussions section](https://github.com/BardoBard/BardCore/discussions/53).
