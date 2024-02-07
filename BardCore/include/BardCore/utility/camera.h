@@ -41,7 +41,7 @@ namespace bardcore
                 const vector3d cross_factor = direction_.cross(arbitrary_vector).normalize();
 
                 //get center of screen
-                const auto center = position_ + direction_;
+                const point3d center = position_ + direction_;
 
                 const double half_fov_tan = math::tan(math::degrees_to_radians(static_cast<double>(fov_) / 2));
 

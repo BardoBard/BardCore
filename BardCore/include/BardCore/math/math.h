@@ -359,7 +359,7 @@ namespace bardcore
 
             if (!std::_Is_constant_evaluated()) // use std if runtime
             {
-                const auto mod = std::fmod(value, divisor);
+                const double mod = std::fmod(value, divisor);
                 return equals(abs(mod), abs(divisor))
                            ? 0
                            : mod;
