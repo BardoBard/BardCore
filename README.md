@@ -4,6 +4,8 @@
 [![nuget](https://img.shields.io/nuget/v/Bardcore.svg)](https://www.nuget.org/packages/Bardcore/)
 [![nuget-github](https://img.shields.io/nuget/vpre/Bardcore.svg?label=nuget-github)](https://github.com/bardobard/bardcore/pkgs/nuget/BardCore)
 
+---
+
 ```text
  /$$$$$$$                            /$$|    /$$$$$$                               
 | $$__  $$                          | $$|   /$$__  $$                              
@@ -18,6 +20,7 @@
 ---
 
 [![build-and-test](https://github.com/bardobard/bardcore/actions/workflows/Build-Test-Windows.yml/badge.svg)](https://github.com/bardobard/bardcore/actions?query=workflow%3Build-Test-Windows.yml)
+![license](https://img.shields.io/github/license/bardobard/bardcore.svg)
 
 #### C++ 14/17/20 compatible [^flag]
 
