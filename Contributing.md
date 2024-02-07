@@ -2,6 +2,10 @@
 
 As this is an open-source project, any contributions are welcome, as long as it follows these guidelines below.
 
+Follow the [Build](https://github.com/BardoBard/BardCore/wiki/Installation#Build) instructions to get started with the project. \
+Due to the fact that this project is a Visual Studio project, it's windows only, but the code should be cross-platform. \
+Personally I use Jetbrains, but any IDE should work, as long as it follows the [conventions](#conventions).
+
 ## Conventions
 
 This is a c++ project, which means that we'll be following basic c++ conventions, such as:
